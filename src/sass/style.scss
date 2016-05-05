@@ -1,0 +1,450 @@
+@CHARSET "UTF-8";
+
+@import 'partial/button';
+@import 'partial/font';
+@import 'partial/wrapper';
+
+.selectbox {
+	width:200px;
+}
+
+.selectbox-wrapper {
+	padding : 2px;
+}
+
+.btn-wrapper {
+	padding : 2px;
+}
+
+.ui-spinner input {
+	width: 4em;
+}
+
+.ui-widget .ui-widget-content table th {
+	border: 0.2em solid #AAAAAA;
+}
+
+.ui-widget .ui-widget-content table td {
+	border: 0.2em solid #AAAAAA;
+}
+
+label {
+	padding: 0em 0.5em;
+}
+
+#title {
+	margin: 0 auto;
+	position: relative;
+	text-align: center;
+	background-color: #D3D3D3;
+}
+
+#top-menu {
+	margin: 0.2em;
+	padding: 0.2em;
+}
+
+.tabs {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	overflow: hidden;
+}
+
+.tabs li {
+	float: left;
+	display: block;
+	padding: 5px;
+	background-color: #bbb;
+	margin-right: 5px;
+	border-radius: 5px 5px 0 0;
+}
+
+.tabs li a {
+	color: #fff;
+	text-decoration: none;
+}
+
+.tabs li.current {
+	background-color: #e1e1e1;
+}
+
+.tabs li.current a {
+	color: #000;
+	text-decoration: none;
+}
+
+.tabs li a.remove {
+	color: #f00;
+	margin-left: 10px;
+}
+
+.content {
+	background-color: #e1e1e1;
+	overflow: hidden;
+}
+
+.content p {
+	margin: 0;
+	padding: 20px 20px 100px 20px;
+}
+
+#wrapper {
+	margin: 0 20px 0 0;
+}
+
+#itemlist {
+	float: left;
+	position: relative;
+	margin: auto;
+	width: 100%;
+}
+
+#itemlist ul {
+	margin: 0;
+	list-style: none;
+}
+
+#itemlist li {
+	margin: 0;
+	padding: 0em 1.0em;
+}
+
+.items {
+	margin: 0;
+	padding: 0;
+}
+
+.items li a {
+	margin: 0;
+	width: 100%;
+	display: block;
+}
+
+#wrapper {
+	padding: 20px;
+	overflow: hidden;
+}
+
+ul.ldd_menu {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	background-color: #D3D3D3;
+	list-style: none;
+	font-family: "Trebuchet MS", sans-serif;
+	border-top: 1px solid #999999;
+	border-bottom: 1px solid #999999;
+	border-left: 10px solid #D3D3D3;
+}
+
+ul.ldd_menu a {
+	text-decoration: none;
+}
+
+ul.ldd_menu > li {
+	float: left;
+	position: relative;
+}
+
+ul.ldd_menu > li > span {
+	float: left;
+	color: #000;
+	background-color: #D3D3D3;
+	height: 100%;
+	line-height: 100%;
+	cursor: default;
+	padding: 0 20px;
+	border-right: 1px solid #999999;
+	border-left: 1px solid #999999;
+}
+
+ul.ldd_menu .ldd_submenu {
+	position: absolute;
+	width: 100%;
+	display: none;
+	opacity: 0.9;
+	left: 0px;
+	font-size: 10px;
+	background: #D3D3D3;
+	border-top: 1px solid #999999;
+	z-Index: 100;
+}
+
+a.ldd_subfoot {
+	background-color: #f0f0f0;
+	color: #444;
+	display: block;
+	clear: both;
+	padding: 15px 20px;
+	text-transform: uppercase;
+	font-family: Arial, serif;
+	font-size: 12px;
+}
+
+ul.ldd_menu ul {
+	list-style: none;
+	float: left;
+	border-left: 1px solid #999999;
+	/*#DF7B61;*/
+	margin: 20px 0 10px 30px;
+	padding: 10px;
+}
+
+li.ldd_heading {
+	font-family: Georgia, serif;
+	font-size: 13px;
+	font-style: italic;
+	color: #000;
+	padding: 0 0 10px 0;
+}
+
+ul.ldd_menu ul li a {
+	font-family: Arial, serif;
+	font-size: 10px;
+	line-height: 20px;
+	color: #000;
+	/*#fff;*/
+	padding: 1px 3px;
+}
+
+ul.ldd_menu ul li a:hover {
+	background: #666666;
+}
+
+.box {
+	margin-top: 0;
+	width: 100%;
+	height: 100%;
+	position: relative;
+	overflow: visible;
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+}
+
+.borderbox {
+	margin-top: 1em;
+	padding: 0.1em;
+	width: 100%;
+	height: 100%;
+	position: relative;
+	overflow: visible;
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+	border: solid;
+}
+
+span.reference {
+	position: fixed;
+	left: 10px;
+	bottom: 10px;
+	font-size: 11em;
+}
+
+span.reference a {
+	color: #666666;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+
+span.reference a:hover {
+	color: #000;
+}
+
+.menu-button {
+	position: relative;
+	margin: 5px;
+	height: 36px;
+	width: 36px;
+	cursor: pointer;
+}
+
+.menu-button:before {
+	content: "";
+	position: absolute;
+	top: 5px;
+	right: 3px;
+	border-bottom: 17px double #696969;
+	border-top: 6px solid #696969;
+	width: 30px;
+	height: 5px;
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+}
+
+.menu-right {
+	float: right;
+}
+
+.menu-left {
+	float: left;
+	margin-right: 1.5em;
+}
+
+.toolbar {
+	top: 0;
+	left: 0;
+	right: 0;
+	background-color: transparent;
+	line-height: 68px;
+	border-top: 2px solid #BBBBBB;
+	z-index: 200;
+}
+
+.main-panel {
+	padding: 1em;
+	background-color: transparent;
+}
+
+.rightSidebar {
+	margin: 0;
+	padding-top: 1em;
+	color: white;
+	background-color: #FF99CC;
+}
+
+.rightSidebar h6 {
+	margin: 0 .8em;
+	padding: 0;
+	font-weight: 300;
+}
+
+.rightSidebar li {
+	margin: .5em 0;
+	padding: 0 1em;
+	line-height: 32px;
+}
+
+.rightSidebar li:hover {
+	background-color: #FF3399;
+}
+
+.rightSidebar hr {
+	margin: 2em auto;
+	border: 0;
+	padding: 0;
+	width: 80%;
+	height: 1px;
+	background-color: white;
+}
+
+.leftSidebar {
+	margin: 0;
+	padding-top: 1em;
+	color: white;
+	background-color: #b0a7f5;
+}
+
+.leftSidebar h6 {
+	margin: 0 .8em;
+	padding: 0;
+	font-weight: 300;
+}
+
+.leftSidebar li {
+	margin: .5em 0;
+	padding: 0 1em;
+	line-height: 2em;
+}
+
+.leftSidebar li:hover {
+	background-color: #28b9ff;
+}
+
+.leftSidebar hr {
+	margin: 2em auto;
+	border: 0;
+	padding: 0;
+	width: 80%;
+	height: 1px;
+	background-color: white;
+}
+
+.breaking {
+	display: block;
+}
+
+.non_breaking {
+	display: inline-block;
+	_display: inline;
+	zoom: 1;
+}
+
+.clearfix:after {
+	/*Release float*/
+	display: block;
+	clear: both;
+	height: 0px;
+	visibility: hidden;
+	content: ".";
+}
+
+.clearfix {
+	/*for IE6,7*/
+	min-height: 1px;
+}
+
+* html .clearfix {
+	/*For MAC IE5.x*/
+	height: 1px;
+	height: auto;
+	overflow: hidden;
+}
+
+#readfile_zone {
+	border: 0.1em dashed #bbb;
+	-moz-border-radius: 0.1em;
+	-webkit-border-radius: 0.1em;
+	border-radius: 0.1em;
+	padding: 1em;
+	text-align: center;
+	font: 2em bold 'Vollkorn';
+	color: #bbb;
+}
+
+.popUp {
+	border: 0.4em solid #666;
+	background-color: #FADBDA;
+	-moz-border-radius: 1.0em;
+	-webkit-border-radius: 1.0em;
+	border-radius: 1.0em;
+	padding: 1em;
+}
+
+.fixed_center {
+	position: fixed;
+	margin: auto;
+	width: 50%;
+	top: 25%;
+	left: 25%;
+}
+
+.fixed_lower_right {
+	position: fixed;
+	right: 0;
+	bottom: 0;
+}
+
+.fixed_top {
+	position: fixed;
+	top: 0;
+}
+
+.relative_center_position {
+	position: relative;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.list_panel {
+	position: relative;
+	margin: 0 auto;
+	overflow: hidden;
+	-moz-border-radius: 1.0em;
+	-webkit-border-radius: 1.0em;
+	border-radius: 1.0em;
+	padding: 1.0em;
+}

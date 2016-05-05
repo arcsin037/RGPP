@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>{{Title}}</title>
+	<!-- meta setting -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2, user-scalable=yes">
+	<!-- css -->
+	<!--<link rel="stylesheet" type="text/css" href="{{& CSS_PATH}}Editor.css" />-->
+	<link rel="stylesheet" type="text/css" href="{{& CSS_PATH}}style.css" />
+	<!--<link rel="stylesheet" type="text/css" href="{{& CSS_PATH}}Calendar.css">-->
+	<link rel="stylesheet" type="text/css" href="{{& LIB_PATH}}msDropDown/dd.css" />
+	<!--<link rel="stylesheet" type="text/css" href="{{& LIB_PATH}}BootStrap/css/bootstrap.min.css">-->
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="{{& LIB_PATH}}BootStrap/css/bootstrap-theme.min.css">
+	<!--<link type="text/css" rel="stylesheet" href="{{& LIB_PATH}}jQueryUI/jquery-ui-1.10.3.custom.min.css" />-->
+	<link type="text/css" rel="stylesheet" href="{{& LIB_PATH}}jQueryUI/jquery-ui.min.css" />
+	<link type="text/css" rel="stylesheet" href="{{& LIB_PATH}}ContextMenu/jquery.contextMenu.css" />
+
+	<!-- JS -->
+	<!-- jQuery -->
+	<!-- <script type="text/javascript"	src="http://code.jquery.com/jquery-1.10.2.js" charset="utf-8"></script> -->
+	<script src="{{& LIB_PATH}}jquery-1.11.3.js" charset="utf-8"></script>
+	<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>-->
+
+	<script src="{{& LIB_PATH}}msDropDown/jquery.dd.min.js" type="text/javascript"></script>
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="{{& LIB_PATH}}BootStrap/js/bootstrap.min.js"></script>
+	<script src="{{& LIB_PATH}}ContextMenu/jquery.contextMenu.js" charset="utf-8"></script>
+
+	<!-- jQuery UI -->
+	<script src="{{& LIB_PATH}}jQueryUI/jquery-ui.min.js" charset="utf-8"></script>
+	<!--<script src="{{& LIB_PATH}}jQueryUI/jquery-ui-1.10.3.custom.min.js" charset="utf-8"></script>-->
+	<!--<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>-->
+
+	<!-- simple side bar -->
+	<!--<script src="{{& LIB_PATH}}simple-sidebar/dist/jquery.simplesidebar.min.js"></script>-->
+	<script src="{{& LIB_PATH}}simple-sidebar/jquery.simplesidebar.js"></script>
+
+	<!-- source -->
+	<!--<script src="{{& JS_PATH}}module/RGPP.system.js" charset="utf-8"></script>-->
+	<!--<script src="{{& JS_PATH}}module/RGPP.mw.js" charset="utf-8"></script>-->
+	<!--<script src="{{& JS_PATH}}module/RGPP.user.js" charset="utf-8"></script>-->
+	<!--<script src="{{& JS_PATH}}RGPP.editor.min.js" charset="utf-8"></script>-->
+	<script src="{{& JS_PATH}}RGPP.editor.js" charset="utf-8"></script>
+
+	<!--[if IE 8 ]> <script src="{{& LIB_PATH}}uuCanvas/uuCanvas.js" charset="utf-8"></script><![endif]-->
+	<!--[if IE 7 ]> <script src="{{& LIB_PATH}}uuCanvas/uuCanvas.js" charset="utf-8"></script><![endif]-->
+
+</head>
+
+<body>
+	<div id="icon-menu">
+		<div class="btn-wrapper">
+			<button class="btn" title="New Map">
+				<img src="{{& SYSTEM_IMAGE_PATH}}new.svg">
+			</button>
+			<button class="btn" title="Save Map">
+				<img src="{{& SYSTEM_IMAGE_PATH}}save.svg">
+			</button>
+			<button class="btn" title="Grid">
+				<img src="{{& SYSTEM_IMAGE_PATH}}grid.svg">
+			</button>
+			<button class="btn" title="Schedule">
+				<img src="{{& SYSTEM_IMAGE_PATH}}calendar.svg">
+			</button>
+			<button class="btn" title="Play">
+				<img src="{{& SYSTEM_IMAGE_PATH}}play.svg">
+			</button>
+			<button class="btn" title="Pause">
+				<img src="{{& SYSTEM_IMAGE_PATH}}pause.svg">
+			</button>
+			<button class="btn" title="Debug Mode">
+				<img src="{{& SYSTEM_IMAGE_PATH}}debug.svg">
+			</button>
+		</div>
+		<div class="selectbox-wrapper">
+			<select id="executeMode" class="selectbox">
+				<option value="TestMode" selected>Test Mode</option>
+				<option value="EmulationMode">EmulationMode Mode</option>
+			</select>
+			<select id="layer" class="selectbox">
+				<option value="Layer 1">Layer 1</option>
+				<option value="Layer 2">Layer 2</option>
+				<option value="Layer 3">Layer 3</option>
+				<option value="Event" selected>Event</option>
+			</select>
+		</div>
+	</div>
+	<div id="emulation-window-panel">
+		<div id="emulation-window-bar">
+			<b>{{Title}}</b>
+			<div id="emulation-window-buttons">
+				<button class="FullScreen" title="Full Screen">
+					<img src="{{& SYSTEM_IMAGE_PATH}}fullScreenIcon.svg">
+				</button>
+				<button class="PseudoFullScreen" title="Save Map">
+					<img src="{{& SYSTEM_IMAGE_PATH}}pseudoFullScreenIcon.svg">
+				</button>
+				<button class="btn" title="Save Map">
+					<img src="{{& SYSTEM_IMAGE_PATH}}windowIcon.svg">
+				</button>
+			</div>
+		</div>
+		<canvas id="emulation-window-canvas">
+			
+		</canvas>
+	</div>
+	<div id="palette-window" title="Palette">
+		<div id="palette-window-menu">
+			<select id="drawMode" class="selectbox">
+				<option value="Pen" data-image="{{& SYSTEM_IMAGE_PATH}}pen.svg" data-description="Draw like using a pen." selected>Pen</option>
+				<option value="Rectangle" data-image="{{& SYSTEM_IMAGE_PATH}}rectangle.svg" data-description="Fill rectangle.">Rectangle</option>
+				<option value="Filling" data-image="{{& SYSTEM_IMAGE_PATH}}bucket.svg" data-description="Fill bounded areas.">Filling</option>
+				<option value="Eraser" data-image="{{& SYSTEM_IMAGE_PATH}}eraser.svg" data-description="Erase map chip.">Eraser</option>
+			</select>
+
+			<label>Tag value</label>
+			<input id="tag-data-spinner">
+
+			<button id="save-tag-data" class="btn" title="Save Tag Data">
+				<img src="{{& SYSTEM_IMAGE_PATH}}save.svg">
+			</button>
+		</div>
+		<div id='PalettePanelItemDiv'>
+
+		</div>
+	</div>
+	<div id="main-panel" class="main-panel">
+		<section id="toolbar-left" class="toolbar">
+			<div id="open-sb-left" class="menu-button menu-left"></div>
+		</section>
+		<section id="leftSidebar" class="leftSidebar"></section>
+	</div>
+	<section id="rightSidebar" class="rightSidebar"></section>
+</body>
+
+</html>

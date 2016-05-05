@@ -1,0 +1,3 @@
+var UNDEFINED_ERROR = -1;
+var NULL_ERROR = -2;
+// var NOTHING_ERROR = -3;

@@ -1,0 +1,7 @@
+{
+	"Title": "Rapid Game Prototyping Platform (RPGP) Editor",
+	"SYSTEM_IMAGE_PATH": "../../resources/Image/System/",
+	"CSS_PATH": "../css/",
+	"JS_PATH": "../js/",
+	"LIB_PATH": "../../lib/"
+}
