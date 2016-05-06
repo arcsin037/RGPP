@@ -10,10 +10,10 @@
 
 	/**
 	 * Browser Utility Functions
-	 * 
+	 *
 	 * @class BrowserUtil
 	 * @author arcsin
-	 * @constructor 
+	 * @constructor
 	 */
 	var constructor = function() {
 		var that = {};
@@ -127,7 +127,7 @@
 
 		/**
 		 * Extract IE version from user agent.
-		 * 
+		 *
 		 * @method extractIEVerStr_
 		 * @return {String} IE version
 		 * @private
@@ -144,7 +144,7 @@
 
 		/**
 		 * Extract FireFox version from user agent.
-		 * 
+		 *
 		 * @method extractFireFoxVerStr_
 		 * @return {String} FireFox version
 		 * @private
@@ -165,7 +165,7 @@
 
 		/**
 		 * Extract Opera version from user agent.
-		 * 
+		 *
 		 * @method extractOperaVerStr_
 		 * @return {String} Opera version
 		 * @private
@@ -186,7 +186,7 @@
 
 		/**
 		 * Extract Google chrome version from user agent.
-		 * 
+		 *
 		 * @method extractChromeVerStr_
 		 * @return {String} Google chrome version
 		 * @private
@@ -207,7 +207,7 @@
 
 		/**
 		 * Extract Safari version from user agent.
-		 * 
+		 *
 		 * @method extractSafariVerStr_
 		 * @return {String} Safari version
 		 * @private
@@ -228,7 +228,7 @@
 
 		return that;
 	};
-	
+
 	RGPP.System.exportsAsSingleton({
 		name: objName,
 		constructorFunc: constructor,

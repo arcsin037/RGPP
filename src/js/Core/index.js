@@ -1,1 +1,2 @@
-import RGPP from './RGPP.js'
+import RGPP from './RGPP';
+export default RGPP

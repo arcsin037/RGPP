@@ -9,7 +9,7 @@
     "server": "webpack-dev-server --open http://localhost:8080/public/",
     "build": "webpack",
     "start": "npm run server",
-    "test": "mocha"
+    "test": "gulp test"
   },
   "author": "arcsin",
   "license": "Apache-2.0",

@@ -5,6 +5,6 @@
 			"SAFARI": 2,
 			"GOOGLE_CHROME": 3,
 			"FIRE_FOX": 4,
-			"OTHER": -1,
-		},
+			"OTHER": -1
+		}
 }
