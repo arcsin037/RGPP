@@ -58,7 +58,10 @@ export class List {
         ++this.count
     }
 
-    //return data
+    /**
+    *  pop data
+    *
+    */
     pop(index) {
         index = (index === undefined) ? 0 : index
 
@@ -67,7 +70,7 @@ export class List {
         for (let i = 0; i < n; ++i) {
             if (i === index) {
                 const data = wp.data
-                remove(index)
+                this.remove(index)
                 return data
             }
             wp = wp.next
@@ -78,7 +81,7 @@ export class List {
     //return true or false
     remove(index) {
         if (index === undefined) {
-            console.error("please input index")
+            console.error('please input index')
             return false
         }
         const n = this.size()
@@ -106,7 +109,7 @@ export class List {
         }
         return false
     }
-
+    
     size() {
         return this.count
     }
@@ -117,7 +120,7 @@ export class List {
         var next = null
         var item = null
         if (index === undefined) {
-            return push(data)
+            return this.push(data)
         }
         var n = this.size()
             //header is null
@@ -160,7 +163,7 @@ export class List {
         next.prev = item
         item.next = next
         item.prev = prev
-            ++this.count
+        ++this.count
         return index
     }
 
@@ -169,13 +172,13 @@ export class List {
         var n = this.size()
 
         if (n === 0) {
-            console.log("list size is 0")
+            console.log('list size is 0')
             return
         }
         var wp = this.head
 
         for (var i = 0; i < n; ++i) {
-            console.log(wp.index() + ", " + wp.data)
+            console.log(wp.index() + ', ' + wp.data)
             wp = wp.next
         }
     }
@@ -195,7 +198,7 @@ export class List {
     //return data
     data(index) {
         if (index >= this.size() || index < 0) {
-            console.error("[List.js] return null --- over list size")
+            console.error('[List.js] return null --- over list size')
             return null
         }
         var wp = this.head
@@ -218,7 +221,7 @@ export class List {
     }
 
     copy() {
-        var ret = RGPP.System.List()
+        var ret = List()
         var wp = this.head
         for (var i = 0, n = this.size(); i < n; ++i) {
             ret.push(wp.data)
@@ -228,7 +231,7 @@ export class List {
     }
 
     sortedDatas(sortFunction) {
-        var sortedDataArray = datas()
+        var sortedDataArray = this.datas()
         sortedDataArray.sort(sortFunction)
         return sortedDataArray
     }

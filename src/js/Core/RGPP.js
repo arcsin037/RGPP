@@ -1,4 +1,4 @@
-"use strict";
+'use strict'
 
 import Const from './Common/Const.json'
 import Config from './Common/Config.json'
@@ -20,16 +20,56 @@ import User from '../User'
  */
 
 /**
+ * String of System namespace
+ *
+ * @property SYSTEM_NAME_SPACE_STRING
+ * @type {String}
+ * @private
+ * @final
+ */
+const SYSTEM_NAME_SPACE_STRING = 'System',
+
+    /**
+     * String of middle-ware namespace
+     * @property MW_NAME_SPACE_STRING
+     * @type {String}
+     * @private
+     * @final
+     */
+    MW_NAME_SPACE_STRING = 'MW',
+
+    /**
+     * String of user namespace
+     *
+     * @property USER_NAME_SPACE_STRING
+     * @type {String}
+     * @private
+     * @final
+     */
+    USER_NAME_SPACE_STRING = 'User',
+
+    /**
+     * String of configutation namespace
+     *
+     * @property CONF_NAME_SPACE_STRING
+     * @type {String}
+     * @private
+     * @final
+     */
+    CONF_NAME_SPACE_STRING = 'Config'
+
+
+/**
  * Whether a reference is defined or not.
  * @method isDefined
  * @param {*} value Reference to check
  * @return {boolean} Whether a reference is defined or not.
  */
 const isDefined = (value) => {
-    if (typeof value === "undefined") {
-        return false;
+    if (typeof value === 'undefined') {
+        return false
     }
-    return true;
+    return true
 }
 
 /**
@@ -40,9 +80,9 @@ const isDefined = (value) => {
  */
 const isUndefined = (value) => {
     if (isDefined(value)) {
-        return false;
+        return false
     }
-    return true;
+    return true
 }
 
 /**
@@ -52,10 +92,10 @@ const isUndefined = (value) => {
  * @return {Boolean} Whether a reference is string or not.
  */
 const isString = (value) => {
-    if (typeof value === "string") {
-        return true;
+    if (typeof value === 'string') {
+        return true
     }
-    return false;
+    return false
 }
 
 /**
@@ -66,9 +106,9 @@ const isString = (value) => {
  */
 const isIntegerType = (value) => {
     if (value === parseInt(value, 10)) {
-        return true;
+        return true
     }
-    return false;
+    return false
 }
 
 /**
@@ -79,9 +119,9 @@ const isIntegerType = (value) => {
  */
 const isFiniteNumber = (value) => {
     if (typeof(value) !== 'number' && typeof(value) !== 'string') {
-        return false;
+        return false
     } else {
-        return (value === parseFloat(value) && isFinite(value));
+        return (value === parseFloat(value) && isFinite(value))
     }
 }
 
@@ -91,10 +131,10 @@ const isFiniteNumber = (value) => {
  * @param {*} value Reference to check
  * @return {Boolean} Whether a reference is numeric or not. <br/>
  *
- * (e.g. 0, 0.0, -1, "-1.5", "30.0", "20.80", -20.85, .42, 0x89f, "0x89f", 8e5)
+ * (e.g. 0, 0.0, -1, '-1.5', '30.0', '20.80', -20.85, .42, 0x89f, '0x89f', 8e5)
  */
 const isNumeric = (value) => {
-    return !isNaN(parseFloat(value)) && isFinite(value);
+    return !isNaN(parseFloat(value)) && isFinite(value)
 }
 
 /**
@@ -110,26 +150,26 @@ const isNumeric = (value) => {
  */
 const exports = (nameSpaceString, arg) => {
 
-    var nameSpaceObj = global.RGPP[nameSpaceString];
-    var objName = arg.name;
+    var nameSpaceObj = global.RGPP[nameSpaceString]
+    var objName = arg.name
 
     // check namespace is defined
     if (isUndefined(nameSpaceObj)) {
-        console.error("undefined");
-        return;
+        console.error('undefined')
+        return
     }
 
     // check multiple definition
-    var isMultDefined = isDefined(nameSpaceObj[objName]);
+    var isMultDefined = isDefined(nameSpaceObj[objName])
     if (isMultDefined) {
-        console.error("RGPP." + nameSpaceString + "." + objName + " is already defined");
-        return;
+        console.error('RGPP.' + nameSpaceString + '.' + objName + ' is already defined')
+        return
     }
 
     // export as module
-    exportAsModule(nameSpaceString, arg);
+    exportAsModule(nameSpaceString, arg)
 
-    global.RGPP[nameSpaceString][objName] = arg.constructorFunc;
+    global.RGPP[nameSpaceString][objName] = arg.constructorFunc
 
 }
 
@@ -147,16 +187,16 @@ const exports = (nameSpaceString, arg) => {
 const exportAsModule = (nameSpaceString, arg) => {
     if (isDefined(arg.module)) {
         arg.module.exports[nameSpaceString] =
-            arg.module.exports[nameSpaceString] || {};
+            arg.module.exports[nameSpaceString] || {}
 
         arg.module.exports[nameSpaceString][arg.name] =
-            arg.module.exports[nameSpaceString][arg.name] || arg.constructorFunc;
+            arg.module.exports[nameSpaceString][arg.name] || arg.constructorFunc
 
         arg.module.exports[CONF_NAME_SPACE_STRING] =
-            arg.module.exports[CONF_NAME_SPACE_STRING] || {};
+            arg.module.exports[CONF_NAME_SPACE_STRING] || {}
 
         arg.module.exports[CONF_NAME_SPACE_STRING].setConfigParam =
-            arg.module.exports[CONF_NAME_SPACE_STRING].setConfigParam || setConfigParam;
+            arg.module.exports[CONF_NAME_SPACE_STRING].setConfigParam || setConfigParam
     }
 }
 
@@ -170,7 +210,7 @@ const exportAsModule = (nameSpaceString, arg) => {
  * @private
  */
 const exportsAsSystem = (arg) => {
-    exports(SYSTEM_NAME_SPACE_STRING, arg);
+    exports(SYSTEM_NAME_SPACE_STRING, arg)
 }
 
 /**
@@ -183,7 +223,7 @@ const exportsAsSystem = (arg) => {
  * @private
  */
 const exportsAsMW = (arg) => {
-    exports(MW_NAME_SPACE_STRING, arg);
+    exports(MW_NAME_SPACE_STRING, arg)
 }
 
 /**
@@ -196,7 +236,7 @@ const exportsAsMW = (arg) => {
  * @private
  */
 const exportsAsUser = (arg) => {
-    exports(USER_NAME_SPACE_STRING, arg);
+    exports(USER_NAME_SPACE_STRING, arg)
 }
 
 /**
@@ -211,15 +251,15 @@ const exportsAsUser = (arg) => {
  * @private
  */
 const getSingletonInstance = (arg) => {
-    var instance = undefined;
+    var instance = undefined
     return {
         getInstance: function(spec) {
             if (isUndefined(instance)) {
-                instance = arg.constructorFunc(spec);
+                instance = arg.constructorFunc(spec)
             }
-            return instance;
+            return instance
         }
-    };
+    }
 
 }
 
@@ -233,12 +273,12 @@ const getSingletonInstance = (arg) => {
  * @private
  */
 const expotrsAsSystemSingleton = (arg) => {
-    var singleton = getSingletonInstance(arg);
+    var singleton = getSingletonInstance(arg)
     exports(SYSTEM_NAME_SPACE_STRING, {
         name: arg.name,
         constructorFunc: singleton,
         module: arg.module
-    });
+    })
 }
 
 /**
@@ -251,12 +291,12 @@ const expotrsAsSystemSingleton = (arg) => {
  * @private
  */
 const expotrsAsMWSingleton = (arg) => {
-    var singleton = getSingletonInstance(arg);
+    var singleton = getSingletonInstance(arg)
     exports(MW_NAME_SPACE_STRING, {
         name: arg.name,
         constructorFunc: singleton,
         module: arg.module
-    });
+    })
 }
 
 /**
@@ -269,12 +309,12 @@ const expotrsAsMWSingleton = (arg) => {
  * @private
  */
 const expotrsAsUserSingleton = (arg) => {
-    var singleton = getSingletonInstance(arg);
+    var singleton = getSingletonInstance(arg)
     exports(USER_NAME_SPACE_STRING, {
         name: arg.name,
         constructorFunc: singleton,
         module: arg.module
-    });
+    })
 }
 
 /**
@@ -286,11 +326,11 @@ const expotrsAsUserSingleton = (arg) => {
  */
 const setConfigParam = (configName, configValue) => {
     if (isInValidConfigName(configName)) {
-        return;
+        return
     }
 
     if (global && global.RGPP && global.RGPP[CONF_NAME_SPACE_STRING]) {
-        global.RGPP[CONF_NAME_SPACE_STRING][configName] = configValue;
+        global.RGPP[CONF_NAME_SPACE_STRING][configName] = configValue
     }
 }
 
@@ -303,10 +343,10 @@ const setConfigParam = (configName, configValue) => {
  */
 const getConfigParam = (configName) => {
     if (isInValidConfigName(configName)) {
-        return;
+        return
     }
     if (global && global.RGPP && global.RGPP[CONF_NAME_SPACE_STRING]) {
-        return global.RGPP[CONF_NAME_SPACE_STRING][configName];
+        return global.RGPP[CONF_NAME_SPACE_STRING][configName]
     }
 }
 
@@ -320,11 +360,11 @@ const getConfigParam = (configName) => {
  */
 const isInValidConfigName = (configName) => {
     if (!isString(configName) ||
-        configName === "setConfigParam" ||
-        configName === "getConfigParam") {
-        return true;
+        configName === 'setConfigParam' ||
+        configName === 'getConfigParam') {
+        return true
     }
-    return false;
+    return false
 }
 
 export const RGPP = {
@@ -335,19 +375,19 @@ export const RGPP = {
     isFiniteNumber: isFiniteNumber,
     isNumeric: isNumeric,
     setConfigParam: setConfigParam,
-    getConfigParam: getConfigParam,
-};
+    getConfigParam: getConfigParam
+}
 
 
-RGPP.Const = Const;
-RGPP.Config = Config;
-RGPP.System = System;
+RGPP.Const = Const
+RGPP.Config = Config
+RGPP.System = System
 RGPP.System.exports = exportsAsSystem
 RGPP.System.exportsAsSingleton = expotrsAsSystemSingleton
-RGPP.MW = MW;
+RGPP.MW = MW
 RGPP.MW.exports = exportsAsMW
 RGPP.MW.exportsAsSingleton = expotrsAsMWSingleton
-RGPP.User = User;
+RGPP.User = User
 RGPP.User.exports = exportsAsUser
 RGPP.User.exportsAsSingleton = expotrsAsUserSingleton
 

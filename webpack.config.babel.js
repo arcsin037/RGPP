@@ -19,18 +19,18 @@ export default {
         chunks: VERBOSE,
         chunkModules: VERBOSE,
         cached: VERBOSE,
-        cachedAssets: VERBOSE,
+        cachedAssets: VERBOSE
     },
 
     entry: {
-        app: './src/js/app.js',
+        app: './src/js/app.js'
     },
 
     output: {
         publicPath: '/',
         sourcePrefix: '  ',
         path: path.join(__dirname, 'public'),
-        filename: '[name].js',
+        filename: '[name].js'
     },
 
     target: 'web',
@@ -50,12 +50,12 @@ export default {
                     warnings: VERBOSE
                 }
             }),
-            new webpack.optimize.AggressiveMergingPlugin(),
-        ]),
+            new webpack.optimize.AggressiveMergingPlugin()
+        ])
     ],
 
     resolve: {
-        extensions: ['', '.js', '.jsx'],
+        extensions: ['', '.js', '.jsx', '.json']
     },
 
     module: {
@@ -66,6 +66,6 @@ export default {
         }, {
             test: /\.json$/,
             loader: 'json'
-        }],
-    },
+        }]
+    }
 }
