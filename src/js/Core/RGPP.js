@@ -6,9 +6,9 @@ var module = module || undefined;
 
 /**
  * Global Object of RGPP
- * 
+ *
  * @module RGPP
- * 
+ *
  * @submodule System
  * @submodule MW
  * @submodule User
@@ -46,7 +46,7 @@ var module = module || undefined;
 
 	/**
 	 * String of global namespace
-	 * 
+	 *
 	 * @property GLOBAL_NAME_SPACE_STING
 	 * @type {String}
 	 * @private
@@ -56,7 +56,7 @@ var module = module || undefined;
 
 		/**
 		 * String of System namespace
-		 * 
+		 *
 		 * @property SYSTEM_NAME_SPACE_STRING
 		 * @type {String}
 		 * @private
@@ -75,7 +75,7 @@ var module = module || undefined;
 
 		/**
 		 * String of user namespace
-		 * 
+		 *
 		 * @property USER_NAME_SPACE_STRING
 		 * @type {String}
 		 * @private
@@ -85,7 +85,7 @@ var module = module || undefined;
 
 		/**
 		 * String of configutation namespace
-		 * 
+		 *
 		 * @property CONF_NAME_SPACE_STRING
 		 * @type {String}
 		 * @private
@@ -175,7 +175,7 @@ var module = module || undefined;
 	 * @method isNumeric
 	 * @param {*} value Reference to check
 	 * @return {Boolean} Whether a reference is numeric or not. <br/>
-	 * 
+	 *
 	 * (e.g. 0, 0.0, -1, "-1.5", "30.0", "20.80", -20.85, .42, 0x89f, "0x89f", 8e5)
 	 */
 	function isNumeric(value) {
@@ -184,10 +184,10 @@ var module = module || undefined;
 
 	/**
 	 * Exports an object to a global object & Exports as a module of Node.js.
-	 * 
+	 *
 	 * @method exports
 	 * @param nameSpaceString {String} String of namespace of name
-	 * @param arg {Object} 
+	 * @param arg {Object}
 	 * @param arg.name {String} An object name
 	 * @param arg.constructorFunc {Function} A constructor function of an object,
 	 * @param arg.module {Object} A module of Node.js
@@ -220,10 +220,10 @@ var module = module || undefined;
 
 	/**
 	 * Exports an object as a module of Node.js.
-	 * 
+	 *
 	 * @method exportAsModule
 	 * @param nameSpaceString {String} String of namespace
-	 * @param arg {Object} 
+	 * @param arg {Object}
 	 * @param arg.name {String} An object name
 	 * @param arg.constructorFunc {Function} A constructor function of an object,
 	 * @param arg.module {Object} A module of Node.js
@@ -248,7 +248,7 @@ var module = module || undefined;
 	/**
 	 * Exports an object to System namespace.
 	 * @method exportsAsSystem
-	 * @param arg {Object} 
+	 * @param arg {Object}
 	 * @param arg.name {String} An object name
 	 * @param arg.constructorFunc {Function} A constructor function of an object,
 	 * @param arg.module {Object} A module of Node.js
@@ -261,7 +261,7 @@ var module = module || undefined;
 	/**
 	 * Exports an object to MW namespace.
 	 * @method exportsAsMW
-	 * @param arg {Object} 
+	 * @param arg {Object}
 	 * @param arg.name {String} An object name
 	 * @param arg.constructorFunc {Function} A constructor function of an object,
 	 * @param arg.module {Object} A module of Node.js
@@ -274,7 +274,7 @@ var module = module || undefined;
 	/**
 	 * Exports an object to User namespace.
 	 * @method exportsAsUser
-	 * @param arg {Object} 
+	 * @param arg {Object}
 	 * @param arg.name {String} An object name
 	 * @param arg.constructorFunc {Function} A constructor function of an object,
 	 * @param arg.module {Object} A module of Node.js
@@ -286,9 +286,9 @@ var module = module || undefined;
 
 	/**
 	 * Return singleton instance.
-	 * 
+	 *
 	 * @method getSingletonInstance
-	 * @param arg {Object} 
+	 * @param arg {Object}
 	 * @param arg.name {String} An object name
 	 * @param arg.constructorFunc {Function} A constructor function of an object,
 	 * @param arg.module {Object} A module of Node.js
@@ -311,7 +311,7 @@ var module = module || undefined;
 	/**
 	 * Exports an object to System namespace as singleton object.
 	 * @method expotrsAsSystemSingleton
-	 * @param arg {Object} 
+	 * @param arg {Object}
 	 * @param arg.name {String} An object name
 	 * @param arg.constructorFunc {Function} A constructor function of an object,
 	 * @param arg.module {Object} A module of Node.js
@@ -329,7 +329,7 @@ var module = module || undefined;
 	/**
 	 * Exports an object to MW namespace as singleton object.
 	 * @method expotrsAsMWSingleton
-	 * @param arg {Object} 
+	 * @param arg {Object}
 	 * @param arg.name {String} An object name
 	 * @param arg.constructorFunc {Function} A constructor function of an object,
 	 * @param arg.module {Object} A module of Node.js
@@ -347,7 +347,7 @@ var module = module || undefined;
 	/**
 	 * Exports to User namespace as singleton object.
 	 * @method expotrsAsUserSingleton
-	 * @param arg {Object} 
+	 * @param arg {Object}
 	 * @param arg.name {String} An object name
 	 * @param arg.constructorFunc {Function} A constructor function of an object,
 	 * @param arg.module {Object} A module of Node.js
@@ -364,7 +364,7 @@ var module = module || undefined;
 
 	/**
 	 * Set configuration parameter.
-	 * 
+	 *
 	 * @method setConfigParam
 	 * @param configName {String} Name of configuration parameter
 	 * @param configValue {*} Value of configuration parameter
@@ -381,7 +381,7 @@ var module = module || undefined;
 
 	/**
 	 * Return configuration parameter.
-	 * 
+	 *
 	 * @method getConfigParam
 	 * @param configName {String} Name of configuration parameter
 	 * @return Configuration parameter / If the configuration name is invalid, return undefined
@@ -397,11 +397,11 @@ var module = module || undefined;
 
 	/**
 	 * Whether the configuration name is invalid or not.
-	 * 
+	 *
 	 * @method isInValidConfigName
 	 * @param {string} configName Name of configuration parameter
 	 * @return Whether the configuration name is invalid or not.
-	 * @private 
+	 * @private
 	 */
 	function isInValidConfigName(configName) {
 		if (!isString(configName) ||

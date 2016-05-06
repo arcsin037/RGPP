@@ -1,0 +1,15 @@
+{
+    "GAME_NAME": "My Game",
+    "RESOLUTION_X": 640,
+    "RESOLUTION_Y": 480,
+    "DEBUG_BOOT_MODE": false,
+    "SYSTEM_IMAGE_PATH": "resources/Image/System/",
+    "SYSTEM_SOUND_PATH": "resources/Sound/System/",
+    "USER_IMAGE_DIRECTORY_PATH": "User/ImageData/",
+    "USER_SOUND_DIRECTORY_PATH": "User/Sound/",
+    "USER_SCRIPT_DIRECTORY_PATH": "User/Script/",
+    "LOAD_END_SYSTEM_SCRIPT": false,
+    "LOAD_END_MW_SCRIPT": false,
+    "LOAD_END_USER_SCRIPT": false,
+    "DEFAULT_FONT": "1.5em serif"
+}
