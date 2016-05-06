@@ -1,16 +1,16 @@
 'use strict'
 
 // gulp plugin
-import gulp from 'gulp'
-import sass from 'gulp-sass'
-import mocha from 'gulp-mocha'
-import gutil from 'gulp-util'
-import uglify from 'gulp-uglify'
 import concat from 'gulp-concat'
+import gulp from 'gulp'
+import gutil from 'gulp-util'
+import mocha from 'gulp-mocha'
+import mustache from 'gulp-mustache'
 import plumber from 'gulp-plumber'
 import rename from 'gulp-rename'
+import sass from 'gulp-sass'
+import uglify from 'gulp-uglify'
 import yuidoc from 'gulp-yuidoc'
-import mustache from 'gulp-mustache'
 
 // name of application
 const app_name = 'RGPP',
@@ -23,7 +23,7 @@ const app_name = 'RGPP',
     js_dir = src_dir + 'js/',
 
     // JS name
-    test_js = js_dir + '**/*GPP.test.js',
+    test_js = js_dir + '**/*ack.test.js',
     templete_js = js_dir + '**/*.template.js',
     all_js = js_dir + '**/*.js',
     compile_js = ['!' + test_js, '!' + templete_js, all_js],
