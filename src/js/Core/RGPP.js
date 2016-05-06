@@ -1,3 +1,5 @@
+import Config from './Common/Config.json'
+
 /**
  * Node.js module
  * @module module
