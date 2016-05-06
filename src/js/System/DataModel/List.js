@@ -89,8 +89,8 @@ export class List {
 
         for (let i = 0; i < n; ++i) {
             if (i === index) {
-                let prev = wp.prev
-                let next = wp.next
+                const prev = wp.prev
+                const next = wp.next
                 prev.next = next
                 next.prev = prev
                 wp.next = null
@@ -109,34 +109,34 @@ export class List {
         }
         return false
     }
-    
+
     size() {
         return this.count
     }
 
     //return index
     insert(index, data) {
-        var prev = null
-        var next = null
-        var item = null
+        let prev = null
+        let next = null
+        let item = null
         if (index === undefined) {
             return this.push(data)
         }
-        var n = this.size()
+        const n = this.size()
             //header is null
         if (n === 0) {
             this.head = new Item(data)
-            var head = this.head
+            const head = this.head
             head.next = head
             head.prev = head
             ++this.count
             return index
         }
 
-        var wp = this.head
-        for (var i = 0; i < n; ++i) {
+        let wp = this.head
+        for (let i = 0; i < n; ++i) {
             if (wp.index() == index) {
-                wp.setData(data)
+                wp.data = data
                 return index
             } else if (wp.index() > index) {
                 prev = wp.prev
@@ -169,26 +169,26 @@ export class List {
 
     //Debug
     debugDisplay() {
-        var n = this.size()
+        const n = this.size()
 
         if (n === 0) {
             console.log('list size is 0')
             return
         }
-        var wp = this.head
+        let wp = this.head
 
-        for (var i = 0; i < n; ++i) {
-            console.log(wp.index() + ', ' + wp.data)
+        for (let i = 0; i < n; ++i) {
+            console.log(`${wp.index()}, ${wp.data}`)
             wp = wp.next
         }
     }
 
     //return array
     datas() {
-        var n = this.size()
-        var array = []
-        var wp = this.head
-        for (var i = 0; i < n; ++i) {
+        const n = this.size()
+        const array = []
+        let wp = this.head
+        for (let i = 0; i < n; ++i) {
             array[i] = wp.data
             wp = wp.next
         }
@@ -201,8 +201,8 @@ export class List {
             console.error('[List.js] return null --- over list size')
             return null
         }
-        var wp = this.head
-        for (var i = 0; i < index; ++i) {
+        let wp = this.head
+        for (let i = 0; i < index; ++i) {
             wp = wp.next
         }
         return wp.data
@@ -221,9 +221,9 @@ export class List {
     }
 
     copy() {
-        var ret = List()
-        var wp = this.head
-        for (var i = 0, n = this.size(); i < n; ++i) {
+        const ret = new List()
+        let wp = this.head
+        for (let i = 0, n = this.size(); i < n; ++i) {
             ret.push(wp.data)
             wp = wp.next
         }
@@ -231,7 +231,7 @@ export class List {
     }
 
     sortedDatas(sortFunction) {
-        var sortedDataArray = this.datas()
+        const sortedDataArray = this.datas()
         sortedDataArray.sort(sortFunction)
         return sortedDataArray
     }

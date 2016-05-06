@@ -1,10 +1,10 @@
 {
-		"BROWSER_TYPE": {
-			"IE": 0,
-			"OPERA": 1,
-			"SAFARI": 2,
-			"GOOGLE_CHROME": 3,
-			"FIRE_FOX": 4,
-			"OTHER": -1
-		}
+    "BROWSER_TYPE": {
+        "IE": 0,
+        "OPERA": 1,
+        "SAFARI": 2,
+        "GOOGLE_CHROME": 3,
+        "FIRE_FOX": 4,
+        "OTHER": -1
+    }
 }

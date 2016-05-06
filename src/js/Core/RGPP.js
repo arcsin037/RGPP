@@ -1,9 +1,9 @@
 'use strict'
 
-import Const from './Common/Const.json'
 import Config from './Common/Config.json'
-import System from '../System'
+import Const from './Common/Const.json'
 import MW from '../MW'
+import System from '../System'
 import User from '../User'
 
 /**
@@ -133,9 +133,7 @@ const isFiniteNumber = (value) => {
  *
  * (e.g. 0, 0.0, -1, '-1.5', '30.0', '20.80', -20.85, .42, 0x89f, '0x89f', 8e5)
  */
-const isNumeric = (value) => {
-    return !isNaN(parseFloat(value)) && isFinite(value)
-}
+const isNumeric = (value) => !isNaN(parseFloat(value)) && isFinite(value)
 
 /**
  * Exports an object to a global object & Exports as a module of Node.js.
@@ -150,8 +148,8 @@ const isNumeric = (value) => {
  */
 const exports = (nameSpaceString, arg) => {
 
-    var nameSpaceObj = global.RGPP[nameSpaceString]
-    var objName = arg.name
+    const nameSpaceObj = RGPP[nameSpaceString]
+    const objName = arg.name
 
     // check namespace is defined
     if (isUndefined(nameSpaceObj)) {
@@ -160,16 +158,16 @@ const exports = (nameSpaceString, arg) => {
     }
 
     // check multiple definition
-    var isMultDefined = isDefined(nameSpaceObj[objName])
+    const isMultDefined = isDefined(nameSpaceObj[objName])
     if (isMultDefined) {
-        console.error('RGPP.' + nameSpaceString + '.' + objName + ' is already defined')
+        console.error(`RGPP.${nameSpaceString}.${objName} is already defined`)
         return
     }
 
     // export as module
     exportAsModule(nameSpaceString, arg)
 
-    global.RGPP[nameSpaceString][objName] = arg.constructorFunc
+    RGPP[nameSpaceString][objName] = arg.constructorFunc
 
 }
 
@@ -251,16 +249,15 @@ const exportsAsUser = (arg) => {
  * @private
  */
 const getSingletonInstance = (arg) => {
-    var instance = undefined
+    let instance = undefined
     return {
-        getInstance: function(spec) {
+        getInstance: (spec) => {
             if (isUndefined(instance)) {
                 instance = arg.constructorFunc(spec)
             }
             return instance
         }
     }
-
 }
 
 /**
@@ -273,7 +270,7 @@ const getSingletonInstance = (arg) => {
  * @private
  */
 const expotrsAsSystemSingleton = (arg) => {
-    var singleton = getSingletonInstance(arg)
+    const singleton = getSingletonInstance(arg)
     exports(SYSTEM_NAME_SPACE_STRING, {
         name: arg.name,
         constructorFunc: singleton,
@@ -291,7 +288,7 @@ const expotrsAsSystemSingleton = (arg) => {
  * @private
  */
 const expotrsAsMWSingleton = (arg) => {
-    var singleton = getSingletonInstance(arg)
+    const singleton = getSingletonInstance(arg)
     exports(MW_NAME_SPACE_STRING, {
         name: arg.name,
         constructorFunc: singleton,
@@ -309,7 +306,7 @@ const expotrsAsMWSingleton = (arg) => {
  * @private
  */
 const expotrsAsUserSingleton = (arg) => {
-    var singleton = getSingletonInstance(arg)
+    const singleton = getSingletonInstance(arg)
     exports(USER_NAME_SPACE_STRING, {
         name: arg.name,
         constructorFunc: singleton,
@@ -329,8 +326,8 @@ const setConfigParam = (configName, configValue) => {
         return
     }
 
-    if (global && global.RGPP && global.RGPP[CONF_NAME_SPACE_STRING]) {
-        global.RGPP[CONF_NAME_SPACE_STRING][configName] = configValue
+    if (RGPP && RGPP[CONF_NAME_SPACE_STRING]) {
+        RGPP[CONF_NAME_SPACE_STRING][configName] = configValue
     }
 }
 
@@ -345,8 +342,8 @@ const getConfigParam = (configName) => {
     if (isInValidConfigName(configName)) {
         return
     }
-    if (global && global.RGPP && global.RGPP[CONF_NAME_SPACE_STRING]) {
-        return global.RGPP[CONF_NAME_SPACE_STRING][configName]
+    if (RGPP && RGPP[CONF_NAME_SPACE_STRING]) {
+        return RGPP[CONF_NAME_SPACE_STRING][configName]
     }
 }
 
@@ -368,26 +365,26 @@ const isInValidConfigName = (configName) => {
 }
 
 export const RGPP = {
-    isDefined: isDefined,
-    isUndefined: isUndefined,
-    isString: isString,
-    isIntegerType: isIntegerType,
-    isFiniteNumber: isFiniteNumber,
-    isNumeric: isNumeric,
-    setConfigParam: setConfigParam,
-    getConfigParam: getConfigParam
+    isDefined,
+    isUndefined,
+    isString,
+    isIntegerType,
+    isFiniteNumber,
+    isNumeric,
+    setConfigParam,
+    getConfigParam
 }
 
 
 RGPP.Const = Const
 RGPP.Config = Config
-RGPP.System = System
+RGPP.System = System || {}
 RGPP.System.exports = exportsAsSystem
 RGPP.System.exportsAsSingleton = expotrsAsSystemSingleton
-RGPP.MW = MW
+RGPP.MW = MW || {}
 RGPP.MW.exports = exportsAsMW
 RGPP.MW.exportsAsSingleton = expotrsAsMWSingleton
-RGPP.User = User
+RGPP.User = User || {}
 RGPP.User.exports = exportsAsUser
 RGPP.User.exportsAsSingleton = expotrsAsUserSingleton
 

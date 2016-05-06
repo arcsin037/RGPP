@@ -23,7 +23,7 @@ const app_name = 'RGPP',
     js_dir = src_dir + 'js/',
 
     // JS name
-    test_js = js_dir + '**/*ist.test.js',
+    test_js = js_dir + '**/*GPP.test.js',
     templete_js = js_dir + '**/*.template.js',
     all_js = js_dir + '**/*.js',
     compile_js = ['!' + test_js, '!' + templete_js, all_js],
