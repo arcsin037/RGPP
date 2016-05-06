@@ -1,9 +1,9 @@
-import 'babel-polyfill';
-import path from 'path';
-import webpack from 'webpack';
+import 'babel-polyfill'
+import path from 'path'
+import webpack from 'webpack'
 
-const DEBUG = !process.argv.includes('--release');
-const VERBOSE = process.argv.includes('--verbose');
+const DEBUG = !process.argv.includes('--release')
+const VERBOSE = process.argv.includes('--verbose')
 
 export default {
     cache: DEBUG,
@@ -68,4 +68,4 @@ export default {
             loader: 'json'
         }],
     },
-};
+}

@@ -1,2 +1,2 @@
-import RGPP from './RGPP';
+import RGPP from './RGPP'
 export default RGPP

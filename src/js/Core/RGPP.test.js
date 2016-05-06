@@ -1,9 +1,11 @@
 "use strict";
+import RGPP from './RGPP';
+
 describe('RGPP', function() {
 	var assert = require('assert');
 	var expect = expect || require('chai').expect;
-	var RGPP = require('./RGPP');
 
+	console.log("RGPP = " + RGPP);
 	describe('Type Utility Functions', function() {
 		var typeUtil = RGPP;
 
