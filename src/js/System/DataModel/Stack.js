@@ -3,93 +3,63 @@
  * @module System
  * @namespace RGPP.System
  */
-(function(global) {
-	/* global RGPP */
-	"use strict";
 
-	var objName = "Stack";
+/**
+ * Stack structure
+ * @class Stack
+ * @author arcsin
+ * @constructor
+ */
+export default class Stack {
+    constructor() {
+        this.items = []
+    }
+    /**
+     * push object to stack
+     * @method push
+     * @param {object} obj
+     */
+    push(obj) {
+        this.items.push(obj)
+    }
 
-	/**
-	 * Stack structure
-	 * @class Stack
-	 * @author arcsin
-	 * @constructor
-	 */
-	var constructor = function() {
-		var that = {};
-		var mStackItems = [];
+    /**
+     * pop object to stack
+     * @method pop
+     * @return object
+     */
+    pop() {
+        if (this.items.length > 0) {
+            return this.items.pop()
+        }
+        return null
+    }
 
-		// push object to stack
-		that.push = push;
+    /**
+     * size of stack
+     * @method size
+     * @return size of stack
+     */
+    size() {
+        return this.items.length
+    }
 
-		// pop object to stack
-		that.pop = pop;
+    /**
+     * clear stack
+     * @method clear
+     */
+    clear() {
+        this.items = []
+    }
 
-		// stack size
-		that.size = size;
-
-		// clear stacl
-		that.clear = clear;
-
-		// whether the stack is empty
-		that.isEmpty = isEmpty;
-
-		/**
-		 * push object to stack
-		 * @method push
-		 * @param {object} obj
-		 */
-		function push(obj) {
-			mStackItems.push(obj);
-		}
-
-		/**
-		 * pop object to stack
-		 * @method pop
-		 * @return object
-		 */
-		function pop() {
-			if (mStackItems.length > 0) {
-				return mStackItems.pop();
-			}
-			return null;
-		}
-
-		/**
-		 * size of stack
-		 * @method size
-		 * @return size of stack
-		 */
-		function size() {
-			return mStackItems.length;
-		}
-
-		/**
-		 * clear stack
-		 * @method clear
-		 */
-		function clear() {
-			mStackItems = [];
-		}
-
-		/**
-		 * whether the stack is empty
-		 * @method isEmpty
-		 */
-		function isEmpty() {
-			if (mStackItems.length === 0) {
-				return true;
-			}
-			return false;
-		}
-
-		return that;
-	};
-
-	RGPP.System.exports({
-		name: objName,
-		constructorFunc: constructor,
-		module: module
-	});
-
-})((this || 0).self || global);
+    /**
+     * whether the stack is empty
+     * @method isEmpty
+     */
+    isEmpty() {
+        if (this.items.length === 0) {
+            return true
+        }
+        return false
+    }
+}

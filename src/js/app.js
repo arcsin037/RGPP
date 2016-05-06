@@ -5,7 +5,7 @@ const sleep = (msec) => new Promise((resolve) => {
     setTimeout(resolve, msec);
 });
 
-(async() => {
+(async () => {
     console.log('start');
     await sleep(2000);
     console.log('end');
@@ -13,7 +13,5 @@ const sleep = (msec) => new Promise((resolve) => {
 
 document.write("It works.");
 
-import Core from './Core'
-import System from './System'
-import MW from './MW'
-import User from './User'
+import RGPP from './Core'
+console.log('RGPP = ', RGPP)
