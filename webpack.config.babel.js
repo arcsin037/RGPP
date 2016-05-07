@@ -55,17 +55,14 @@ export default {
     ],
 
     resolve: {
-        extensions: ['', '.js', '.jsx', '.json']
+        extensions: ['', '.js', '.json']
     },
 
     module: {
-        loaders: [{
-            test: /\.js[x]?$/,
-            include: [path.resolve(__dirname, 'src/js')],
-            loader: 'babel'
-        }, {
-            test: /\.json$/,
-            loader: 'json'
-        }]
+        loaders: [
+            {test: /\.html$/, loader: 'html?minimize'},
+            {test: /\.js[x]?$/, include: [path.resolve(__dirname, 'src/js')], loader: 'babel'},
+            {test: /\.json$/, loader: 'json'}
+        ]
     }
 }

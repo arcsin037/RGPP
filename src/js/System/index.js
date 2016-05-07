@@ -1,5 +1,6 @@
-import DataModel from './DataModel'
+import {List, Stack} from './DataModel'
 
 export default {
-    DataModel
+    List,
+    Stack
 }
