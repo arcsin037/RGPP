@@ -1,11 +1,3 @@
-'use strict'
-
-import Config from './Common/Config.json'
-import Const from './Common/Const.json'
-import MW from '../MW'
-import System from '../System'
-import User from '../User'
-
 /**
  * Global Object of RGPP
  *
@@ -57,78 +49,6 @@ const SYSTEM_NAME_SPACE_STRING = 'System',
      * @final
      */
     CONF_NAME_SPACE_STRING = 'Config'
-
-
-/**
- * Whether a reference is defined or not.
- * @method isDefined
- * @param {*} value Reference to check
- * @return {boolean} Whether a reference is defined or not.
- */
-const isDefined = (value) => {
-    if (typeof value === 'undefined') {
-        return false
-    }
-    return true
-}
-
-/**
- * Whether a reference is undefined or not.
- * @method isUndefined
- * @param {*} value Reference to check
- * @return {boolean} Whether a reference is undefined or not.
- */
-const isUndefined = (value) => !isDefined(value)
-
-/**
- * Whether a reference is string or not.
- * @method isString
- * @param {*} value Reference to check
- * @return {Boolean} Whether a reference is string or not.
- */
-const isString = (value) => {
-    if (typeof value === 'string') {
-        return true
-    }
-    return false
-}
-
-/**
- * Whether a reference is integer type or not.
- * @method isIntegerType
- * @param {*} value Reference to check
- * @return {Boolean} Whether a reference is integer type or not.
- */
-const isIntegerType = (value) => {
-    if (value === parseInt(value, 10)) {
-        return true
-    }
-    return false
-}
-
-/**
- * Whether a reference is finite number or not.
- * @method isFiniteNumber
- * @param {*} value Reference to check
- * @return {Boolean} Whether a reference is finite number or not.
- */
-const isFiniteNumber = (value) => {
-    if (typeof(value) !== 'number' && typeof(value) !== 'string') {
-        return false
-    } else {
-        return (value === parseFloat(value) && isFinite(value))
-    }
-}
-
-/**
- * Whether a reference is numeric or not.
- * @method isNumeric
- * @param {*} value Reference to check
- * @return {Boolean} Whether a reference is numeric or not. <br/>
- *
- * (e.g. 0, 0.0, -1, '-1.5', '30.0', '20.80', -20.85, .42, 0x89f, '0x89f', 8e5)
- */
-const isNumeric = (value) => !isNaN(parseFloat(value)) && isFinite(value)
 
 /**
  * Exports an object to a global object & Exports as a module of Node.js.
@@ -359,28 +279,7 @@ const isInValidConfigName = (configName) => {
     return false
 }
 
-export const RGPP = {
-    isDefined,
-    isUndefined,
-    isString,
-    isIntegerType,
-    isFiniteNumber,
-    isNumeric,
+export default {
     setConfigParam,
     getConfigParam
 }
-
-
-RGPP.Const = Const
-RGPP.Config = Config
-RGPP.System = System || {}
-RGPP.System.exports = exportsAsSystem
-RGPP.System.exportsAsSingleton = expotrsAsSystemSingleton
-RGPP.MW = MW || {}
-RGPP.MW.exports = exportsAsMW
-RGPP.MW.exportsAsSingleton = expotrsAsMWSingleton
-RGPP.User = User || {}
-RGPP.User.exports = exportsAsUser
-RGPP.User.exportsAsSingleton = expotrsAsUserSingleton
-
-export default RGPP

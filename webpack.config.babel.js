@@ -58,7 +58,8 @@ export default {
     ],
 
     resolve: {
-        extensions: ['', '.js', '.json']
+        extensions: ['', '.js', '.json'],
+        root: path.join(__dirname, 'src/js')
     },
 
     module: {

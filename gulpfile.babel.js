@@ -23,7 +23,7 @@ const app_name = 'RGPP',
     js_dir = `${src_dir}js/`,
 
     // JS name
-    test_js = `${js_dir}**/*.test.js`,
+    test_js = `${js_dir}**/Spinner.test.js`,
     templete_js = `${js_dir}**/*.template.js`,
     all_js = `${js_dir}**/*.js`,
     compile_js = [`!${test_js}`, `!${templete_js}`, all_js],
@@ -81,11 +81,11 @@ const app_name = 'RGPP',
         build_js_module_dir + concat_core_editor_js_name,
         build_js_module_dir + concat_sytem_js_name,
         build_js_module_dir + concat_mw_js_name,
-        build_js_module_dir + concat_user_js_name,
+        build_js_module_dir + concat_user_js_name
     ],
 
     // Game
-    game_script_name = app_name + '.game',
+    game_script_name = `${app_name}.game`,
     concat_game_js_name = game_script_name + '.js',
     compress_game_js_name = game_script_name + '.min.js',
     game_src_dir = [

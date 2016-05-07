@@ -1,8 +1,9 @@
+import {BrowserUtil, TypeUtil} from './Util'
 import {List, Stack} from './DataModel'
-import {EditorMainPanel} from './MainPanel'
 
 export default {
-    EditorMainPanel,
     List,
-    Stack
+    Stack,
+    BrowserUtil,
+    TypeUtil
 }

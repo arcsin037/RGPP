@@ -1,71 +1,68 @@
-describe('Spinner', function() {
-	"use strict";
-	var jsdom = require('mocha-jsdom'),
-		expect = expect || require('chai').expect,
-		assert = assert || require('assert');
+import Spinner from './Spinner'
+import {
+    expect
+} from 'chai'
+import jsdom from 'mocha-jsdom'
 
-	var $;
-	jsdom();
+describe('Spinner', () => {
+    let $
+    jsdom()
 
-	require("./UIBase");
-	var RGPP = require("./Spinner");
+    before(() => {
+        $ = require('jquery')
+    })
 
+    describe('#element', () => {
+        const testCases = [{
+            name: 'arg is undefined',
+            expectedValue: 'input'
+        }, {
+            name: 'arg is {}',
+            arg: {},
+            expectedValue: 'input'
+        }, {
+            name: 'arg.key = "<input>"',
+            arg: {
+                key: '<input>'
+            },
+            expectedValue: 'input'
+        }]
 
-	before(function() {
-		$ = require('jquery');
-	});
+        const isEqual = ($element, expectedValue) => {
+            if (typeof expectedValue === 'undefined') {
+                return $element === expectedValue
+            }
+            return $element.is(expectedValue)
+        }
 
-	describe('#element', function() {
-		var testCases = [{
-			name: "arg is undefined",
-			expectedValue: "input",
-		}, {
-			name: "arg is {}",
-			arg: {},
-			expectedValue: "input",
-		}, {
-			name: 'arg.key = "<input>"',
-			arg: {
-				key: "<input>"
-			},
-			expectedValue: "input",
-		}];
+        testCases.forEach((test) => {
 
-		var isEqual = function($element, expectedValue) {
-			if (typeof expectedValue === "undefined") {
-				return $element === expectedValue;
-			}
-			return $element.is(expectedValue);
-		};
+            it('Spinner test', () => {
+                const spinner = new Spinner(test.arg, $)
+                expect(spinner.getValue()).to.be.undefined
 
-		testCases.forEach(function(test) {
+                spinner.setValue(2)
 
-			it("Spinner test", function() {
-				var spinner = RGPP.System.Spinner(test.arg, $);
-				expect(spinner.getValue()).to.be.undefined;
+                expect(spinner.getValue()).to.be.undefined
+            })
 
-				spinner.setValue(2);
+            it(`${test.name} arg.key ver.`, () => {
+                const spinner = new Spinner(test.arg, $)
+                const $element = spinner.element
+                expect(isEqual($element, test.expectedValue)).to.be.true
+            })
 
-				expect(spinner.getValue()).to.be.undefined;
-			});
+            it(`${test.name} $element is $("<input>")`, () => {
+                const $element = $('<input>')
+                test.arg = test.arg || {}
+                const uiBase = new Spinner({
+                    $element,
+                    key: test.arg.key
+                }, $)
 
-			it(test.name + " arg.key ver.", function() {
-				var spinner = RGPP.System.Spinner(test.arg, $);
-				var $element = spinner.element();
-				expect(isEqual($element, test.expectedValue)).to.be.true;
-			});
+                expect(uiBase.element).to.equal($element)
+            })
+        })
 
-			it(test.name + ' $element is $("<input>")', function() {
-				var $element = $("<input>");
-				test.arg = test.arg || {};
-				var uiBase = RGPP.System.Spinner({
-					$element: $element,
-					key: test.arg.key
-				}, $);
-
-				expect(uiBase.element()).to.equal($element);
-			});
-		});
-
-	});
-});
+    })
+})
