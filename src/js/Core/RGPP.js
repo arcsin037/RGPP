@@ -78,12 +78,7 @@ const isDefined = (value) => {
  * @param {*} value Reference to check
  * @return {boolean} Whether a reference is undefined or not.
  */
-const isUndefined = (value) => {
-    if (isDefined(value)) {
-        return false
-    }
-    return true
-}
+const isUndefined = (value) => !isDefined(value)
 
 /**
  * Whether a reference is string or not.

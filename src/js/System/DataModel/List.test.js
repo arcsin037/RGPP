@@ -12,13 +12,15 @@ describe('List', () => {
 
         list.push(2)
         list.push(3)
-        list2.push(1)
 
         expect(list.data(0)).to.equal(2)
         expect(list.data(1)).to.equal(3)
         expect(list.size()).to.equal(2)
 
+        list2.push(1)
         expect(list2.data(0)).to.equal(1)
+        list2.push(2)
+        expect(list2.data(1)).to.equal(2)
     })
     it('pop', () => {
         const list = new List()
