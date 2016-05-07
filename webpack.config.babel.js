@@ -1,4 +1,5 @@
 import 'babel-polyfill'
+import glob from 'glob'
 import path from 'path'
 import webpack from 'webpack'
 
@@ -23,7 +24,8 @@ export default {
     },
 
     entry: {
-        app: './src/js/app.js'
+        app: path.join(__dirname, 'src/app.js'),
+        test: glob.sync(path.join(__dirname, 'src/js/**/*.test.js'))
     },
 
     output: {
@@ -38,6 +40,7 @@ export default {
     devtool: DEBUG ? 'cheap-module-eval-source-map' : false,
 
     plugins: [
+        new webpack.HotModuleReplacementPlugin(),
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': `"${process.env.NODE_ENV || (DEBUG ? 'development' : 'production')}"`
@@ -61,8 +64,19 @@ export default {
     module: {
         loaders: [
             {test: /\.html$/, loader: 'html?minimize'},
-            {test: /\.js[x]?$/, include: [path.resolve(__dirname, 'src/js')], loader: 'babel'},
-            {test: /\.json$/, loader: 'json'}
+            // for app
+            {test: /\.js[x]?$/, include: [path.join(__dirname, 'src')], loader: 'babel'},
+            // for test
+            {test: /\.test\.js$/, include: [path.join(__dirname, 'src/js')], loaders: ['mocha', 'babel']},
+            {test: /\.json$/, loader: 'json'},
+            {test: /\.css$/, loader: 'style!css'}
         ]
+    },
+
+    devServer: {
+        contentBase: path.join(__dirname, 'public'),
+        port: 8080,
+        hot: true,
+        inline: true
     }
 }

@@ -6,7 +6,7 @@
     "doc": "doc"
   },
   "scripts": {
-    "server": "webpack-dev-server --open http://localhost:8080/public/",
+    "server": "webpack-dev-server",
     "build": "webpack",
     "start": "npm run server",
     "test": "gulp test"
@@ -30,6 +30,7 @@
     "eslint": "^2.9.0",
     "eslint-plugin-babel": "^3.2.0",
     "eslint-plugin-react": "^5.0.1",
+    "glob": "^7.0.3",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-babel": "^6.1.2",
@@ -42,12 +43,15 @@
     "gulp-uglify": "^1.5.2",
     "gulp-util": "^3.0.7",
     "gulp-yuidoc": "^0.1.2",
+    "html-loader": "^0.4.3",
     "html-minify-loader": "^1.1.0",
     "jquery": "^2.2.0",
     "jquery-ui": "^1.10.5",
     "jsdom": "^8.0.4",
     "json-loader": "^0.5.4",
+    "mocha": "^2.4.5",
     "mocha-jsdom": "^1.0.0",
+    "mocha-loader": "^0.7.1",
     "node-normalize-scss": "^1.3.1",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",

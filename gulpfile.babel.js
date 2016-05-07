@@ -20,63 +20,63 @@ const app_name = 'RGPP',
     // Directory name
     dst_dir = './build/',
     src_dir = './src/',
-    js_dir = src_dir + 'js/',
+    js_dir = `${src_dir}js/`,
 
     // JS name
-    test_js = js_dir + '**/*ack.test.js',
-    templete_js = js_dir + '**/*.template.js',
-    all_js = js_dir + '**/*.js',
-    compile_js = ['!' + test_js, '!' + templete_js, all_js],
+    test_js = `${js_dir}**/*.test.js`,
+    templete_js = `${js_dir}**/*.template.js`,
+    all_js = `${js_dir}**/*.js`,
+    compile_js = [`!${test_js}`, `!${templete_js}`, all_js],
 
     // Build directory name
-    build_js_dir = dst_dir + 'js/',
-    build_js_module_dir = build_js_dir + 'module/',
-    build_js_min_dir = build_js_module_dir + 'min/',
+    build_js_dir = `${dst_dir}js/`,
+    build_js_module_dir = `${build_js_dir}module/`,
+    build_js_min_dir = `${build_js_module_dir}min/`,
 
     // Core
-    core_src_dir = src_dir + 'js/Core/',
-    core_script_name = app_name + '.core',
-    concat_core_editor_js_name = core_script_name + '.editor.js',
-    concat_core_game_js_name = core_script_name + '.game.js',
-    compress_core_editor_js_name = core_script_name + '.editor.min.js',
-    compress_core_game_js_name = core_script_name + '.game.min.js',
+    core_src_dir = `${src_dir}js/Core/`,
+    core_script_name = `${app_name}.core`,
+    concat_core_editor_js_name = `${core_script_name}.editor.js`,
+    concat_core_game_js_name = `${core_script_name}.game.js`,
+    compress_core_editor_js_name = `${core_script_name}.editor.min.js`,
+    compress_core_game_js_name = `${core_script_name}.game.min.js`,
     core_src_editor_dir = [
-        core_src_dir + '*.js',
-        core_src_dir + 'Common/**/*.js',
-        core_src_dir + 'Editor/*.js',
-        '!' + core_src_dir + '**/*.test.js',
-        '!' + core_src_dir + '**/*.template.js'
+        `${core_src_dir}*.js`,
+        `${core_src_dir}Common/**/*.js`,
+        `${core_src_dir}Editor/*.js`,
+        `!${core_src_dir}**/*.test.js`,
+        `!${core_src_dir}**/*.template.js`
     ],
     core_src_game_dir = [
-        core_src_dir + '*.js',
-        core_src_dir + 'Common/**/*.js',
-        core_src_dir + 'Game/*.js',
-        '!' + core_src_dir + '**/*.test.js',
-        '!' + core_src_dir + '**/*.template.js'
+        `${core_src_dir}*.js`,
+        `${core_src_dir}Common/**/*.js`,
+        `${core_src_dir}Game/*.js`,
+        `!${core_src_dir}**/*.test.js`,
+        `!${core_src_dir}**/*.template.js`
     ],
 
     // System
-    system_script_name = app_name + '.system',
-    concat_sytem_js_name = system_script_name + '.js',
-    compress_system_js_name = system_script_name + '.min.js',
-    system_src_dir = [src_dir + 'js/System/**/*.js', '!' + src_dir + 'js/System/**/*.test.js', '!' + src_dir + 'js/System/**/*.template.js'],
+    system_script_name = `${app_name}.system`,
+    concat_sytem_js_name = `${system_script_name}.js`,
+    compress_system_js_name = `${system_script_name}.min.js`,
+    system_src_dir = [`${src_dir}js/System/**/*.js`, `!${src_dir}js/System/**/*.test.js`, `!${src_dir}js/System/**/*.template.js`],
 
     // MW
-    mw_script_name = app_name + '.mw',
-    concat_mw_js_name = mw_script_name + '.js',
-    compress_mw_js_name = mw_script_name + '.min.js',
-    mw_src_dir = [src_dir + 'js/MW/**/*.js', '!' + src_dir + 'js/MW/**/*.test.js', '!' + src_dir + 'js/MW/**/*.template.js'],
+    mw_script_name = `${app_name}.mw`,
+    concat_mw_js_name = `${mw_script_name}.js`,
+    compress_mw_js_name = `${mw_script_name}.min.js`,
+    mw_src_dir = [`${src_dir}js/MW/**/*.js`, `!${src_dir}js/MW/**/*.test.js`, `!${src_dir}js/MW/**/*.template.js`],
 
     // User
-    user_script_name = app_name + '.user',
-    concat_user_js_name = user_script_name + '.js',
-    compress_user_js_name = user_script_name + '.min.js',
-    user_src_dir = [src_dir + 'js/User/**/*.js', '!' + src_dir + 'js/User/**/*.test.js', '!' + src_dir + 'js/User/**/*.template.js'],
+    user_script_name = `${app_name}.user`,
+    concat_user_js_name = `${user_script_name}.js`,
+    compress_user_js_name = `${user_script_name}.min.js`,
+    user_src_dir = [`${src_dir}js/User/**/*.js`, `!${src_dir}js/User/**/*.test.js`, `!${src_dir}js/User/**/*.template.js`],
 
     // Editor
-    editor_script_name = app_name + '.editor',
-    concat_editor_js_name = editor_script_name + '.js',
-    compress_editor_js_name = editor_script_name + '.min.js',
+    editor_script_name = `${app_name}.editor`,
+    concat_editor_js_name = `${editor_script_name}.js`,
+    compress_editor_js_name = `${editor_script_name}.min.js`,
     editor_src_dir = [
         build_js_module_dir + concat_core_editor_js_name,
         build_js_module_dir + concat_sytem_js_name,
@@ -85,7 +85,7 @@ const app_name = 'RGPP',
     ],
 
     // Game
-    game_script_name = app_name + ".game",
+    game_script_name = app_name + '.game',
     concat_game_js_name = game_script_name + '.js',
     compress_game_js_name = game_script_name + '.min.js',
     game_src_dir = [
@@ -96,9 +96,9 @@ const app_name = 'RGPP',
     ],
 
     // Template
-    editor_template_name = "Editor.html",
-    game_template_name = "Game.html",
-    template_dir = src_dir + "templates/",
+    editor_template_name = 'Editor.html',
+    game_template_name = 'Game.html',
+    template_dir = src_dir + 'templates/',
     template_config_json = template_dir + 'config.json',
     editor_template_src = [
         template_dir + 'Editor.mustache',
@@ -110,7 +110,7 @@ const app_name = 'RGPP',
 
     // function of concat
     concatJS = (src_path, dst_path, concat_name) => {
-        console.log("[concat] src_path = " + src_path + " dst_path = " + dst_path + " concat_name = " + concat_name)
+        console.log('[concat] src_path = ' + src_path + ' dst_path = ' + dst_path + ' concat_name = ' + concat_name)
         return gulp.src(src_path)
             .pipe(plumber())
             .pipe(concat(concat_name))
@@ -118,7 +118,7 @@ const app_name = 'RGPP',
     },
     // function of compress
     compressJS = (src_path, src_name, dst_path, compress_name) => {
-        console.log("[compress] src_path = " + src_path + " src_name = " + src_name + " dst_path = " + dst_path + " compress_name = " + compress_name)
+        console.log('[compress] src_path = ' + src_path + ' src_name = ' + src_name + ' dst_path = ' + dst_path + ' compress_name = ' + compress_name)
         return gulp.src([src_path + src_name])
             .pipe(plumber())
             .pipe(uglify())
@@ -141,14 +141,14 @@ const app_name = 'RGPP',
         gulp.src(create_doc_js)
             .pipe(yuidoc({
                 project: {
-                    "name": app_name,
-                    "description": app_description,
-                    "version": app_version,
+                    'name': app_name,
+                    'description': app_description,
+                    'version': app_version,
                 },
             }, {
-                themedir: "./lib/blue_theme",
+                themedir: './lib/blue_theme',
             }))
-            .pipe(gulp.dest("./doc/"))
+            .pipe(gulp.dest('./doc/'))
     },
     compileMustache = (template_src_dir, template_config_dir, template_name, build_template_dir) => {
         console.log(template_src_dir, template_config_dir, template_name, build_template_dir)
@@ -254,7 +254,7 @@ gulp.task('game.compress', ['game.concat'], () => {
 
 
 // compile sass file
-gulp.task("sass", () => {
+gulp.task('sass', () => {
     gulp.src(src_dir + 'sass/**/*.scss')
         .pipe(plumber())
         .pipe(sass({
