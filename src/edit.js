@@ -1,13 +1,15 @@
+import $ from 'jquery'
 import RGPP from 'Core'
 
 /**
  * Function to call when DOMs are loaded for uu Canvas
  * @method window.xcanvas
  */
-window.xcanvas = (uu, canvasNodes) => {
+window.xcanvas = (uu) => {
     const system = RGPP.System
     system.OperateCanvas.getInstance(uu)
-        // Open editor mode main panel
+
+    // Open editor mode main panel
     system.EditorMainPanel.open()
 }
 
@@ -15,7 +17,9 @@ window.xcanvas = (uu, canvasNodes) => {
  * Function to call when DOMs are loaded
  * @method main
  */
-$(function main() {
+$(() => {
     // Open editor mode main panel
     RGPP.System.EditorMainPanel.open()
 })
+
+document.write('Editor.')
