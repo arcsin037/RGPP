@@ -13,10 +13,10 @@ import 'babel-polyfill'
 
 document.write('It works.')
 
-import RGPP from './js/Core'
+import RGPP from 'Core'
 import test from './templates/test.html'
 console.log(RGPP)
 console.log(test)
 document.body.innerHTML = test
 
-console.log(RGPP.System.Utils.BrowserUtil.getUserBrowserTypeVersion())
+console.log(RGPP.System.Utils.BrowserUtil.getUserBrowserInfo())

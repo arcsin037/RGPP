@@ -25,6 +25,8 @@ export default {
 
     entry: {
         app: path.join(__dirname, 'src/app.js'),
+        edit: path.join(__dirname, 'src/edit.js'),
+        game: path.join(__dirname, 'src/game.js'),
         test: glob.sync(path.join(__dirname, 'src/js/**/*.test.js'))
     },
 

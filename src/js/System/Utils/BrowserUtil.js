@@ -169,10 +169,10 @@ const extractSafariVerStr_ = () => {
 
 /**
  * Detecting browser type and version of the user
- * @method getUserBrowserTypeVersion
+ * @method getUserBrowserInfo
  * @return {Object} browser version & type
  */
-export const getUserBrowserTypeVersion = () => {
+export const getUserBrowserInfo = () => {
     let bwVerStr = 0
     let bwType = null
 
@@ -203,11 +203,11 @@ export const getUserBrowserTypeVersion = () => {
 
     const bwVer = parseInt(bwVerStr, 10)
     return {
-        Type: bwType,
-        Version: bwVer
+        type: bwType,
+        version: bwVer
     }
 }
 
 export default {
-    getUserBrowserTypeVersion
+    getUserBrowserInfo
 }
