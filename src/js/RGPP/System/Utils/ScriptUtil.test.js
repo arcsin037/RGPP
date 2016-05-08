@@ -1,5 +1,5 @@
 'use strict'
-import RGPP from '../../Core'
+import RGPP from 'RGPP'
 import ScriptUtil from './ScriptUtil'
 import assert from 'assert'
 import {
@@ -145,7 +145,7 @@ describe('ScriptUtil', () => {
             RGPP.Config.setConfigParam('DEBUG_BOOT_MODE', debugBootMode)
             if (test.assertion) {
                 assert.throws(() => {
-                    return ScriptUtil.assert(test.booleanValue, message)
+                    ScriptUtil.assert(test.booleanValue, message)
                 }, Error, 'Error is not occured')
             } else {
                 assert.doesNotThrow(() => {

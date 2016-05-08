@@ -1,6 +1,6 @@
 import Config from './Config.json'
 
-import TypeUtil from 'System/Utils/TypeUtil'
+import TypeUtil from 'RGPP/System/Utils/TypeUtil'
 
 /**
  * Set configuration parameter.

@@ -13,7 +13,7 @@ import 'babel-polyfill'
 
 document.write('It works.')
 
-import RGPP from 'Core'
+import RGPP from 'RGPP'
 import test from './templates/test.html'
 console.log(RGPP)
 console.log(test)

@@ -1,4 +1,4 @@
-import Const from 'Core/Const/Const.json'
+import Const from 'RGPP/Const/Const.json'
 
 /**
  * Browser Utility Functions

@@ -1,8 +1,8 @@
 import Config from './Config'
 import Const from './Const/Const.json'
-import MW from 'MW'
-import System from 'System'
-import User from 'User'
+import MW from './MW'
+import System from './System'
+import User from './User'
 
 const RGPP = {}
 

@@ -11,7 +11,7 @@
  * @author arcsin
  * @constructor
  */
-import RGPP from 'Core'
+import RGPP from 'RGPP'
 
 /**
  * For memolization function

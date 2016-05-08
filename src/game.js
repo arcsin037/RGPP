@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import RGPP from 'Core'
+import RGPP from 'RGPP'
 
 /**
  * for uu Canvas
