@@ -1,5 +1,6 @@
 'use strict'
 
+/* eslint no-console: ["error", {allow: ["log"]}] */
 // gulp plugin
 import concat from 'gulp-concat'
 import gulp from 'gulp'
@@ -23,7 +24,7 @@ const app_name = 'RGPP',
     js_dir = `${src_dir}js/`,
 
     // JS name
-    test_js = `${js_dir}**/Spinner.test.js`,
+    test_js = `${js_dir}**/ScriptUtil.test.js`,
     templete_js = `${js_dir}**/*.template.js`,
     all_js = `${js_dir}**/*.js`,
     compile_js = [`!${test_js}`, `!${templete_js}`, all_js],
@@ -86,31 +87,31 @@ const app_name = 'RGPP',
 
     // Game
     game_script_name = `${app_name}.game`,
-    concat_game_js_name = game_script_name + '.js',
-    compress_game_js_name = game_script_name + '.min.js',
+    concat_game_js_name = `${game_script_name}.js`,
+    compress_game_js_name = `${game_script_name}.min.js`,
     game_src_dir = [
         build_js_module_dir + concat_core_game_js_name,
         build_js_module_dir + concat_sytem_js_name,
         build_js_module_dir + concat_mw_js_name,
-        build_js_module_dir + concat_user_js_name,
+        build_js_module_dir + concat_user_js_name
     ],
 
     // Template
     editor_template_name = 'Editor.html',
     game_template_name = 'Game.html',
-    template_dir = src_dir + 'templates/',
-    template_config_json = template_dir + 'config.json',
+    template_dir = `${src_dir}templates/`,
+    template_config_json = `${template_dir}config.json`,
     editor_template_src = [
-        template_dir + 'Editor.mustache',
+        `${template_dir}Editor.mustache`
     ],
     game_template_src = [
-        template_dir + 'Game.mustache',
+        `${template_dir}Game.mustache`
     ],
-    build_template_dir = dst_dir + 'html/',
+    build_template_dir = `${dst_dir}html/`,
 
     // function of concat
     concatJS = (src_path, dst_path, concat_name) => {
-        console.log('[concat] src_path = ' + src_path + ' dst_path = ' + dst_path + ' concat_name = ' + concat_name)
+        console.log(`[concat] src_path = ${src_path} dst_path = ${dst_path} concat_name = ${concat_name}`)
         return gulp.src(src_path)
             .pipe(plumber())
             .pipe(concat(concat_name))
@@ -118,7 +119,7 @@ const app_name = 'RGPP',
     },
     // function of compress
     compressJS = (src_path, src_name, dst_path, compress_name) => {
-        console.log('[compress] src_path = ' + src_path + ' src_name = ' + src_name + ' dst_path = ' + dst_path + ' compress_name = ' + compress_name)
+        console.log(`[compress] src_path = ${src_path} src_name = ${src_name} dst_path = ${dst_path} compress_name = ${compress_name}`)
         return gulp.src([src_path + src_name])
             .pipe(plumber())
             .pipe(uglify())
@@ -126,13 +127,13 @@ const app_name = 'RGPP',
             .pipe(gulp.dest(dst_path))
     },
     testJS = (dir_path) => {
-        return gulp.src(dir_path, {
+        gulp.src(dir_path, {
                 read: false
             })
             .pipe(plumber())
             .pipe(mocha({
                 reporter: 'spec',
-                timeout: 15000,
+                timeout: 15000
             }))
             .pipe(plumber())
             .on('error', gutil.log)
@@ -143,10 +144,10 @@ const app_name = 'RGPP',
                 project: {
                     'name': app_name,
                     'description': app_description,
-                    'version': app_version,
-                },
+                    'version': app_version
+                }
             }, {
-                themedir: './lib/blue_theme',
+                themedir: './lib/blue_theme'
             }))
             .pipe(gulp.dest('./doc/'))
     },
@@ -255,12 +256,12 @@ gulp.task('game.compress', ['game.concat'], () => {
 
 // compile sass file
 gulp.task('sass', () => {
-    gulp.src(src_dir + 'sass/**/*.scss')
+    gulp.src(`${src_dir}sass/**/*.scss`)
         .pipe(plumber())
         .pipe(sass({
             includePaths: require('node-normalize-scss').includePaths
         }))
-        .pipe(gulp.dest(dst_dir + 'css'))
+        .pipe(gulp.dest(`${dst_dir}css`))
 })
 
 
@@ -271,7 +272,7 @@ gulp.task('default', [
     'editor.compress',
     'game.compress'
 ], () => {
-    gulp.watch([src_dir + 'sass/**/*.scss'], ['sass'])
-    gulp.watch([template_dir + '/**/*'], ['mustache'])
+    gulp.watch([`${src_dir}sass/**/*.scss`], ['sass'])
+    gulp.watch([`${template_dir}/**/*`], ['mustache'])
     gulp.watch([core_src_editor_dir, core_src_game_dir, system_src_dir, mw_src_dir, user_src_dir], ['editor.compress', 'game.compress'])
 })

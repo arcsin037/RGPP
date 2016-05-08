@@ -33,11 +33,6 @@ module.exports = {
             "error",
             "never"
         ],
-        "no-console": [
-            "error", {
-                allow: ["log", "warn", "error"]
-            }
-        ],
         "arrow-body-style": 2,
         "arrow-parens": 2,
         "arrow-spacing": 2,

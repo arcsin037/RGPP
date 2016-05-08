@@ -1,9 +1,7 @@
-import {BrowserUtil, TypeUtil} from './Util'
-import {List, Stack} from './DataModel'
+import DataModel from './DataModel'
+import Utils from './Utils'
 
 export default {
-    List,
-    Stack,
-    BrowserUtil,
-    TypeUtil
+    DataModel,
+    Utils
 }

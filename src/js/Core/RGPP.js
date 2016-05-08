@@ -19,36 +19,37 @@
  * @private
  * @final
  */
-const SYSTEM_NAME_SPACE_STRING = 'System',
 
-    /**
-     * String of middle-ware namespace
-     * @property MW_NAME_SPACE_STRING
-     * @type {String}
-     * @private
-     * @final
-     */
-    MW_NAME_SPACE_STRING = 'MW',
+//const SYSTEM_NAME_SPACE_STRING = 'System',
 
-    /**
-     * String of user namespace
-     *
-     * @property USER_NAME_SPACE_STRING
-     * @type {String}
-     * @private
-     * @final
-     */
-    USER_NAME_SPACE_STRING = 'User',
+/**
+ * String of middle-ware namespace
+ * @property MW_NAME_SPACE_STRING
+ * @type {String}
+ * @private
+ * @final
+ */
+// MW_NAME_SPACE_STRING = 'MW',
 
-    /**
-     * String of configutation namespace
-     *
-     * @property CONF_NAME_SPACE_STRING
-     * @type {String}
-     * @private
-     * @final
-     */
-    CONF_NAME_SPACE_STRING = 'Config'
+/**
+ * String of user namespace
+ *
+ * @property USER_NAME_SPACE_STRING
+ * @type {String}
+ * @private
+ * @final
+ */
+// USER_NAME_SPACE_STRING = 'User',
+
+/**
+ * String of configutation namespace
+ *
+ * @property CONF_NAME_SPACE_STRING
+ * @type {String}
+ * @private
+ * @final
+ */
+// CONF_NAME_SPACE_STRING = 'Config'
 
 /**
  * Exports an object to a global object & Exports as a module of Node.js.
@@ -61,6 +62,7 @@ const SYSTEM_NAME_SPACE_STRING = 'System',
  * @param arg.module {Object} A module of Node.js
  * @private
  */
+/*
 const exports = (nameSpaceString, arg) => {
 
     const nameSpaceObj = RGPP[nameSpaceString]
@@ -85,6 +87,7 @@ const exports = (nameSpaceString, arg) => {
     RGPP[nameSpaceString][objName] = arg.constructorFunc
 
 }
+*/
 
 /**
  * Exports an object as a module of Node.js.
@@ -97,6 +100,7 @@ const exports = (nameSpaceString, arg) => {
  * @param arg.module {Object} A module of Node.js
  * @private
  */
+/*
 const exportAsModule = (nameSpaceString, arg) => {
     if (isDefined(arg.module)) {
         arg.module.exports[nameSpaceString] =
@@ -112,6 +116,7 @@ const exportAsModule = (nameSpaceString, arg) => {
             arg.module.exports[CONF_NAME_SPACE_STRING].setConfigParam || setConfigParam
     }
 }
+*/
 
 /**
  * Exports an object to System namespace.
@@ -122,9 +127,11 @@ const exportAsModule = (nameSpaceString, arg) => {
  * @param arg.module {Object} A module of Node.js
  * @private
  */
+/*
 const exportsAsSystem = (arg) => {
     exports(SYSTEM_NAME_SPACE_STRING, arg)
 }
+*/
 
 /**
  * Exports an object to MW namespace.
@@ -135,9 +142,11 @@ const exportsAsSystem = (arg) => {
  * @param arg.module {Object} A module of Node.js
  * @private
  */
+/*
 const exportsAsMW = (arg) => {
     exports(MW_NAME_SPACE_STRING, arg)
 }
+*/
 
 /**
  * Exports an object to User namespace.
@@ -148,9 +157,11 @@ const exportsAsMW = (arg) => {
  * @param arg.module {Object} A module of Node.js
  * @private
  */
+/*
 const exportsAsUser = (arg) => {
     exports(USER_NAME_SPACE_STRING, arg)
 }
+*/
 
 /**
  * Return singleton instance.
@@ -163,6 +174,7 @@ const exportsAsUser = (arg) => {
  * @return {Object} Singleton instance of an object
  * @private
  */
+/*
 const getSingletonInstance = (arg) => {
     let instance = undefined
     return {
@@ -174,6 +186,7 @@ const getSingletonInstance = (arg) => {
         }
     }
 }
+*/
 
 /**
  * Exports an object to System namespace as singleton object.
@@ -184,6 +197,7 @@ const getSingletonInstance = (arg) => {
  * @param arg.module {Object} A module of Node.js
  * @private
  */
+/*
 const expotrsAsSystemSingleton = (arg) => {
     const singleton = getSingletonInstance(arg)
     exports(SYSTEM_NAME_SPACE_STRING, {
@@ -192,6 +206,7 @@ const expotrsAsSystemSingleton = (arg) => {
         module: arg.module
     })
 }
+*/
 
 /**
  * Exports an object to MW namespace as singleton object.
@@ -202,6 +217,7 @@ const expotrsAsSystemSingleton = (arg) => {
  * @param arg.module {Object} A module of Node.js
  * @private
  */
+/*
 const expotrsAsMWSingleton = (arg) => {
     const singleton = getSingletonInstance(arg)
     exports(MW_NAME_SPACE_STRING, {
@@ -210,6 +226,7 @@ const expotrsAsMWSingleton = (arg) => {
         module: arg.module
     })
 }
+*/
 
 /**
  * Exports to User namespace as singleton object.
@@ -220,6 +237,7 @@ const expotrsAsMWSingleton = (arg) => {
  * @param arg.module {Object} A module of Node.js
  * @private
  */
+/*
 const expotrsAsUserSingleton = (arg) => {
     const singleton = getSingletonInstance(arg)
     exports(USER_NAME_SPACE_STRING, {
@@ -228,58 +246,4 @@ const expotrsAsUserSingleton = (arg) => {
         module: arg.module
     })
 }
-
-/**
- * Set configuration parameter.
- *
- * @method setConfigParam
- * @param configName {String} Name of configuration parameter
- * @param configValue {*} Value of configuration parameter
- */
-const setConfigParam = (configName, configValue) => {
-    if (isInValidConfigName(configName)) {
-        return
-    }
-
-    if (RGPP && RGPP[CONF_NAME_SPACE_STRING]) {
-        RGPP[CONF_NAME_SPACE_STRING][configName] = configValue
-    }
-}
-
-/**
- * Return configuration parameter.
- *
- * @method getConfigParam
- * @param configName {String} Name of configuration parameter
- * @return Configuration parameter / If the configuration name is invalid, return undefined
- */
-const getConfigParam = (configName) => {
-    if (isInValidConfigName(configName)) {
-        return
-    }
-    if (RGPP && RGPP[CONF_NAME_SPACE_STRING]) {
-        return RGPP[CONF_NAME_SPACE_STRING][configName]
-    }
-}
-
-/**
- * Whether the configuration name is invalid or not.
- *
- * @method isInValidConfigName
- * @param {string} configName Name of configuration parameter
- * @return Whether the configuration name is invalid or not.
- * @private
- */
-const isInValidConfigName = (configName) => {
-    if (!isString(configName) ||
-        configName === 'setConfigParam' ||
-        configName === 'getConfigParam') {
-        return true
-    }
-    return false
-}
-
-export default {
-    setConfigParam,
-    getConfigParam
-}
+*/

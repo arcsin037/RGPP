@@ -20,4 +20,4 @@ console.log(RGPP)
 console.log(HTML)
 document.body.innerHTML = HTML
 
-console.log(RGPP.System.BrowserUtil.getUserBrowserTypeVersion())
+console.log(RGPP.System.Utils.BrowserUtil.getUserBrowserTypeVersion())

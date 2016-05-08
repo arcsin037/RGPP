@@ -1,13 +1,11 @@
 'use strict'
-import RGPP from './RGPP'
+import RGPP from './index'
 import {
     expect
 } from 'chai'
 
 describe('RGPP', () => {
-    before(() => {
-        console.log('RGPP = ', RGPP)
-    })
+    /*
     const assert = require('assert')
 
     describe('#System.exportsAsSingleton', () => {
@@ -48,7 +46,7 @@ describe('RGPP', () => {
             assert.strictEqual(test1 === test2, false, 'test1 & test2 are same object')
         })
     })
-
+    */
     describe('#setConfigParam / #getConfigParam', () => {
         const testCases = [{
             configName: 'GAME_NAME',
@@ -125,8 +123,8 @@ describe('RGPP', () => {
         testCases.forEach((test) => {
             it(`set ${test.configValue} <${typeof test.configValue}> to ${test.configName} <${typeof test.configName}> => ${test.expectedValue}`,
                 () => {
-                    RGPP.setConfigParam(test.configName, test.configValue)
-                    expect(RGPP.getConfigParam(test.configName)).to.equal(test.expectedValue)
+                    RGPP.Config.setConfigParam(test.configName, test.configValue)
+                    expect(RGPP.Config.getConfigParam(test.configName)).to.equal(test.expectedValue)
                 })
         })
     })
