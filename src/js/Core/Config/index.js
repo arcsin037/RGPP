@@ -11,10 +11,7 @@ const setConfigParam = (configName, configValue) => {
     if (isInValidConfigName(configName)) {
         return
     }
-
-    if (RGPP && RGPP.Config) {
-        RGPP.Config[configName] = configValue
-    }
+    Config[configName] = configValue
 }
 
 /**
@@ -28,9 +25,7 @@ const getConfigParam = (configName) => {
     if (isInValidConfigName(configName)) {
         return
     }
-    if (RGPP && RGPP.Config) {
-        return RGPP.Config[configName]
-    }
+    return Config[configName]
 }
 
 /**
