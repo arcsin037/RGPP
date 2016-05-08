@@ -7,7 +7,7 @@
   },
   "scripts": {
     "server": "webpack-dev-server",
-    "build": "webpack",
+    "build": "webpack --release",
     "start": "npm run server",
     "test": "gulp test"
   },

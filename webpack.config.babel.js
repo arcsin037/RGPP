@@ -42,12 +42,17 @@ export default {
     devtool: DEBUG ? 'cheap-module-eval-source-map' : false,
 
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': `"${process.env.NODE_ENV || (DEBUG ? 'development' : 'production')}"`
         }),
-        ...(DEBUG ? [] : [
+        new webpack.ProvidePlugin({
+            jQuery: 'jquery',
+            $: 'jquery'
+        }),
+        ...(DEBUG ? [
+            new webpack.HotModuleReplacementPlugin(),
+            new webpack.NoErrorsPlugin()
+        ] : [
             new webpack.optimize.DedupePlugin(),
             new webpack.optimize.UglifyJsPlugin({
                 compress: {
@@ -55,6 +60,7 @@ export default {
                     warnings: VERBOSE
                 }
             }),
+            new webpack.optimize.OccurenceOrderPlugin(),
             new webpack.optimize.AggressiveMergingPlugin()
         ])
     ],
@@ -65,15 +71,26 @@ export default {
     },
 
     module: {
-        loaders: [
-            {test: /\.html$/, loader: 'html?minimize'},
+        loaders: [{
+            test: /\.html$/,
+            loader: 'html?minimize'
+        }, {
             // for app
-            {test: /\.js[x]?$/, include: [path.join(__dirname, 'src')], loader: 'babel'},
+            test: /\.js[x]?$/,
+            include: [path.join(__dirname, 'src')],
+            loader: 'babel'
+        }, {
             // for test
-            {test: /\.test\.js$/, include: [path.join(__dirname, 'src/js')], loaders: ['mocha', 'babel']},
-            {test: /\.json$/, loader: 'json'},
-            {test: /\.css$/, loader: 'style!css'}
-        ]
+            test: /\.test\.js$/,
+            include: [path.join(__dirname, 'src/js')],
+            loaders: ['mocha', 'babel']
+        }, {
+            test: /\.json$/,
+            loader: 'json'
+        }, {
+            test: /\.css$/,
+            loader: 'style!css'
+        }]
     },
 
     devServer: {
