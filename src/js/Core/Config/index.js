@@ -1,5 +1,7 @@
 import Config from './Config.json'
 
+import TypeUtil from 'System/Utils/TypeUtil'
+
 /**
  * Set configuration parameter.
  *
@@ -37,7 +39,7 @@ const getConfigParam = (configName) => {
  * @private
  */
 const isInValidConfigName = (configName) => {
-    if (!(typeof configName === 'string') ||
+    if (!TypeUtil.isString(configName) ||
         configName === 'setConfigParam' ||
         configName === 'getConfigParam') {
         return true

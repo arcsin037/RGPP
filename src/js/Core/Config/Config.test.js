@@ -1,5 +1,5 @@
 'use strict'
-import RGPP from './index'
+import Config from './index'
 import {
     expect
 } from 'chai'
@@ -81,8 +81,8 @@ describe('Config', () => {
         testCases.forEach((test) => {
             it(`set ${test.configValue} <${typeof test.configValue}> to ${test.configName} <${typeof test.configName}> => ${test.expectedValue}`,
                 () => {
-                    RGPP.Config.setConfigParam(test.configName, test.configValue)
-                    expect(RGPP.Config.getConfigParam(test.configName)).to.equal(test.expectedValue)
+                    Config.setConfigParam(test.configName, test.configValue)
+                    expect(Config.getConfigParam(test.configName)).to.equal(test.expectedValue)
                 })
         })
     })

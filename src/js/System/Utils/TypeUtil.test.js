@@ -5,9 +5,6 @@ import {
 } from 'chai'
 
 describe('TypeUtil', () => {
-    before(() => {
-        console.log('TypeUtil = ', TypeUtil)
-    })
     describe('Type Utility Functions', () => {
         const typeUtil = TypeUtil
 

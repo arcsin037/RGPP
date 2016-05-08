@@ -1,4 +1,4 @@
-import Const from 'Core/Common/Const.json'
+import Const from 'Core/Const/Const.json'
 
 /**
  * Browser Utility Functions
@@ -176,8 +176,6 @@ export const getUserBrowserTypeVersion = () => {
     let bwVerStr = 0
     let bwType = null
 
-    console.log(Const)
-
     if (isIE_()) {
         // IE
         bwVerStr = extractIEVerStr_()
@@ -204,7 +202,6 @@ export const getUserBrowserTypeVersion = () => {
     }
 
     const bwVer = parseInt(bwVerStr, 10)
-    console.log(`Browser Major Type / Version : ${bwType} / ${bwVer}`)
     return {
         Type: bwType,
         Version: bwVer
