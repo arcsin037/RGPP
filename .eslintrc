@@ -1,4 +1,4 @@
-module.exports = {
+{
     "env": {
         "node": true,
         "browser": true,
@@ -74,4 +74,4 @@ module.exports = {
         "it": false,
         "before": false
     }
-};
+}

@@ -78,7 +78,10 @@ export default {
             // for app
             test: /\.js[x]?$/,
             include: [path.join(__dirname, 'src')],
-            loader: 'babel'
+            loader: 'babel',
+            query: {
+                presets: ['react', 'es2015']
+            }
         }, {
             // for test
             test: /\.test\.js$/,
