@@ -31,9 +31,5 @@ $(() => {
     )
 })
 
-
-
-document.write('Editor.')
-
 const html = template(config)
 document.write(html)

@@ -66,8 +66,8 @@ export default {
     ],
 
     resolve: {
-        extensions: ['', '.js', '.json'],
-        root: path.join(__dirname, 'src/js')
+        extensions: ['', '.js', '.json', '.jsx'],
+        root: [path.join(__dirname, 'src/js'), path.join(__dirname, 'resources')]
     },
 
     module: {
@@ -97,6 +97,10 @@ export default {
             test: /\.mustache$/,
             include: [path.join(__dirname, 'src/templates')],
             loader: 'mustache'
+        }, {
+            test: /\.(svg|png|jpg)$/,
+            include: [path.join(__dirname, 'resources')],
+            loader: 'url-loader'
         }]
     },
 

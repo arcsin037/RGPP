@@ -1,6 +1,6 @@
 import {
     TypeUtil
-} from 'Util'
+} from 'RGPP/System/Utils'
 import UIBase from './UIBase'
 
 /**
@@ -24,7 +24,6 @@ export default class SelectBox extends UIBase {
         spec.key = spec.key || '<select>'
         const mUpdateFunc = spec.updateFunc
         super(spec, $)
-
 
         // selected index of select box
         this.selectedIndex = 0
