@@ -90,6 +90,10 @@ export default {
         }, {
             test: /\.css$/,
             loader: 'style!css'
+        }, {
+            test: /\.mustache$/,
+            include: [path.join(__dirname, 'src/templates')],
+            loader: 'mustache'
         }]
     },
 

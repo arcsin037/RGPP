@@ -1,5 +1,7 @@
 import $ from 'jquery'
 import RGPP from 'RGPP'
+import config from './templates/config.json'
+import template from './templates/Editor.mustache'
 
 /**
  * Function to call when DOMs are loaded for uu Canvas
@@ -22,4 +24,8 @@ $(() => {
     RGPP.System.EditorMainPanel.open()
 })
 
+
 document.write('Editor.')
+
+const html = template(config)
+document.write(html)
