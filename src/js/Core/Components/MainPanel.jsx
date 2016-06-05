@@ -5,7 +5,7 @@ class MainPanel extends React.Component {
         return (
             <div id='main-panel' className='main-panel'>
                 <section id='toolbar-left' className='toolbar'>
-                    <div id='open-sb-left' className='menu-button menu-left'></div>
+                    <div id='open-sb-left' className='menu-button menu-left'>open sb-left</div>
                 </section>
                 <section id='leftSidebar' className='leftSidebar'></section>
             </div>

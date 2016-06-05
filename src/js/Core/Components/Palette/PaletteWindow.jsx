@@ -1,7 +1,8 @@
-import Draggable from 'react-draggable'
 import React from 'react'
 import SelectBox from 'Core/Components/Base/SelectBox.jsx'
+import Draggable from 'react-draggable'
 
+// import FlatButton from 'material-ui/FlatButton'
 import saveIcon from 'Image/System/save.svg'
 
 const drawModeOptions = [
@@ -20,6 +21,16 @@ const drawModeOptions = [
     }
 
 ]
+/*
+const FlatButtonExampleSimple = () => (
+  <div>
+    <FlatButton label="Default" />
+    <FlatButton label="Primary" primary={true} />
+    <FlatButton label="Secondary" secondary={true} />
+    <FlatButton label="Disabled" disabled={true} />
+  </div>
+)
+*/
 
 class PaletteWindow extends React.Component {
     constructor(props) {
@@ -57,6 +68,7 @@ class PaletteWindow extends React.Component {
 
     render() {
         return (
+
             <Draggable handle='div'>
                 <div id='palette-window' title='Palette'>
                     <div id='palette-window-menu'>

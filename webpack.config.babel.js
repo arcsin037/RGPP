@@ -45,10 +45,12 @@ export default {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': `"${process.env.NODE_ENV || (DEBUG ? 'development' : 'production')}"`
         }),
+        /*
         new webpack.ProvidePlugin({
             jQuery: 'jquery',
             $: 'jquery'
         }),
+        */
         ...(DEBUG ? [
             new webpack.HotModuleReplacementPlugin(),
             new webpack.NoErrorsPlugin()
@@ -93,6 +95,11 @@ export default {
         }, {
             test: /\.css$/,
             loader: 'style!css'
+        }, {
+            test: /\.scss$/,
+            include: [path.join(__dirname, 'src')],
+            // loaders: ['style', 'css', 'sass']
+            loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!sass?outputStyle=expanded&sourceMap'
         }, {
             test: /\.mustache$/,
             include: [path.join(__dirname, 'src/templates')],

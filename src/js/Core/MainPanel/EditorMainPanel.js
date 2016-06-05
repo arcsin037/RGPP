@@ -14,6 +14,14 @@ import $ from 'jquery'
  * @constructor
  */
 export default class EditorMainPanel {
+
+    render() {
+        return (
+            <MapPanels />
+            
+        )
+    }
+
     constructor() {
         // Panel
         /**
