@@ -1,5 +1,5 @@
 import EmulationWindow from 'Core/Components/EmulationWindow'
-import IconMenu from 'Core/Components/IconMenu'
+import IconMenu from 'Core/Components/Elements/IconMenu'
 // import MainPanel from 'Core/Components/MainPanel'
 import MapPanel from 'Core/Components/MapPanel'
 import PaletteWindow from 'Core/Components/Palette/PaletteWindow.jsx'

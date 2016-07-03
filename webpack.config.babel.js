@@ -69,7 +69,10 @@ export default {
 
     resolve: {
         extensions: ['', '.js', '.json', '.jsx'],
-        root: [path.join(__dirname, 'src/js'), path.join(__dirname, 'resources')]
+        root: [
+            path.join(__dirname, 'src/js'),
+            path.join(__dirname, 'resources')
+        ]
     },
 
     module: {
@@ -86,7 +89,7 @@ export default {
             }
         }, {
             // for test
-            test: /\.test\.js$/,
+            test: /\.test\.js[x]$/,
             include: [path.join(__dirname, 'src/js')],
             loaders: ['mocha', 'babel']
         }, {
@@ -98,7 +101,6 @@ export default {
         }, {
             test: /\.scss$/,
             include: [path.join(__dirname, 'src')],
-            // loaders: ['style', 'css', 'sass']
             loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!sass?outputStyle=expanded&sourceMap'
         }, {
             test: /\.mustache$/,
@@ -109,6 +111,10 @@ export default {
             include: [path.join(__dirname, 'resources')],
             loader: 'url-loader'
         }]
+    },
+
+    sassLoader: {
+        includePaths: [path.resolve(__dirname, 'src/sass')]
     },
 
     devServer: {
