@@ -3,11 +3,28 @@
 $button-width: 32px;
 $button-height: 32px;
 
+$button-backgroud-color: $base-color-primary-0;
+$button-text-color: $base-color-primary-4;
+
+$button-backgroud-hover-color: $base-color-primary-4;
+$button-text-hover-color: $base-color-primary-0;
+
+
 .Button {
     width: $button-width;
     height: $button-height;
     padding: 0;
     margin: 0 2px;
-    border: hidden;
+
+    background-color: $button-backgroud-color;
+    color: $button-text-color;
+
+    border-style: none;
+
     cursor: pointer;
+
+    &:hover {
+        background-color: $button-backgroud-hover-color;
+        color: $button-text-hover-color;
+    }
 }

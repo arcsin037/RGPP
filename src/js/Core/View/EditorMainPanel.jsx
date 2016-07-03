@@ -6,6 +6,7 @@ import PaletteWindow from 'Core/Components/Palette/PaletteWindow.jsx'
 import RGPP from 'RGPP'
 import React from 'react'
 import SelectBox from 'Core/Components/Base/SelectBox.jsx'
+import Text from 'Core/Components/Base/Text'
 // import FlatButtonExampleSimple from 'Core/Components/FlatButtonExampleSimple'
 // import getMuiTheme from 'material-ui/styles/getMuiTheme'
 // import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
@@ -53,6 +54,14 @@ class EditorMainPanel extends React.Component {
                     <FlatButtonExampleSimple/>
                 </MuiThemeProvider>
                 */}
+                <Text text='test' size='xxsmall' />
+                <Text text='test' size='xsmall' />
+                <Text text='test' size='small' />
+                <Text text='test' size='medium' />
+                <Text text='test' />
+                <Text text='test' size='large' />
+                <Text text='test' size='xlarge' />
+                <Text text='test' size='xxlarge' />
                 <IconMenu/>
                 <div className='selectbox-wrapper'>
                     <SelectBox options={modeOptions} defaultValue='TestMode'/>

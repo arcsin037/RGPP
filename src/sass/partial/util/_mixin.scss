@@ -10,3 +10,21 @@
      bottom: $bottom;
      left: $left;
 }
+
+@mixin util_set_font_size($size) {
+    &.is_#{$size} {
+        @include util_font_size(map-get($base-font-size, $size))
+    }
+}
+
+@mixin util_set_each_font_size() {
+    @each $size in $base-size-list {
+        @include util_set_font_size($size)
+    }
+}
+
+@mixin util_css3($property, $value) {
+     @each $prefix in -webkit-, -moz-, -ms-, -o-, '' {
+          #{$prefix}#{$property}: $value;
+     }
+}

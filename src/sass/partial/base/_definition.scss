@@ -1,10 +1,32 @@
-$font-size: (
-    xxsmall: 1.5,
-    xsmall: 1.8,
+// Base Size
+$base-size-list: xxsmall, xsmall, small, medium, large, xlarge, xxlarge;
+
+// Base Font Size
+$base-font-size: (
+    xxsmall: 1.2,
+    xsmall: 1.5,
+    small: 1.8,
     medium: 2.0,
     large: 2.4,
     xlarge: 2.8,
     xxlarge: 3.0,
 );
 
-$font-family: Lucida Sans, Lucida Sans Unicode, Arial, Sans-Serif;
+// Base Font Family
+$base-font-family: Lucida Sans, Lucida Sans Unicode, Arial, Sans-Serif;
+
+// Base Primary color
+$base-color-primary-0: #FBE4C5;
+$base-color-primary-1: #FFC983;
+$base-color-primary-2: #FFD9A8;
+$base-color-primary-3: #C9B9A5;
+$base-color-primary-4: #A29C94;
+$baes-color-white: #FFF;
+$bace-color-black: #000;
+
+
+body {
+	font-family: $base-font-family;
+    background: $baes-color-white;
+    color: $base-color-primary-4;
+}

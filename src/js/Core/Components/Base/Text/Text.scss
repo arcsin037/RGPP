@@ -1,0 +1,4 @@
+@import 'style';
+.Text {
+    @include util_set_each_font_size()
+}
