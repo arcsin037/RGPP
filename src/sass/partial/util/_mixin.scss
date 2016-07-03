@@ -1,0 +1,12 @@
+@mixin util_font_size($font-size) {
+    font-size: ($font-size * 10) + px;
+    font-size: $font-size + rem;
+}
+
+@mixin util_abs_position ($top: auto, $right: auto, $bottom: auto, $left: auto) {
+     position: absolute;
+     top: $top;
+     right: $right;
+     bottom: $bottom;
+     left: $left;
+}
