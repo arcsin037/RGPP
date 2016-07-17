@@ -10,12 +10,12 @@ import styles from './Button.scss'
 
 export const Button = (props) => (
     <button className={styles.Button} title={props.title}>
-        {props.innerElement}
+        {props.children}
     </button>
 )
 
 Button.propTypes = {
-    innerElement: PropTypes.oneOfType([PropTypes.object.isRequired, PropTypes.string]),
+    children: PropTypes.element,
     title: PropTypes.string.isRequired
 }
 

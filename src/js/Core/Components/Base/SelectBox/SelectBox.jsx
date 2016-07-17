@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react'
-
+import styles from './SelectBox.scss'
 /**
  * Select Box
  *
@@ -17,7 +17,7 @@ export const SelectBox = (props) => {
         <option key={option.value} value={option.value} selected={option.selected}>{option.name}</option>
     ))
     return (
-        <select defaultValue={props.defaultValue}>
+        <select className={styles.SelectBox} defaultValue={props.defaultValue}>
             {options}
         </select>
     )

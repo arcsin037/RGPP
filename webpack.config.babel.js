@@ -114,7 +114,10 @@ export default {
     },
 
     sassLoader: {
-        includePaths: [path.resolve(__dirname, 'src/sass')]
+        includePaths: [
+            path.join(__dirname, 'src/sass'),
+            path.join(__dirname, 'node_modules/node-normalize-scss')
+        ]
     },
 
     devServer: {

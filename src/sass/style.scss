@@ -1,12 +1,9 @@
 @CHARSET "UTF-8";
 
+@import "normalize";
 @import 'partial/base';
 @import 'partial/util';
 @import 'partial/wrapper';
-
-.selectbox {
-	width:200px;
-}
 
 .selectbox-wrapper {
 	padding : 2px;

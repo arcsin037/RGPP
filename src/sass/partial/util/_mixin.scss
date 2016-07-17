@@ -13,13 +13,13 @@
 
 @mixin util_set_font_size($size) {
     &.is_#{$size} {
-        @include util_font_size(map-get($base-font-size, $size))
+        @include util_font_size(map-get($base-font-size, $size));
     }
 }
 
 @mixin util_set_each_font_size() {
     @each $size in $base-size-list {
-        @include util_set_font_size($size)
+        @include util_set_font_size($size);
     }
 }
 
@@ -27,4 +27,8 @@
      @each $prefix in -webkit-, -moz-, -ms-, -o-, '' {
           #{$prefix}#{$property}: $value;
      }
+}
+
+@mixin box-shadow($shadows...) {
+    @include util_css3(box-shadow, $shadows);
 }

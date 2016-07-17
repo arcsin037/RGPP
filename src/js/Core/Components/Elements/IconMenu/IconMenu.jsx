@@ -12,26 +12,31 @@ import styles from './IconMenu.scss'
 
 class IconMenu extends React.Component {
     render() {
-        const newIconImg = <img src={newIcon}/>
-        const saveIconImg = <img src={saveIcon}/>
-        const gridIconImg = <img src={gridIcon}/>
-        const calendarIconImg = <img src={calendarIcon}/>
-        const playIconImg = <img src={playIcon}/>
-        const pauseIconImg = <img src={pauseIcon}/>
-        const debugIconImg = <img src={debugIcon}/>
-
         return (
             <div className={styles.btnWrapper}>
-                <Button title='New Map' innerElement={newIconImg}/>
-                <Button title='Save Map' innerElement={saveIconImg}/>
-                <Button title='Grid' innerElement={gridIconImg}/>
-                <Button title='Schedule' innerElement={calendarIconImg}/>
-                <Button title='Play' innerElement={playIconImg}/>
-                <Button title='Pause' innerElement={pauseIconImg}/>
-                <Button title='Debug Mode' innerElement={debugIconImg}/>
-            </div>
+                <Button title='New Map'>
+                    <img src={newIcon}/>
+                </Button>
+                <Button title='Save Map'>
+                    <img src={saveIcon}/>
+                </Button>
+                <Button title='Grid'>
+                    <img src={gridIcon}/>
+                </Button>
+                <Button title='Schedule'>
+                    <img src={calendarIcon}/>
+                </Button>
+                <Button title='Play'>
+                    <img src={playIcon}/>
+                </Button>
+                <Button title='Pause'>
+                    <img src={pauseIcon}/>
+                </Button>
+                <Button title='Debug Mode'>
+                    <img src={debugIcon}/>
+                </Button>
+            </div >
         )
     }
 }
-
 export default IconMenu

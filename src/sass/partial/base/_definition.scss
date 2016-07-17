@@ -21,12 +21,14 @@ $base-color-primary-1: #FFC983;
 $base-color-primary-2: #FFD9A8;
 $base-color-primary-3: #C9B9A5;
 $base-color-primary-4: #A29C94;
-$baes-color-white: #FFF;
-$bace-color-black: #000;
+$base-color-white: #FFF;
+$base-color-black: #000;
 
+$base-background-color: $base-color-white;
+$base-font-color: $base-color-primary-4;
 
 body {
 	font-family: $base-font-family;
-    background: $baes-color-white;
-    color: $base-color-primary-4;
+    background: $base-background-color;
+    color: $base-font-color;
 }
