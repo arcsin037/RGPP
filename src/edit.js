@@ -1,11 +1,16 @@
 import 'babel-polyfill'
 import $ from 'jquery'
 // import RGPP from 'RGPP'
+import App from 'Core/Components/TodoList/App'
 import EditorMainPanel from 'Core/View/EditorMainPanel'
+import {Provider} from 'react-redux'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import injectTapEventPlugin from 'react-tap-event-plugin'
 import config from './templates/config.json'
+import {createStore} from 'redux'
+import injectTapEventPlugin from 'react-tap-event-plugin'
+import reducers from 'Core/reducers'
+
 import template from './templates/Edit.mustache'
 
 /**
@@ -26,6 +31,7 @@ import template from './templates/Edit.mustache'
 //https://github.com/zilverline/react-tap-event-plugin
 injectTapEventPlugin()
 
+const store = createStore(reducers, window.devToolsExtension && window.devToolsExtension())
 /**
  * Function to call when DOMs are loaded
  * @method main
@@ -33,7 +39,9 @@ injectTapEventPlugin()
 $(() => {
     // Open editor mode main panel
     ReactDOM.render(
-        <EditorMainPanel />,
+        <Provider store={store}>
+            <EditorMainPanel />
+        </Provider>,
         document.getElementById('content')
     )
 })

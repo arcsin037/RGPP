@@ -1,5 +1,2 @@
 import EditorMainPanel from './EditorMainPanel'
-
-export default {
-    EditorMainPanel
-}
+export default {EditorMainPanel}

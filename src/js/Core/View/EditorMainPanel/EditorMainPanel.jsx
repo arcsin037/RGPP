@@ -59,7 +59,7 @@ class EditorMainPanel extends React.Component {
                     <SelectBox options={layerOptions} defaultValue='Event'/>
                 </div>
                 <MapPanel />
-                <EmulationWindow titleName={RGPP.Config.GAME_NAME}/>
+                {/* <EmulationWindow titleName={RGPP.Config.GAME_NAME}/> */}
             {/*<PaletteWindow />*/}
             </div>
         )
