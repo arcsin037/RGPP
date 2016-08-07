@@ -19,3 +19,13 @@ export const setColor = (ctx, r, g, b, a) => {
 export const clear = (ctx) => {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
 }
+
+export const drawImage = (ctx, img) => {
+    ctx.drawImage(img, 0, 0)
+}
+
+export const loadImage = (imgPath) => {
+    const img = new Image()
+    img.src = `${imgPath}?${new Date().getTime()}`
+    return img
+}

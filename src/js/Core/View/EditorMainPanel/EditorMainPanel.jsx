@@ -2,7 +2,7 @@ import EmulationWindow from 'Core/Components/EmulationWindow'
 import IconMenu from 'Core/Components/Elements/IconMenu'
 // import MainPanel from 'Core/Components/MainPanel'
 import MapPanel from 'Core/Components/MapPanel'
-import PaletteWindow from 'Core/Components/Palette/PaletteWindow.jsx'
+import PalettePanel from 'Core/Components/PalettePanel'
 import RGPP from 'RGPP'
 import React from 'react'
 import SelectBox from 'Core/Components/Base/SelectBox'
@@ -59,6 +59,7 @@ class EditorMainPanel extends React.Component {
                     <SelectBox options={layerOptions} defaultValue='Event'/>
                 </div>
                 <MapPanel />
+                <PalettePanel />
                 {/* <EmulationWindow titleName={RGPP.Config.GAME_NAME}/> */}
             {/*<PaletteWindow />*/}
             </div>
