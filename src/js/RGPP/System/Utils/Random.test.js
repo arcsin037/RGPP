@@ -92,7 +92,7 @@ describe('Random', () => {
                     const range = Math.abs(toInteger - fromInteger) / 2
                     const base = (fromInteger + toInteger) / 2
                     expect(result).to.be.closeTo(base, range)
-                    expect(result).to.be.equal(parseInt(result, 10))
+                    expect(result).to.equal(parseInt(result, 10))
                 }
             })
 

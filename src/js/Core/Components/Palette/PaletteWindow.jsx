@@ -68,7 +68,6 @@ class PaletteWindow extends React.Component {
 
     render() {
         return (
-
             <Draggable handle='div'>
                 <div id='palette-window' title='Palette'>
                     <div id='palette-window-menu'>

@@ -1,144 +1,94 @@
-(function(global) {
-	/* global RGPP */
-	"use strict";
-		var objName = "MapLayer";
+export const NOTHING = -1
+export const OUT_OF_BOUNDS = -2
 
-	var constructor = function(spec) {
-		var that = {};
-		var mCol = spec.col;
-		var mRow = spec.row;
-		var mChipSetCategoryIDArray = [];
-		var mChipSetDataIDArray = [];
-		var mChipSetNoArray = [];
-		var NOTHING = -1;
-		var OUT_OF_BOUNDS = -2;
+export const DEFAULT_COL = 20
+export const DEFAULT_ROW = 15
 
-		// Interface
-		that.setData = setData;
-		that.chipSetID = chipSetDataID;
-		that.chipSetNo = chipSetNo;
-		that.chipSetCategoryID = chipSetCategoryID;
-		
-		that.getChipSetCategoryIDArray = getChipSetCategoryIDArray;
-		that.getChipSetIDArray = getChipSetIDArray;
-		that.getChipSetNoArray = getChipSetNoArray;
+export class MapLayer {
+    constructor(spec = {}) {
+        const {
+            col = DEFAULT_COL, row = DEFAULT_ROW
+        } = spec
 
-		// Implementation
-		var initialize = function() {
-			for (var y = 0; y < mRow; ++y) {
-				mChipSetCategoryIDArray[y] = [];
-				mChipSetDataIDArray[y] = [];
-				mChipSetNoArray[y] = [];
-				for (var x = 0; x < mCol; ++x) {
-					mChipSetCategoryIDArray[y][x] = NOTHING;
-					mChipSetDataIDArray[y][x] = NOTHING;
-					mChipSetNoArray[y][x] = NOTHING;
-				}
-			}
-		};
+        this.col = col
+        this.row = row
+        this.chipSetCategoryIDArray = []
+        this.chipSetDataIDArray = []
+        this.chipSetNoArray = []
+        for (let y = 0; y < this.row; ++y) {
+            this.chipSetCategoryIDArray[y] = []
+            this.chipSetDataIDArray[y] = []
+            this.chipSetNoArray[y] = []
+            for (let x = 0; x < this.col; ++x) {
+                this.chipSetCategoryIDArray[y][x] = NOTHING
+                this.chipSetDataIDArray[y][x] = NOTHING
+                this.chipSetNoArray[y][x] = NOTHING
+            }
+        }
+    }
 
-		function setData(x, y, chipSetCategoryID, chipSetDataID, chipSetNo) {
-			if (x >= 0 && x < mCol && y >= 0 && y < mRow) {
-				mChipSetCategoryIDArray[y][x] = chipSetCategoryID;
-				mChipSetDataIDArray[y][x] = chipSetDataID;
-				mChipSetNoArray[y][x] = chipSetNo;
-			}
-		}
-		
-		function chipSetCategoryID(x, y) {
-			if (x < 0 || x >= mCol || y < 0 || y >= mRow) {
-				return OUT_OF_BOUNDS;
-			}
-			return mChipSetCategoryIDArray[y][x];
-		}
+    setData(x, y, chipSetCategoryID, chipSetDataID, chipSetNo) {
+        if (x >= 0 && x < this.col && y >= 0 && y < this.row) {
+            this.chipSetCategoryIDArray[y][x] = chipSetCategoryID
+            this.chipSetDataIDArray[y][x] = chipSetDataID
+            this.chipSetNoArray[y][x] = chipSetNo
+        }
+    }
 
-		function chipSetDataID(x, y) {
-			if (x < 0 || x >= mCol || y < 0 || y >= mRow) {
-				return OUT_OF_BOUNDS;
-			}
-			return mChipSetDataIDArray[y][x];
-		}
+    chipSetCategoryID(x, y) {
+        if (x < 0 || x >= this.col || y < 0 || y >= this.row) {
+            return OUT_OF_BOUNDS
+        }
+        return this.chipSetCategoryIDArray[y][x]
+    }
 
-		function chipSetNo(x, y) {
-			if (x < 0 || x >= mCol || y < 0 || y >= mRow) {
-				return OUT_OF_BOUNDS;
-			}
-			return mChipSetNoArray[y][x];
-		}
+    chipSetDataID(x, y) {
+        if (x < 0 || x >= this.col || y < 0 || y >= this.row) {
+            return OUT_OF_BOUNDS
+        }
+        return this.chipSetDataIDArray[y][x]
+    }
 
-		function getChipSetCategoryIDArray(x, y, pSpecifyRangeX, pSpecifyRangeY) {
-			var absPaletteSpecifyRangeX = Math.abs(pSpecifyRangeX);
-			var absPaletteSpecifyRangeY = Math.abs(pSpecifyRangeY);
-			var ret = [absPaletteSpecifyRangeY];
+    chipSetNo(x, y) {
+        if (x < 0 || x >= this.col || y < 0 || y >= this.row) {
+            return OUT_OF_BOUNDS
+        }
+        return this.chipSetNoArray[y][x]
+    }
 
-			for (var i = 0; i < absPaletteSpecifyRangeY; ++i) {
-				ret[i] = [absPaletteSpecifyRangeX];
-				for (var j = 0; j < absPaletteSpecifyRangeX; ++j) {
-					var dstX = j + x;
-					var dstY = i + y;
-					if (0 <= dstX && dstX < mCol && 0 <= dstY && dstY < mRow) {
-						ret[i][j] = mChipSetCategoryIDArray[dstY][dstX];
-					}
-					else {
-						ret[i][j] = OUT_OF_BOUNDS;
-					}
-				}
-			}
-			return ret;
-		}
+    getChipSetCategoryIDArray(x, y, pSpecifyRangeX, pSpecifyRangeY) {
+        return this.getPartArray(x, y, pSpecifyRangeX, pSpecifyRangeY, this.chipSetCategoryIDArray)
+    }
 
-		function getChipSetIDArray(x, y, pSpecifyRangeX, pSpecifyRangeY) {
-			var absPaletteSpecifyRangeX = Math.abs(pSpecifyRangeX);
-			var absPaletteSpecifyRangeY = Math.abs(pSpecifyRangeY);
-			var ret = [absPaletteSpecifyRangeY];
+    getChipSetDataIDArray(x, y, pSpecifyRangeX, pSpecifyRangeY) {
+        return this.getPartArray(x, y, pSpecifyRangeX, pSpecifyRangeY, this.chipSetDataIDArray)
+    }
 
-			for (var i = 0; i < absPaletteSpecifyRangeY; ++i) {
-				ret[i] = [absPaletteSpecifyRangeX];
-				for (var j = 0; j < absPaletteSpecifyRangeX; ++j) {
-					var dstX = j + x;
-					var dstY = i + y;
-					if (0 <= dstX && dstX < mCol && 0 <= dstY && dstY < mRow) {
-						ret[i][j] = mChipSetDataIDArray[dstY][dstX];
-					}
-					else {
-						ret[i][j] = OUT_OF_BOUNDS;
-					}
-				}
-			}
-			return ret;
-		}
+    getChipSetNoArray(x, y, pSpecifyRangeX, pSpecifyRangeY) {
+        return this.getPartArray(x, y, pSpecifyRangeX, pSpecifyRangeY, this.chipSetNoArray)
+    }
 
-		function getChipSetNoArray(x, y, pSpecifyRangeX, pSpecifyRangeY) {
-			var absPaletteSpecifyRangeX = Math.abs(pSpecifyRangeX);
-			var absPaletteSpecifyRangeY = Math.abs(pSpecifyRangeY);
+    getPartArray(x, y, pSpecifyRangeX, pSpecifyRangeY, arrayData) {
+        const absPaletteSpecifyRangeX = Math.abs(pSpecifyRangeX)
+        const absPaletteSpecifyRangeY = Math.abs(pSpecifyRangeY)
 
-			var ret = [absPaletteSpecifyRangeY];
+        const ret = [absPaletteSpecifyRangeY]
 
-			for (var i = 0; i < absPaletteSpecifyRangeY; ++i) {
-				ret[i] = [absPaletteSpecifyRangeX];
-				for (var j = 0; j < absPaletteSpecifyRangeX; ++j) {
-					var dstX = j + x;
-					var dstY = i + y;
-					if (0 <= dstX && dstX < mCol && 0 <= dstY && dstY < mRow) {
-						ret[i][j] = mChipSetNoArray[dstY][dstX];
-					}
-					else {
-						ret[i][j] = OUT_OF_BOUNDS;
-					}
-				}
-			}
-			return ret;
+        for (let i = 0; i < absPaletteSpecifyRangeY; i += 1) {
+            ret[i] = [absPaletteSpecifyRangeX]
+            for (let j = 0; j < absPaletteSpecifyRangeX; j += 1) {
+                const dstX = j + x
+                const dstY = i + y
+                if (0 <= dstX && dstX < this.col && 0 <= dstY && dstY < this.row) {
+                    ret[i][j] = arrayData[dstY][dstX]
+                } else {
+                    ret[i][j] = OUT_OF_BOUNDS
+                }
+            }
+        }
+        return ret
+    }
 
-		}
+}
 
-		initialize();
-
-		return that;
-	};
-    RGPP.System.exports({
-        name: objName,
-        constructorFunc: constructor,
-        module: module
-    });
-
-})((this || 0).self || global);
+export default MapLayer

@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import Canvas from 'Core/Components/Base/Canvas'
 import KeyBoard from 'Core/Input/KeyBoard'
 import Mouse from 'Core/Input/Mouse'
+import Pad from 'Core/Input/Pad'
 
 import styles from './ControllableCanvas.scss'
 
@@ -11,6 +12,7 @@ class ControllableCanvas extends Component {
         this.ctx = null
         this.keyboard = new KeyBoard()
         this.mouse = new Mouse()
+        this.pad = new Pad(this.keyboard)
 
         this.getCanvasInfo = this.getCanvasInfo.bind(this)
         this.onKeyDown = this.onKeyDown.bind(this)
@@ -24,19 +26,23 @@ class ControllableCanvas extends Component {
     }
 
     componentWillMount() {
-        this.setState({
-            ctx: this.ctx,
-            mouseInfo: this.mouse.mouseInfo(),
-            keyInfo: this.keyboard.keyInfo()
-        })
+        this.updateState()
     }
 
     updateState() {
         this.setState({
             ctx: this.ctx,
             mouseInfo: this.mouse.mouseInfo(),
-            keyInfo: this.keyboard.keyInfo()
+            keyInfo: this.keyboard.keyInfo(),
+            padInfo: this.pad.padInfo()
         })
+        if (!this.state) {
+            return
+        }
+        const {ctx, mouseInfo, keyInfo, padInfo} = this.state
+        if (!mouseInfo || !ctx || !keyInfo || !padInfo) {
+            return
+        }
         this.props.onEvent(this.state)
     }
 
@@ -93,7 +99,7 @@ class ControllableCanvas extends Component {
                 onMouseDown={this.onMouseDown}
                 onMouseUp={this.onMouseUp}
                 onMouseOut={this.onMouseOut}
-                onMouseOver={this.onMouseOut}
+                onMouseOver={this.onMouseOver}
                 onDoubleClick={this.onDoubleClick}
             >
                 <Canvas

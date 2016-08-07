@@ -1,70 +1,43 @@
 /**
- * System module
- * @module System
- * @namespace RGPP.System
+ * Coordinate System operator
+ * @class Coordinate System operator
+ * @author arcsin
+ * @constructor
  */
-(function(global) {
-	/* global RGPP */
-	"use strict";
-	var objName = "CoordinateSystem";
+export class CoordinateSystem {
+    constructor() {
+        this.scrollX = 0
+        this.scrollY = 0
+    }
 
-	/**
-	 * Coordinate System operator
-	 * @class Coordinate System operator 
-	 * @author arcsin
-	 * @constructor
-	 */
-	var constructor = function(spec) {
-		var that = {};
+    setScrollXY(x, y) {
+        this.scrollX = x
+        this.scrollY = y
+    }
 
-		var mScrollX = 0;
-		var mScrollY = 0;
+    getScrollX() {
+        return this.scrollX
+    }
 
-		that.setScrollXY = setScrollXY;
-		that.getScrollX = getScrollX;
-		that.getScrollY = getScrollY;
+    getScrollY() {
+        return this.scrollY
+    }
 
-		that.convertMapToScreenX = convertMapToScreenX;
-		that.convertMapToScreenY = convertMapToScreenY;
-		that.convertScreenToMapX = convertScreenToMapX;
-		that.convertScreenToMapY = convertScreenToMapY;
+    convertMapToScreenX(x) {
+        return x + this.scrollX
+    }
 
-		function setScrollXY(x, y) {
-			mScrollX = x;
-			mScrollY = y;
-		}
+    convertMapToScreenY(y) {
+        return y + this.scrollY
+    }
 
-		function getScrollX() {
-			return mScrollX;
-		}
+    convertScreenToMapX(x) {
+        return x - this.scrollX
+    }
 
-		function getScrollY() {
-			return mScrollY;
-		}
+    convertScreenToMapY(y) {
+        return y - this.scrollY
+    }
+}
 
-		function convertMapToScreenX(x) {
-			return x + mScrollX;
-		}
-
-		function convertMapToScreenY(y) {
-			return y + mScrollY;
-		}
-
-		function convertScreenToMapX(x) {
-			return x - mScrollX;
-		}
-
-		function convertScreenToMapY(y) {
-			return y - mScrollY;
-		}
-
-		return that;
-	};
-
-	RGPP.System.exportsAsSingleton({
-		name: objName,
-		constructorFunc: constructor,
-		module: module
-	});
-
-})((this || 0).self || global);
+export default CoordinateSystem

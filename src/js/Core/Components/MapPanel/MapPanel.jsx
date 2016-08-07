@@ -3,52 +3,104 @@ import ControllableCanvas from 'Core/Components/Base/ControllableCanvas'
 import RGPP from 'RGPP'
 import styles from './MapPanel.scss'
 
-const DOT_MODE = 0
-const SQUARE_MODE = 1
-const AREA_FILL_MODE = 2
-const ERASER_MODE = 3
+const CHIP_WIDTH = 32
+const CHIP_HEIGHT = 32
 
-const MAP_LAYER_NUM = 3
+const BasicDraw = RGPP.System.Graphics.BasicDraw
+const NumberUtil = RGPP.System.Utils.NumberUtil
+const MapData = RGPP.System.Map.MapData
 
 class MapPanel extends Component {
 
     constructor(props) {
         super(props)
+        this.selectedX = 0
+        this.selectedY = 0
         this.onEvent = this.onEvent.bind(this)
-    }
+        const width = RGPP.Config.RESOLUTION_X
+        const height = RGPP.Config.RESOLUTION_Y
 
-    componentWillMount() {
-        this.setState({
+        this.chipWidth = CHIP_WIDTH
+        this.chipHeight = CHIP_HEIGHT
+        this.col = Math.floor(width / this.chipWidth)
+        this.row = Math.floor(height / this.chipHeight)
+
+        this.mapData = new MapData({
+            col: this.col,
+            row: this.row,
+            chipWidth: this.chipWidth,
+            chipHeight: this.chipHeight
         })
     }
 
     onEvent(state) {
-        this.setState(state)
-        console.log(state)
+        const {ctx} = state
+        BasicDraw.clear(ctx)
+        this.onUpdate(state)
+        this.onDraw(ctx)
     }
 
-    drawEventLayer() {
-        const { ctx } = this.state
+    onUpdate(state) {
+        const {mouseInfo, padInfo} = state
+        this.updateSelectedPos(mouseInfo, padInfo)
+    }
+
+    updateSelectedPos(mouseInfo, padInfo) {
+        if (mouseInfo.isLeftClick) {
+            this.selectedX = Math.floor(mouseInfo.x / this.chipWidth)
+            this.selectedY = Math.floor(mouseInfo.y / this.chipHeight)
+        }
+        if (padInfo.isKeyOnLeft) {
+            this.selectedX -= 1
+        }
+        if (padInfo.isKeyOnRight) {
+            this.selectedX += 1
+        }
+        if (padInfo.isKeyOnUp) {
+            this.selectedY -= 1
+        }
+        if (padInfo.isKeyOnDown) {
+            this.selectedY += 1
+        }
+
+        this.selectedX = NumberUtil.clamp(this.selectedX, 0, this.col - 1)
+        this.selectedY = NumberUtil.clamp(this.selectedY, 0, this.row - 1)
+    }
+
+    onDraw(ctx) {
+        if (!ctx) {
+            return
+        }
+        this.drawMap(ctx)
+        this.drawEditSystemImage(ctx)
+    }
+
+    drawEditSystemImage(ctx) {
         ctx.globalAlpha = 1.0
-
+        // draw Green Rectangle in Selected Area
+        this.drawCellLargeRect(ctx, this.selectedX, this.selectedY, 0, 255, 0, 1)
     }
 
-    drawCellRect2 (x, y, r, g, b, a) {
-        setColor(mCtx, r, g, b, a)
-        fundDrawing.drawRect(mCtx,
-            x * CHIP_WIDTH, y * CHIP_HEIGHT, CHIP_WIDTH, CHIP_HEIGHT, 2);
-    };
+    drawMap(ctx) {
+        this.mapData.onDraw(ctx)
+    }
+
+    drawCellRect(ctx, x, y, r, g, b, a) {
+        BasicDraw.setColor(ctx, r, g, b, a)
+        BasicDraw.drawRect(ctx, x * this.chipWidth, y * this.chipHeight, this.chipWidth, this.chipHeight, 2)
+    }
+
+    drawCellLargeRect(ctx, x, y, r, g, b, a) {
+        BasicDraw.setColor(ctx, r, g, b, a)
+        BasicDraw.drawRect(ctx, x * this.chipWidth, y * this.chipHeight, this.chipWidth, this.chipHeight, 3)
+    }
 
     render() {
         const width = RGPP.Config.RESOLUTION_X
         const height = RGPP.Config.RESOLUTION_Y
         return (
             <div className={styles.MapPanel}>
-                <ControllableCanvas
-                    width={width}
-                    height={height}
-                    onEvent={this.onEvent}
-                />
+                <ControllableCanvas width={width} height={height} onEvent={this.onEvent}/>
             </div>
         )
     }

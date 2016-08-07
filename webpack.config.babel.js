@@ -89,7 +89,7 @@ export default {
             }
         }, {
             // for test
-            test: /\.test\.js[x]$/,
+            test: /\.test\.js[x]?$/,
             include: [path.join(__dirname, 'src/js')],
             loaders: ['mocha', 'babel']
         }, {
