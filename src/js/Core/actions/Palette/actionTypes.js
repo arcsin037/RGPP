@@ -1,0 +1,3 @@
+export const ADD_PALETTE = 'ADD_PALETTE'
+
+export const SET_SELECTION_RANGE = 'SET_SELECTION_RANGE'
