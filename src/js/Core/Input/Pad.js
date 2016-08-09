@@ -1,4 +1,4 @@
-import KeyBoard, * as KeyCode from './KeyBoard'
+import * as KeyCode from './KeyBoard'
 
 /**
  * Pad

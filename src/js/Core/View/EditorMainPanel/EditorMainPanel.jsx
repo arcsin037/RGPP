@@ -1,7 +1,7 @@
 import EmulationWindow from 'Core/Components/EmulationWindow'
 import IconMenu from 'Core/Components/Elements/IconMenu'
 // import MainPanel from 'Core/Components/MainPanel'
-import MapPanel from 'Core/Components/MapPanel'
+import MapPanel from 'Core/containers/MapPanel'
 import PalettePanel from 'Core/containers/PalettePanel'
 import RGPP from 'RGPP'
 import React from 'react'

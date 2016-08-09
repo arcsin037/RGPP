@@ -36,39 +36,6 @@ export class Palette {
         }
         BasicDraw.drawImage(ctx, this.paletteImage)
     }
-
-    drawSelectedImage(ctx, dstX, dstY, mapChipWidth, mapChipHeight) {
-        const scaleX = mapChipWidth / this.chipWidth
-        const scaleY = mapChipHeight / this.chipHeight
-
-        const option = {
-            sx: this.startPixelX,
-            sy: this.startPixelY,
-            sw: this.specifyRangePixelX,
-            sh: this.specifyRangePixelY,
-            dx: dstX,
-            dy: dstY,
-            dw: this.specifyRangePixelX * scaleX,
-            dh: this.specifyRangePixelY * scaleY
-        }
-        BasicDraw.drawImage(ctx, this.paletteImage, option)
-    }
-
-    drawChipImage(ctx, dstX, dstY, chipNo, mapChipWidth, mapChipHeight) {
-        const chipX = chipNo % this.chipMaxWidth
-        const chipY = Math.floor(chipNo / this.chipMaxWidth)
-        const option = {
-            sx: chipX * this.chipWidth,
-            sy: chipY * this.chipHeight,
-            sw: this.chipWidth,
-            sh: this.chipHeight,
-            dx: dstX,
-            dy: dstY,
-            dw: mapChipWidth,
-            dh: mapChipHeight
-        }
-        BasicDraw.drawImage(ctx, this.paletteImage, option)
-    }
 }
 
 export default Palette

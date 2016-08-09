@@ -34,11 +34,10 @@ class ControllableCanvas extends Component {
     }
 
     componentDidUpdate(nextProps, nextState) {
-        console.log('componentDidUpdate', nextProps, nextState)
         nextProps.onEvent(nextState)
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
+    shouldComponentUpdate(nextProps) {
         return nextProps.width !== this.props.width || nextProps.height !== this.props.height
     }
 
