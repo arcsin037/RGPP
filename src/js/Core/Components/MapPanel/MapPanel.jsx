@@ -35,7 +35,6 @@ class MapPanel extends Component {
 
     onEvent(state) {
         const {ctx} = state
-        BasicDraw.clear(ctx)
         this.onUpdate(state)
         this.onDraw(ctx)
     }
@@ -71,6 +70,7 @@ class MapPanel extends Component {
         if (!ctx) {
             return
         }
+        BasicDraw.clear(ctx)
         this.drawMap(ctx)
         this.drawEditSystemImage(ctx)
     }

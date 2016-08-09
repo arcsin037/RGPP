@@ -1,6 +1,11 @@
 @import 'style';
 
 .PalettePanel {
-    width: 640px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
     margin: auto;
+    padding: 0;
+    overflow-y: scroll;
 }

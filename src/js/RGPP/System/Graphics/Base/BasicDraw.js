@@ -20,12 +20,20 @@ export const clear = (ctx) => {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
 }
 
-export const drawImage = (ctx, img) => {
-    ctx.drawImage(img, 0, 0)
-}
-
-export const loadImage = (imgPath) => {
-    const img = new Image()
-    img.src = `${imgPath}?${new Date().getTime()}`
-    return img
+export const drawImage = (ctx, img, option) => {
+    if (!option) {
+        ctx.drawImage(img, 0, 0)
+        return
+    }
+    const {
+        sx = 0,
+        sy = 0,
+        sw = img.width,
+        sh = img.height,
+        dx = 0,
+        dy = 0,
+        dw = img.width,
+        dh = img.height
+    } = option
+    ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh)
 }

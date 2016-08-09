@@ -29,22 +29,32 @@ class ControllableCanvas extends Component {
         this.updateState()
     }
 
+    componentDidMount() {
+        this.updateState()
+    }
+
+    componentDidUpdate(nextProps, nextState) {
+        nextProps.onEvent(nextState)
+    }
+
     updateState() {
-        this.setState({
+        const nextState = {
             ctx: this.ctx,
             mouseInfo: this.mouse.mouseInfo(),
             keyInfo: this.keyboard.keyInfo(),
             padInfo: this.pad.padInfo()
-        })
-        if (!this.state) {
+        }
+        this.setState(nextState)
+        if (!nextState) {
             return
         }
-        const {ctx, mouseInfo, keyInfo, padInfo} = this.state
+        const {ctx, mouseInfo, keyInfo, padInfo} = nextState
         if (!mouseInfo || !ctx || !keyInfo || !padInfo) {
             return
         }
-        this.props.onEvent(this.state)
+        this.props.onEvent(nextState)
     }
+
 
     getCanvasInfo(ctx) {
         this.ctx = ctx

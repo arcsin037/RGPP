@@ -4,6 +4,9 @@ import styles from './Canvas.scss'
 class Canvas extends Component {
     componentDidMount() {
         const canvas = findDOMNode(this.refs.canvas)
+        if (!canvas || !canvas.getContext) {
+            return
+        }
         const ctx = canvas.getContext('2d')
         this.props.getCanvasInfo(ctx)
     }
@@ -15,13 +18,22 @@ class Canvas extends Component {
             onKeyDown = () => {},
             onKeyUp = () => {}
         } = this.props
-        
+
+        const widthPx = `${width}px`
+        const heightPx = `${height}px`
+
+        const sizeStyle = {
+            width: widthPx,
+            height: heightPx
+        }
+
         return (
             <canvas
                 ref='canvas'
                 className={styles.Canvas}
-                width={`${width}px`}
-                height={`${height}px`}
+                style={sizeStyle}
+                width={widthPx}
+                height={heightPx}
                 tabIndex='0'
                 onKeyDown={onKeyDown}
                 onKeyUp={onKeyUp}
