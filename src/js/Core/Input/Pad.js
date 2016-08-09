@@ -20,6 +20,7 @@ class Pad {
             isKeyOnA: this.isKeyOnA(),
             isKeyOnB: this.isKeyOnB(),
             isKeyOnC: this.isKeyOnC(),
+            isKeyOnDirection: this.isKeyOnUp() || this.isKeyOnDown() || this.isKeyOnLeft() || this.isKeyOnRight(),
 
             isKeyTriggeredUp: this.isKeyTriggeredUp(),
             isKeyTriggeredDown: this.isKeyTriggeredDown(),

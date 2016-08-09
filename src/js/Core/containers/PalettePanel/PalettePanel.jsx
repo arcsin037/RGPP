@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, PropTypes} from 'react'
 import {addPalette, setSelectionRange} from 'Core/actions/Palette'
 import ControllableCanvas from 'Core/Components/Base/ControllableCanvas'
 import PaletteImage from 'Image/User/MapChip/mack_material.png'
@@ -24,15 +24,14 @@ class PalettePanel extends Component {
 
         this.specifyRangeX = 1
         this.specifyRangeY = 1
-        this.palette = new Palette({img: PaletteImage, onLoad: this.onLoad})
-    }
-
-    componentWillMount() {
-        this.setState({paletteWidth: 0, paletteHeight: 0})
+        this.palette = new Palette({
+            img: PaletteImage,
+            onLoad: this.onLoad
+        })
     }
 
     onLoad() {
-        this.setState({paletteWidth: this.palette.width, paletteHeight: this.palette.height})
+        this.props.addPalette(this.palette)
     }
 
     onEvent(state) {
@@ -44,12 +43,15 @@ class PalettePanel extends Component {
     onUpdate(state) {
         const {mouseInfo, padInfo} = state
         this.updateSelectedPos(mouseInfo, padInfo)
+        this.updateSelectionRange(mouseInfo, padInfo)
     }
 
     updateSelectedPos(mouseInfo, padInfo) {
+        const selectedX = Math.floor(mouseInfo.x / this.palette.chipWidth)
+        const selectedY = Math.floor(mouseInfo.y / this.palette.chipHeight)
         if (mouseInfo.isLeftClick) {
-            this.selectedX = Math.floor(mouseInfo.x / this.palette.chipWidth)
-            this.selectedY = Math.floor(mouseInfo.y / this.palette.chipHeight)
+            this.selectedX = selectedX
+            this.selectedY = selectedY
             this.specifyRangeX = 1
             this.specifyRangeY = 1
         }
@@ -66,9 +68,9 @@ class PalettePanel extends Component {
             this.selectedY += 1
         }
 
-        if (mouseInfo.isDragged) {
-            const x = Math.floor(mouseInfo.x / this.palette.chipWidth)
-            const y = Math.floor(mouseInfo.y / this.palette.chipHeight)
+        if (mouseInfo.isLeftDragged) {
+            const x = NumberUtil.clamp(selectedX, 0, this.palette.maxCol - 1)
+            const y = NumberUtil.clamp(selectedY, 0, this.palette.maxRow - 1)
             const diffX = x - this.selectedX
             const diffY = y - this.selectedY
 
@@ -88,19 +90,7 @@ class PalettePanel extends Component {
         this.selectedY = NumberUtil.clamp(this.selectedY, 0, this.palette.maxRow - this.specifyRangeY)
     }
 
-    onDraw(ctx) {
-        if (!ctx) {
-            return
-        }
-        BasicDraw.clear(ctx)
-        this.palette.onDraw(ctx)
-        this.drawEditSystemImage(ctx)
-    }
-
-    drawEditSystemImage(ctx) {
-        ctx.globalAlpha = 1.0
-        // draw Green Rectangle in Selected Area
-        // this.drawCellLargeRect(ctx, this.selectedX, this.selectedY, 0, 255, 0, 1)
+    updateSelectionRange(mouseInfo, padInfo) {
         this.startPixelX = this.selectedX
         if (this.specifyRangeX < 0) {
             this.startPixelX += this.specifyRangeX + 1
@@ -115,6 +105,30 @@ class PalettePanel extends Component {
 
         this.specifyRangePixelX = this.palette.chipWidth * Math.abs(this.specifyRangeX)
         this.specifyRangePixelY = this.palette.chipHeight * Math.abs(this.specifyRangeY)
+
+        if (mouseInfo.isLeftUp || padInfo.isKeyOnDirection) {
+            this.props.setSelectionRange({
+                id: this.palette.id,
+                startPixelX: this.startPixelX,
+                startPixelY: this.startPixelY,
+                specifyRangePixelX: this.specifyRangePixelX,
+                specifyRangePixelY: this.specifyRangePixelY
+            })
+        }
+    }
+
+    onDraw(ctx) {
+        if (!ctx) {
+            return
+        }
+        BasicDraw.clear(ctx)
+        this.palette.onDraw(ctx)
+        this.drawEditSystemImage(ctx)
+    }
+
+    drawEditSystemImage(ctx) {
+        ctx.globalAlpha = 1.0
+
         if (this.startPixelX >= 0 && this.startPixelX < this.palette.width && this.startPixelY >= 0 && this.startPixelY < this.palette.height) {
             BasicDraw.setColor(ctx, 244, 255, 0, 1)
             BasicDraw.drawRect(ctx, this.startPixelX, this.startPixelY, this.specifyRangePixelX, this.specifyRangePixelY, 2)
@@ -127,23 +141,45 @@ class PalettePanel extends Component {
     }
 
     render() {
+        const {
+            paletteWidth,
+            paletteHeight
+        } = this.props
         return (
             <div className={styles.PalettePanel}>
-                <ControllableCanvas width={this.state.paletteWidth} height={this.state.paletteHeight} onEvent={this.onEvent}/>
+                <ControllableCanvas width={paletteWidth} height={paletteHeight} onEvent={this.onEvent}/>
             </div>
         )
     }
-
 }
 
-const mapStateToProps = (state) => ({})
+PalettePanel.propTypes = {
+    paletteWidth: PropTypes.number.isRequired,
+    paletteHeight: PropTypes.number.isRequired,
+    addPalette: PropTypes.func.isRequired,
+    setSelectionRange: PropTypes.func.isRequired
+}
+
+const mapStateToProps = (state) => {
+    const paletteId = state.palette.selection.id
+    const selectedPalette = state.palette.palettes[paletteId]
+    let paletteWidth = 0
+    let paletteHeight = 0
+    if (selectedPalette) {
+        const paletteImg = state.palette.palettes[paletteId].img
+        paletteWidth = paletteImg.width
+        paletteHeight = paletteImg.height
+    }
+
+    return {
+        paletteWidth,
+        paletteHeight
+    }
+}
 
 const mapDispatchToProps = (dispatch) => (bindActionCreators({
     addPalette,
     setSelectionRange
 }, dispatch))
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(PalettePanel)
+export default connect(mapStateToProps, mapDispatchToProps)(PalettePanel)

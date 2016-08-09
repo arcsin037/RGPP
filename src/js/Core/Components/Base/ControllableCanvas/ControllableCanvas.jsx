@@ -34,7 +34,12 @@ class ControllableCanvas extends Component {
     }
 
     componentDidUpdate(nextProps, nextState) {
+        console.log('componentDidUpdate', nextProps, nextState)
         nextProps.onEvent(nextState)
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return nextProps.width !== this.props.width || nextProps.height !== this.props.height
     }
 
     updateState() {
@@ -54,7 +59,6 @@ class ControllableCanvas extends Component {
         }
         this.props.onEvent(nextState)
     }
-
 
     getCanvasInfo(ctx) {
         this.ctx = ctx
@@ -103,21 +107,8 @@ class ControllableCanvas extends Component {
 
     render() {
         return (
-            <div
-                className={styles.ControllableCanvas}
-                onMouseMove={this.onMouseMove}
-                onMouseDown={this.onMouseDown}
-                onMouseUp={this.onMouseUp}
-                onMouseOut={this.onMouseOut}
-                onMouseOver={this.onMouseOver}
-                onDoubleClick={this.onDoubleClick}
-            >
-                <Canvas
-                    {...this.props}
-                    getCanvasInfo={this.getCanvasInfo}
-                    onKeyDown={this.onKeyDown}
-                    onKeyUp={this.onKeyUp}
-                />
+            <div className={styles.ControllableCanvas} onMouseMove={this.onMouseMove} onMouseDown={this.onMouseDown} onMouseUp={this.onMouseUp} onMouseOut={this.onMouseOut} onMouseOver={this.onMouseOver} onDoubleClick={this.onDoubleClick}>
+                <Canvas {...this.props} getCanvasInfo={this.getCanvasInfo} onKeyDown={this.onKeyDown} onKeyUp={this.onKeyUp}/>
             </div>
         )
     }

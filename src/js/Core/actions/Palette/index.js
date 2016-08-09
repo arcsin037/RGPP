@@ -5,11 +5,11 @@ import {
 
 export const addPalette = ({
     id,
-    img
+    paletteImage
 }) => ({
     type: ADD_PALETTE,
     id,
-    img
+    img: paletteImage
 })
 
 export const setSelectionRange = ({

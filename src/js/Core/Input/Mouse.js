@@ -10,11 +10,6 @@ export const MOUSE_BUTTON_CENTER = 1
 export const MOUSE_BUTTON_RIGHT = 2
 export const MOUSE_BUTTON_COUNT = 3
 
-const Mode = {
-    INIT_MODE: false,
-    DRAG_MODE: true
-}
-
 const checkPosition = (e) => {
     if (e) {
         const rect = e.target.getBoundingClientRect()
@@ -26,8 +21,8 @@ const checkPosition = (e) => {
     }
 }
 
-const isDragged = () => {
-    if (MouseButton[MOUSE_BUTTON_LEFT]) {
+const isDragged = (buttonID) => {
+    if (MouseButton[buttonID]) {
         return true
     } else {
         return false
@@ -83,9 +78,7 @@ class Mouse {
             MouseButtonPrevious[i] = false
         }
         this.mouseOverFlag = false
-        this.leftButtonMode = Mode.INIT_MODE
     }
-
 
     onmousemove(e) {
         this.mouseMoveFunc(e)
@@ -119,13 +112,7 @@ class Mouse {
 
     mouseDownFunc(e) {
         checkPosition(e)
-        if (this.mouseOverFlag) {
-            if (MouseButton[MOUSE_BUTTON_LEFT]) {
-                this.leftButtonMode = Mode.DRAG_MODE
-            }
-        }
     }
-
 
     mouseOutFunc(e) {
         checkPosition(e)
@@ -149,44 +136,13 @@ class Mouse {
         return MouseY
     }
 
-    isPressedLeftButton() {
-        if (MouseButton[MOUSE_BUTTON_LEFT]) {
-            return this.leftButtonMode
-        }
-        this.leftButtonMode = Mode.INIT_MODE
-        return false
+    isPressed(buttonID) {
+        return MouseButton[buttonID]
     }
 
-    isPressedRightButton() {
-        return MouseButton[MOUSE_BUTTON_RIGHT]
-    }
-
-    isPressedCenterButton() {
-        return MouseButton[MOUSE_BUTTON_CENTER]
-    }
-
-
-    isLeftClick() {
-        if (!MouseButtonPrevious[MOUSE_BUTTON_LEFT]) {
-            if (this.isPressedLeftButton()) {
-                return true
-            }
-        }
-        return false
-    }
-
-    isCenterClick() {
-        if (!MouseButtonPrevious[MOUSE_BUTTON_CENTER]) {
-            if (this.isPressedCenterButton()) {
-                return true
-            }
-        }
-        return false
-    }
-
-    isRightClick() {
-        if (!MouseButtonPrevious[MOUSE_BUTTON_RIGHT]) {
-            if (this.isPressedRightButton()) {
+    isClick(buttonID) {
+        if (!MouseButtonPrevious[buttonID]) {
+            if (this.isPressed(buttonID)) {
                 return true
             }
         }
@@ -197,19 +153,37 @@ class Mouse {
         return this.mouseOverFlag
     }
 
+    isMouseUp(buttonID) {
+        if (MouseButtonPrevious[buttonID]) {
+            if (!this.isPressed(buttonID)) {
+                return true
+            }
+        }
+        return false
+    }
+
     mouseInfo() {
         return {
             x: this.getX(),
             y: this.getY(),
-            isPressedLeftButton: this.isPressedLeftButton(),
-            isPressedRightButton: this.isPressedRightButton(),
-            isPressedCenterButton: this.isPressedCenterButton(),
 
-            isLeftClick: this.isLeftClick(),
-            isCenterClick: this.isCenterClick(),
-            isRightClick: this.isRightClick(),
             isMouseOver: this.isMouseOver(),
-            isDragged: isDragged()
+
+            isPressedLeftButton: this.isPressed(MOUSE_BUTTON_LEFT),
+            isPressedRightButton: this.isPressed(MOUSE_BUTTON_RIGHT),
+            isPressedCenterButton: this.isPressed(MOUSE_BUTTON_CENTER),
+
+            isLeftClick: this.isClick(MOUSE_BUTTON_LEFT),
+            isRightClick: this.isClick(MOUSE_BUTTON_RIGHT),
+            isCenterClick: this.isClick(MOUSE_BUTTON_CENTER),
+
+            isLeftDragged: isDragged(MOUSE_BUTTON_LEFT),
+            isRightDragged: isDragged(MOUSE_BUTTON_RIGHT),
+            isCenterDragged: isDragged(MOUSE_BUTTON_CENTER),
+
+            isLeftUp: this.isMouseUp(MOUSE_BUTTON_LEFT),
+            isRightUp: this.isMouseUp(MOUSE_BUTTON_RIGHT),
+            isCenterUp: this.isMouseUp(MOUSE_BUTTON_CENTER)
         }
     }
 }

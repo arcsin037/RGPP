@@ -1,20 +1,20 @@
-import RGPP from 'RGPP'
-const BasicDraw = RGPP.System.Graphics.BasicDraw
+import Graphics from '../Graphics'
 
 const CHIP_WIDTH = 32
 const CHIP_HEIGHT = 32
 
-const ImageUtil = RGPP.System.Graphics.ImageUtil
+const BasicDraw = Graphics.BasicDraw
+const ImageUtil = Graphics.ImageUtil
+
+let id = 0
 
 export class Palette {
     constructor({img, onLoad}) {
-        const width = RGPP.Config.RESOLUTION_X
-        const height = RGPP.Config.RESOLUTION_Y
+        this.id = id++
         this.chipWidth = CHIP_WIDTH
         this.chipHeight = CHIP_HEIGHT
-
-        this.maxCol = Math.floor(width / this.chipWidth)
-        this.maxRow = Math.floor(height / this.chipHeight)
+        this.maxCol = 0
+        this.maxRow = 0
 
         this.onLoadImage = this.onLoadImage.bind(this)
         this.paletteImage = ImageUtil.loadImage(img, this.onLoadImage)

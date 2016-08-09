@@ -1,11 +1,11 @@
 import {combineReducers} from 'redux'
 
+import palette from './Palette'
 import todos from './todos'
 import visibilityFilter from './visibilityFilter'
-import Palette from './Palette'
 
 const reducer = combineReducers({
-    Palette,
+    palette,
     todos,
     visibilityFilter
 })

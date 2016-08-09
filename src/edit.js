@@ -1,7 +1,6 @@
 import 'babel-polyfill'
 import $ from 'jquery'
 // import RGPP from 'RGPP'
-import App from 'Core/Components/TodoList/App'
 import EditorMainPanel from 'Core/View/EditorMainPanel'
 import {Provider} from 'react-redux'
 import React from 'react'
