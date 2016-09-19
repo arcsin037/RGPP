@@ -7,7 +7,7 @@ const initialState = {
     specifyRangePixelY: 32
 }
 
-const selection = (state = initialState, action) => {
+const selected = (state = initialState, action) => {
     switch (action.type) {
     case SET_SELECTION_RANGE:
         return {
@@ -22,4 +22,4 @@ const selection = (state = initialState, action) => {
     }
 }
 
-export default selection
+export default selected

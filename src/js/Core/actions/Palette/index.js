@@ -3,13 +3,22 @@ import {
     SET_SELECTION_RANGE
 } from './actionTypes'
 
-export const addPalette = ({
+export const addPalette = (ctx, {
     id,
-    paletteImage
+    col,
+    row,
+    chipWidth,
+    chipHeight,
+    img,
 }) => ({
     type: ADD_PALETTE,
     id,
-    img: paletteImage
+    ctx,
+    col,
+    row,
+    chipWidth,
+    chipHeight,
+    img
 })
 
 export const setSelectionRange = ({

@@ -1,10 +1,8 @@
 import {combineReducers} from 'redux'
-import palettes from './palettes'
-import selection from './selection'
+import data from './data'
 
 const reducer = combineReducers({
-    palettes,
-    selection
+    data
 })
 
 export default reducer

@@ -13,28 +13,25 @@ export class Palette {
         this.id = id++
         this.chipWidth = CHIP_WIDTH
         this.chipHeight = CHIP_HEIGHT
-        this.maxCol = 0
-        this.maxRow = 0
+        this.col = 0
+        this.row = 0
 
         this.onLoadImage = this.onLoadImage.bind(this)
-        this.paletteImage = ImageUtil.loadImage(img, this.onLoadImage)
+        this.img = ImageUtil.loadImage(img, this.onLoadImage)
         this.onLoad = onLoad
     }
 
     onLoadImage() {
-        this.width = this.paletteImage.width
-        this.height = this.paletteImage.height
-        this.maxCol = Math.floor(this.width / this.chipWidth)
-        this.maxRow = Math.floor(this.height / this.chipHeight)
+        this.width = this.img.width
+        this.height = this.img.height
+        this.col = Math.floor(this.width / this.chipWidth)
+        this.row = Math.floor(this.height / this.chipHeight)
 
         this.onLoad()
     }
 
     onDraw (ctx) {
-        if (!ctx) {
-            return
-        }
-        BasicDraw.drawImage(ctx, this.paletteImage)
+        BasicDraw.drawImage(ctx, this.img)
     }
 }
 

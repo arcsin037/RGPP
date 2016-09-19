@@ -61,7 +61,7 @@ class EditorMainPanel extends React.Component {
                     <SelectBox options={modeOptions} defaultValue='TestMode'/>
                     <SelectBox options={layerOptions} defaultValue='Event'/>
                 </div>
-                <MapPanel />
+                <MapPanel id={0} />
                 <PalettePanel />
                 {/* <EmulationWindow titleName={RGPP.Config.GAME_NAME}/> */}
             {/*<PaletteWindow />*/}
