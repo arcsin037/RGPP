@@ -6,7 +6,7 @@ let id = 0
 export class MapData {
     constructor(spec = {}) {
         // Create Map Layer
-        this.mapLayers = [MAP_LAYER_NUM]
+        this.layers = [MAP_LAYER_NUM]
         this.id = id++
         this.col = spec.col
         this.row = spec.row
@@ -14,7 +14,7 @@ export class MapData {
         this.chipHeight = spec.chipHeight
 
         for (let layerNo = 0; layerNo < MAP_LAYER_NUM; layerNo += 1) {
-            this.mapLayers[layerNo] = new MapLayer({
+            this.layers[layerNo] = new MapLayer({
                 col: this.col,
                 row: this.row
             })
@@ -29,9 +29,9 @@ export class MapData {
     getTagData(x, y) {
         let tagData = -1
         for (let layerNo = 0; layerNo < MAP_LAYER_NUM; layerNo += 1) {
-            const chipSetCategoryID = this.mapLayers[layerNo].chipSetCategoryID(x, y)
-            const chipSetDataID = this.mapLayers[layerNo].chipSetDataID(x, y)
-            const chipSetNo = this.mapLayers[layerNo].chipSetNo(x, y)
+            const chipSetCategoryID = this.layers[layerNo].chipSetCategoryID(x, y)
+            const chipSetDataID = this.layers[layerNo].chipSetDataID(x, y)
+            const chipSetNo = this.layers[layerNo].chipSetNo(x, y)
             const md = RGPP.System.MapChipDataBase.getInstance()
             if (chipSetCategoryID >= 0 && chipSetDataID >= 0 && chipSetNo >= 0) {
                 let tmp = md.getTagData(chipSetCategoryID, chipSetDataID, chipSetNo)
@@ -65,7 +65,7 @@ export class MapData {
     initTestData() {
         for (let y = 0; y < this.row; y += 1) {
             for (let x = 0; x < this.col; x += 1) {
-                this.mapLayers[0].setData(x, y, 0, 0, 9)
+                this.layers[0].setData(x, y, 0, 0, 9)
             }
         }
     }

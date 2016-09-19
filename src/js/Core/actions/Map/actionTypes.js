@@ -1,2 +1,5 @@
 export const ADD_MAP = 'ADD_MAP'
 export const SET_CTX = 'SET_CTX'
+export const SET_MAP_CHIP = 'SET_MAP_CHIP'
+export const SET_CURRENT_MAP_ID = 'SET_CURRENT_MAP_ID'
+export const SET_CURRENT_LAYER_NO = 'SET_CURRENT_LAYER_NO'

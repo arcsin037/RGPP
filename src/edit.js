@@ -1,5 +1,5 @@
 import 'babel-polyfill'
-import {applyMiddleware, createStore, compose} from 'redux'
+import {applyMiddleware, compose, createStore} from 'redux'
 import $ from 'jquery'
 // import RGPP from 'RGPP'
 import EditorMainPanel from 'Core/View/EditorMainPanel'

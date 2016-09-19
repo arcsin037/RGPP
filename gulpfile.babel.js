@@ -128,15 +128,15 @@ const app_name = 'RGPP',
     },
     testJS = (dir_path) => {
         gulp.src(dir_path, {
-                read: false
-            })
-            .pipe(plumber())
-            .pipe(mocha({
-                reporter: 'spec',
-                timeout: 15000
-            }))
-            .pipe(plumber())
-            .on('error', gutil.log)
+            read: false
+        })
+        .pipe(plumber())
+        .pipe(mocha({
+            reporter: 'spec',
+            timeout: 15000
+        }))
+        .pipe(plumber())
+        .on('error', gutil.log)
     },
     createYUIdoc = (create_doc_js) => {
         gulp.src(create_doc_js)

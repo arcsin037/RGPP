@@ -80,15 +80,20 @@ export const drawVirtualImage = (ctx, mapPanel) => {
 
     ctx.globalAlpha = 0.5
 
+    const startPixelX = selected.startX * paletteChipWidth
+    const startPixelY = selected.startY * paletteChipHeight
+    const specifyRangePixelX = selected.specifyRangeX * paletteChipWidth
+    const specifyRangePixelY = selected.specifyRangeY * paletteChipHeight
+
     const option = {
-        sx: selected.startPixelX,
-        sy: selected.startPixelY,
-        sw: selected.specifyRangePixelX,
-        sh: selected.specifyRangePixelY,
+        sx: startPixelX,
+        sy: startPixelY,
+        sw: specifyRangePixelX,
+        sh: specifyRangePixelY,
         dx: mapPanel.mouseCellX * mapPanel.chipWidth,
         dy: mapPanel.mouseCellY * mapPanel.chipHeight,
-        dw: selected.specifyRangePixelX * scaleX,
-        dh: selected.specifyRangePixelY * scaleY
+        dw: specifyRangePixelX * scaleX,
+        dh: specifyRangePixelY * scaleY
     }
     drawImage(ctx, paletteImg, option)
 }

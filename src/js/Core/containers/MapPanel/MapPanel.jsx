@@ -1,8 +1,8 @@
 import React, {Component, PropTypes} from 'react'
+import {addMap, setCtx, setMapChip} from 'Core/actions/Map'
 import {drawMap, drawVirtualImage} from './MapUtil'
 import ControllableCanvas from 'Core/Components/Base/ControllableCanvas'
 import RGPP from 'RGPP'
-import {addMap, setCtx} from 'Core/actions/Map'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import styles from './MapPanel.scss'
@@ -54,11 +54,12 @@ class MapPanel extends Component {
     }
 
     onUpdate(state) {
-        const {mouseInfo, padInfo} = state
-        this.updateSelectedPos(mouseInfo, padInfo)
+        this.updateSelectedPos(state)
+        this.updateMap(state)
     }
 
-    updateSelectedPos(mouseInfo, padInfo) {
+    updateSelectedPos(state) {
+        const {mouseInfo, padInfo} = state
         this.mouseCellX = Math.floor(mouseInfo.x / this.chipWidth)
         this.mouseCellY = Math.floor(mouseInfo.y / this.chipHeight)
         if (mouseInfo.isLeftClick) {
@@ -80,6 +81,25 @@ class MapPanel extends Component {
 
         this.selectedX = NumberUtil.clamp(this.selectedX, 0, this.col - 1)
         this.selectedY = NumberUtil.clamp(this.selectedY, 0, this.row - 1)
+    }
+
+    updateMap(state) {
+        const {mouseInfo} = state
+        if (mouseInfo.isLeftClick) {
+            const {
+                id,
+                selected: selectedPalette,
+                setMapChip
+            } = this.props
+            setMapChip({
+                id,
+                currentLayerNo: this.currentLayerNo,
+                selectedX: this.selectedX,
+                selectedY: this.selectedY,
+                selectedPalette
+            })
+        }
+
     }
 
     onDraw(ctx) {
@@ -130,7 +150,8 @@ MapPanel.propTypes = {
     selected: PropTypes.object.isRequired,
     palettesData: PropTypes.array.isRequired,
     addMap: PropTypes.func.isRequired,
-    setCtx: PropTypes.func.isRequired
+    setCtx: PropTypes.func.isRequired,
+    setMapChip: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state, ownProps) => ({
@@ -141,7 +162,8 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch) => (bindActionCreators({
     addMap,
-    setCtx
+    setCtx,
+    setMapChip
 }, dispatch))
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapPanel)

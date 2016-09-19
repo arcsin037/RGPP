@@ -1,22 +1,23 @@
-import {SET_SELECTION_RANGE} from 'Core/actions/Palette/actionTypes'
-const initialState = {
-    id: 0,
-    startPixelX: 0,
-    startPixelY: 0,
-    specifyRangePixelX: 32,
-    specifyRangePixelY: 32
+import {
+    SET_SELECTION_RANGE
+} from 'Core/actions/Palette/actionTypes'
+import SelectionRange from '../common/SelectionRange'
+
+const initialState = new SelectionRange({
+    id: 0
+})
+initialState.chipNoArray= [[0]]
+
+const setSelectionRange = (state, action) => {
+    const nextState = new SelectionRange(action)
+    nextState.chipNoArray = action.chipNoArray
+    return nextState
 }
 
 const selected = (state = initialState, action) => {
     switch (action.type) {
     case SET_SELECTION_RANGE:
-        return {
-            id: action.id,
-            startPixelX: action.startPixelX,
-            startPixelY: action.startPixelY,
-            specifyRangePixelX: action.specifyRangePixelX,
-            specifyRangePixelY: action.specifyRangePixelY
-        }
+        return setSelectionRange(state, action)
     default:
         return state
     }
