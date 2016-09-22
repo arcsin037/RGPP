@@ -1,6 +1,7 @@
 import EmulationWindow from 'Core/Components/EmulationWindow'
 import IconMenu from 'Core/Components/Elements/IconMenu'
 // import MainPanel from 'Core/Components/MainPanel'
+import LayerSelectBox from 'Core/containers/LayerSelectBox'
 import MapPanel from 'Core/containers/MapPanel'
 import PalettePanel from 'Core/containers/PalettePanel'
 import RGPP from 'RGPP'
@@ -30,22 +31,6 @@ const modeOptions = [
     }
 ]
 
-const layerOptions = [
-    {
-        value: 'Layer1',
-        name: 'Layer 1'
-    }, {
-        value: 'Layer2',
-        name: 'Layer 2'
-    }, {
-        value: 'Layer3',
-        name: 'Layer 3'
-    }, {
-        value: 'Event',
-        name: 'Event'
-    }
-]
-
 class EditorMainPanel extends React.Component {
     render() {
         return (
@@ -59,7 +44,7 @@ class EditorMainPanel extends React.Component {
                 <IconMenu/>
                 <div className='selectbox-wrapper'>
                     <SelectBox options={modeOptions} defaultValue='TestMode'/>
-                    <SelectBox options={layerOptions} defaultValue='Event'/>
+                    <LayerSelectBox />
                 </div>
                 <MapPanel id={0} />
                 <PalettePanel />

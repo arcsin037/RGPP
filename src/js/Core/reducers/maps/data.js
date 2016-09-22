@@ -42,7 +42,7 @@ const setMapChip = (state, action) => {
         const mapY = action.selectedY + y
         for (let x = 0; x < rangeX; x += 1) {
             const mapX = action.selectedX + x
-            nextState[id].layers[currentLayerNo].chipSetNoArray[mapY][mapX] = selectedChipNoArray[y][x]
+            nextState[id].layers[currentLayerNo].setData(mapX, mapY, 0, selectedChipNoArray[y][x]) 
         }
     }
     return nextState

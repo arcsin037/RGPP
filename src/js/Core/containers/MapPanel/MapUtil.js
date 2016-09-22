@@ -6,9 +6,9 @@ export const drawMap = (ctx, mapPanel) => {
     const {
         props: {
             mapData,
-            palettesData
-        },
-        currentLayerNo
+            palettesData,
+            currentLayerNo
+        }
     } = mapPanel
 
     if (!mapData || !palettesData) {
@@ -31,10 +31,9 @@ export const drawMap = (ctx, mapPanel) => {
         const layer = mapLayers[layerNo]
         for (let y = 0; y < row; y += 1) {
             for (let x = 0; x < col; x += 1) {
-                const chipSetCategoryID = layer.chipSetCategoryID(x, y)
                 const chipSetDataID = layer.chipSetDataID(x, y)
                 const chipSetNo = layer.chipSetNo(x, y)
-                if (chipSetCategoryID >= 0 && chipSetDataID >= 0 && chipSetNo >= 0) {
+                if (chipSetDataID >= 0 && chipSetNo >= 0) {
                     const palette = palettesData[chipSetDataID]
                     const paletteCol = palette.col
                     const paletteChipWidth = palette.chipWidth
@@ -61,29 +60,29 @@ export const drawMap = (ctx, mapPanel) => {
 
 export const drawVirtualImage = (ctx, mapPanel) => {
     const {
-        selected,
+        selectedPalette,
         palettesData
     } = mapPanel.props
 
-    const paletteId = selected.id
-    const selectedPalette = palettesData[paletteId]
-    if (!selectedPalette) {
+    const paletteId = selectedPalette.id
+    const selectedPaletteData = palettesData[paletteId]
+    if (!selectedPaletteData) {
         return
     }
 
-    const paletteImg = selectedPalette.img
-    const paletteChipWidth = selectedPalette.chipWidth
-    const paletteChipHeight = selectedPalette.chipHeight
+    const paletteImg = selectedPaletteData.img
+    const paletteChipWidth = selectedPaletteData.chipWidth
+    const paletteChipHeight = selectedPaletteData.chipHeight
 
     const scaleX = mapPanel.chipWidth / paletteChipWidth
     const scaleY = mapPanel.chipHeight / paletteChipHeight
 
     ctx.globalAlpha = 0.5
 
-    const startPixelX = selected.startX * paletteChipWidth
-    const startPixelY = selected.startY * paletteChipHeight
-    const specifyRangePixelX = selected.specifyRangeX * paletteChipWidth
-    const specifyRangePixelY = selected.specifyRangeY * paletteChipHeight
+    const startPixelX = selectedPalette.startX * paletteChipWidth
+    const startPixelY = selectedPalette.startY * paletteChipHeight
+    const specifyRangePixelX = selectedPalette.specifyRangeX * paletteChipWidth
+    const specifyRangePixelY = selectedPalette.specifyRangeY * paletteChipHeight
 
     const option = {
         sx: startPixelX,

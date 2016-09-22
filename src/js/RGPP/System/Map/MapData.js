@@ -1,7 +1,7 @@
 import * as BasicDraw from '../Graphics/Base/BasicDraw'
-import MapLayer from './MapLayer'
+import MapLayer, {NOTHING} from './MapLayer'
 
-const MAP_LAYER_NUM = 3
+export const MAP_LAYER_NUM = 3
 let id = 0
 export class MapData {
     constructor(spec = {}) {
@@ -63,9 +63,11 @@ export class MapData {
     }
 
     initTestData() {
-        for (let y = 0; y < this.row; y += 1) {
-            for (let x = 0; x < this.col; x += 1) {
-                this.layers[0].setData(x, y, 0, 0, 9)
+        for (let layerNo = 0; layerNo < MAP_LAYER_NUM; layerNo += 1) {
+            for (let y = 0; y < this.row; y += 1) {
+                for (let x = 0; x < this.col; x += 1) {
+                    this.layers[layerNo].setData(x, y, 0, NOTHING)
+                }
             }
         }
     }

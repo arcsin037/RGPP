@@ -6,7 +6,9 @@ import SelectionRange from '../common/SelectionRange'
 const initialState = new SelectionRange({
     id: 0
 })
-initialState.chipNoArray= [[0]]
+initialState.chipNoArray = [
+    [0]
+]
 
 const setSelectionRange = (state, action) => {
     const nextState = new SelectionRange(action)

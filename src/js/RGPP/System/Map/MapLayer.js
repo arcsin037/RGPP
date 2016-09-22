@@ -12,34 +12,23 @@ export class MapLayer {
 
         this.col = col
         this.row = row
-        this.chipSetCategoryIDArray = []
         this.chipSetDataIDArray = []
         this.chipSetNoArray = []
         for (let y = 0; y < this.row; ++y) {
-            this.chipSetCategoryIDArray[y] = []
             this.chipSetDataIDArray[y] = []
             this.chipSetNoArray[y] = []
             for (let x = 0; x < this.col; ++x) {
-                this.chipSetCategoryIDArray[y][x] = NOTHING
                 this.chipSetDataIDArray[y][x] = NOTHING
                 this.chipSetNoArray[y][x] = NOTHING
             }
         }
     }
 
-    setData(x, y, chipSetCategoryID, chipSetDataID, chipSetNo) {
+    setData(x, y, chipSetDataID, chipSetNo) {
         if (x >= 0 && x < this.col && y >= 0 && y < this.row) {
-            this.chipSetCategoryIDArray[y][x] = chipSetCategoryID
             this.chipSetDataIDArray[y][x] = chipSetDataID
             this.chipSetNoArray[y][x] = chipSetNo
         }
-    }
-
-    chipSetCategoryID(x, y) {
-        if (x < 0 || x >= this.col || y < 0 || y >= this.row) {
-            return OUT_OF_BOUNDS
-        }
-        return this.chipSetCategoryIDArray[y][x]
     }
 
     chipSetDataID(x, y) {
@@ -54,10 +43,6 @@ export class MapLayer {
             return OUT_OF_BOUNDS
         }
         return this.chipSetNoArray[y][x]
-    }
-
-    getChipSetCategoryIDArray(x, y, pSpecifyRangeX, pSpecifyRangeY) {
-        return this.getPartArray(x, y, pSpecifyRangeX, pSpecifyRangeY, this.chipSetCategoryIDArray)
     }
 
     getChipSetDataIDArray(x, y, pSpecifyRangeX, pSpecifyRangeY) {

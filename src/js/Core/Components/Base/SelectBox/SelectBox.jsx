@@ -12,12 +12,12 @@ import styles from './SelectBox.scss'
  * @param jquery {$} Global object of jQuery
  */
 
-export const SelectBox = (props) => {
+const SelectBox = (props) => {
     const options = props.options.map((option) => (
-        <option key={option.value} value={option.value} selected={option.selected}>{option.name}</option>
+        <option key={option.name} value={option.value} selected={option.selected}>{option.name}</option>
     ))
     return (
-        <select className={styles.SelectBox} defaultValue={props.defaultValue}>
+        <select className={styles.SelectBox} defaultValue={props.defaultValue} onChange={props.onChange}>
             {options}
         </select>
     )
@@ -30,7 +30,8 @@ SelectBox.propTypes = {
             name: PropTypes.string.isRequired
         })
     ),
-    defaultValue: PropTypes.string
+    defaultValue: PropTypes.string,
+    onChange: PropTypes.func
 }
 
 export default SelectBox

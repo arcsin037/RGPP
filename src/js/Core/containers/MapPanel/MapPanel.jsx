@@ -6,6 +6,7 @@ import RGPP from 'RGPP'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import styles from './MapPanel.scss'
+import {MAP_LAYER_NUM} from 'RGPP/System/Map/MapData'
 
 const CHIP_WIDTH = 32
 const CHIP_HEIGHT = 32
@@ -22,7 +23,6 @@ class MapPanel extends Component {
         this.mouseCellY = 0
         this.selectedX = 0
         this.selectedY = 0
-        this.currentLayerNo = 0
 
         this.onEvent = this.onEvent.bind(this)
 
@@ -43,10 +43,7 @@ class MapPanel extends Component {
         const {ctx} = state
         if (!this.ctx) {
             this.ctx = ctx
-            const {
-                id,
-                setCtx
-            } = this.props
+            const {id, setCtx} = this.props
             setCtx(id, ctx)
         }
         this.onUpdate(state)
@@ -54,6 +51,7 @@ class MapPanel extends Component {
     }
 
     onUpdate(state) {
+        this.isEventLayer = this.props.currentLayerNo === MAP_LAYER_NUM
         this.updateSelectedPos(state)
         this.updateMap(state)
     }
@@ -62,42 +60,40 @@ class MapPanel extends Component {
         const {mouseInfo, padInfo} = state
         this.mouseCellX = Math.floor(mouseInfo.x / this.chipWidth)
         this.mouseCellY = Math.floor(mouseInfo.y / this.chipHeight)
-        if (mouseInfo.isLeftClick) {
-            this.selectedX = this.mouseCellX
-            this.selectedY = this.mouseCellY
-        }
-        if (padInfo.isKeyOnLeft) {
-            this.selectedX -= 1
-        }
-        if (padInfo.isKeyOnRight) {
-            this.selectedX += 1
-        }
-        if (padInfo.isKeyOnUp) {
-            this.selectedY -= 1
-        }
-        if (padInfo.isKeyOnDown) {
-            this.selectedY += 1
-        }
 
-        this.selectedX = NumberUtil.clamp(this.selectedX, 0, this.col - 1)
-        this.selectedY = NumberUtil.clamp(this.selectedY, 0, this.row - 1)
+        this.mouseCellX = NumberUtil.clamp(this.mouseCellX, 0, this.col - 1)
+        this.mouseCellY = NumberUtil.clamp(this.mouseCellY, 0, this.row - 1)
+        if (this.isEventLayer) {
+            if (mouseInfo.isLeftClick) {
+                this.selectedX = this.mouseCellX
+                this.selectedY = this.mouseCellY
+            }
+            if (padInfo.isKeyOnLeft) {
+                this.selectedX -= 1
+            }
+            if (padInfo.isKeyOnRight) {
+                this.selectedX += 1
+            }
+            if (padInfo.isKeyOnUp) {
+                this.selectedY -= 1
+            }
+            if (padInfo.isKeyOnDown) {
+                this.selectedY += 1
+            }
+
+            this.selectedX = NumberUtil.clamp(this.selectedX, 0, this.col - 1)
+            this.selectedY = NumberUtil.clamp(this.selectedY, 0, this.row - 1)
+        }
     }
 
     updateMap(state) {
         const {mouseInfo} = state
-        if (mouseInfo.isLeftClick) {
-            const {
-                id,
-                selected: selectedPalette,
-                setMapChip
-            } = this.props
-            setMapChip({
-                id,
-                currentLayerNo: this.currentLayerNo,
-                selectedX: this.selectedX,
-                selectedY: this.selectedY,
-                selectedPalette
-            })
+
+        if (!this.isEventLayer) {
+            if (mouseInfo.isLeftDragged) {
+                const {id, currentLayerNo, selectedPalette, setMapChip} = this.props
+                setMapChip({id, currentLayerNo, selectedX: this.mouseCellX, selectedY: this.mouseCellY, selectedPalette})
+            }
         }
 
     }
@@ -108,8 +104,11 @@ class MapPanel extends Component {
         }
         BasicDraw.clear(ctx)
         drawMap(ctx, this)
-        drawVirtualImage(ctx, this)
-        this.drawEditSystemImage(ctx)
+        if (this.isEventLayer) {
+            this.drawEditSystemImage(ctx)
+        } else {
+            drawVirtualImage(ctx, this)
+        }
     }
 
     drawEditSystemImage(ctx) {
@@ -147,7 +146,8 @@ class MapPanel extends Component {
 MapPanel.propTypes = {
     id: PropTypes.number.isRequired,
     mapData: PropTypes.object,
-    selected: PropTypes.object.isRequired,
+    currentLayerNo: PropTypes.number.isRequired,
+    selectedPalette: PropTypes.object.isRequired,
     palettesData: PropTypes.array.isRequired,
     addMap: PropTypes.func.isRequired,
     setCtx: PropTypes.func.isRequired,
@@ -156,8 +156,9 @@ MapPanel.propTypes = {
 
 const mapStateToProps = (state, ownProps) => ({
     mapData: state.maps.data[ownProps.id],
-    selected: state.palettes.selected,
-    palettesData: state.palettes.data
+    palettesData: state.palettes.data,
+    currentLayerNo: state.maps.selected.currentLayerNo,
+    selectedPalette: state.palettes.selected
 })
 
 const mapDispatchToProps = (dispatch) => (bindActionCreators({
