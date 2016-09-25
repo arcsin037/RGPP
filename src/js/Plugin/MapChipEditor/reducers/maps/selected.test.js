@@ -1,7 +1,7 @@
 'use strict'
 
-import * as types from 'Core/actions/Map/actionTypes'
-import {MAP_LAYER_NUM} from 'Core/constants'
+import * as types from '../../actions/Map/actionTypes'
+import {MAP_LAYER_NUM} from '../../constants'
 import SelectionRange from '../common/SelectionRange'
 import {
     expect

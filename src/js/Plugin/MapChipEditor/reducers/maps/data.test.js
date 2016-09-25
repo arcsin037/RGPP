@@ -1,6 +1,6 @@
 'use strict'
 
-import * as types from 'Core/actions/Map/actionTypes'
+import * as types from '../../actions/Map/actionTypes'
 import {
     expect
 } from 'chai'

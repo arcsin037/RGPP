@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import SelectBox from 'Core/Components/Base/SelectBox'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import {setCurrentLayerNo} from 'Core/actions/Map'
+import {setCurrentLayerNo} from '../../actions/Map'
 
 const layerOptions = [
     {

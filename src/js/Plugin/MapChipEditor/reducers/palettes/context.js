@@ -1,6 +1,6 @@
 import {
     SET_DRAW_MODE
-} from 'Core/actions/Palette/actionTypes'
+} from '../../actions/Palette/actionTypes'
 
 const initialState = {
     drawMode: 'Pen'

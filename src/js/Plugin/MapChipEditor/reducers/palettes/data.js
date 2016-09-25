@@ -1,4 +1,4 @@
-import {ADD_PALETTE} from 'Core/actions/Palette/actionTypes'
+import {ADD_PALETTE} from '../../actions/Palette/actionTypes'
 
 const createPalette = (state, action) => {
     switch (action.type) {

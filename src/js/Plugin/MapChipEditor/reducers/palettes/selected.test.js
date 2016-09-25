@@ -1,6 +1,6 @@
 'use strict'
 
-import * as types from 'Core/actions/Palette/actionTypes'
+import * as types from '../../actions/Palette/actionTypes'
 import SelectionRange from '../common/SelectionRange'
 import {
     expect

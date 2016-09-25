@@ -1,9 +1,10 @@
-import {ERASER_MODE, FILLING_MODE, MAP_LAYER_NUM, PEN_MODE, RECTANGLE_MODE} from 'Core/constants'
+import {ERASER_MODE, FILLING_MODE, MAP_LAYER_NUM, PEN_MODE, RECTANGLE_MODE} from '../../constants'
 import React, {Component, PropTypes} from 'react'
 import SelectBox from 'Core/Components/Base/SelectBox'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import {setDrawMode} from 'Core/actions/Palette'
+import {getStore} from '../../utils/storeUtil'
+import {setDrawMode} from '../../actions/Palette'
 
 const drawModeOptions = [
     {
@@ -43,7 +44,12 @@ DrawModeSelectBox.propTypes = {
     currentLayerNo: PropTypes.number.isRequired
 }
 
-const mapStateToProps = (state) => ({currentLayerNo: state.maps.selected.currentLayerNo})
+const mapStateToProps = (state) => {
+    const store = getStore(state)
+    return {
+        currentLayerNo: store.maps.selected.currentLayerNo
+    }
+}
 
 const mapDispatchToProps = (dispatch) => (bindActionCreators({
     setDrawMode

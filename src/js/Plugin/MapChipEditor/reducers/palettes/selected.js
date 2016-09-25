@@ -1,6 +1,6 @@
 import {
     SET_SELECTION_RANGE
-} from 'Core/actions/Palette/actionTypes'
+} from '../../actions/Palette/actionTypes'
 import SelectionRange from '../common/SelectionRange'
 
 const initialState = new SelectionRange({

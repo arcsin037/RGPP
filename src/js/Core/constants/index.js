@@ -1,2 +1,1 @@
-export const MAP_LAYER_NUM = 3
-export * from './drawMode'
+export const MAP_LAYER_NUM = 1

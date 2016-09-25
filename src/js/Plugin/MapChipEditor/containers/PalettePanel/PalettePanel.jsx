@@ -1,10 +1,11 @@
 import React, {Component, PropTypes} from 'react'
-import {addPalette, setSelectionRange} from 'Core/actions/Palette'
+import {addPalette, setSelectionRange} from '../../actions/Palette'
 import ControllableCanvas from 'Core/Components/Base/ControllableCanvas'
 import PaletteImage from 'Image/User/MapChip/mack_material.png'
 import RGPP from 'RGPP'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
+import {getStore} from '../../utils/storeUtil'
 import styles from './PalettePanel.scss'
 
 const BasicDraw = RGPP.System.Graphics.BasicDraw
@@ -177,8 +178,9 @@ PalettePanel.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-    const paletteId = state.palettes.selected.id
-    const selectedPalette = state.palettes.data[paletteId]
+    const store = getStore(state)
+    const paletteId = store.palettes.selected.id
+    const selectedPalette = store.palettes.data[paletteId]
     let paletteWidth = 0
     let paletteHeight = 0
     if (selectedPalette) {
