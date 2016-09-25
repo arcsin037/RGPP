@@ -1,5 +1,5 @@
+import {ERASER_MODE, FILLING_MODE, MAP_LAYER_NUM, PEN_MODE, RECTANGLE_MODE} from 'Core/constants'
 import React, {Component, PropTypes} from 'react'
-import {MAP_LAYER_NUM} from 'Core/constant'
 import SelectBox from 'Core/Components/Base/SelectBox'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
@@ -7,21 +7,21 @@ import {setDrawMode} from 'Core/actions/Palette'
 
 const drawModeOptions = [
     {
-        value: 'Pen',
-        name: 'Pen'
+        value: PEN_MODE,
+        name: PEN_MODE
     }, {
-        value: 'Rectangle',
-        name: 'Rectangle'
+        value: RECTANGLE_MODE,
+        name: RECTANGLE_MODE
     }, {
-        value: 'Filling',
-        name: 'Filling'
+        value: FILLING_MODE,
+        name: FILLING_MODE
     }, {
-        value: 'Eraser',
-        name: 'Eraser'
+        value: ERASER_MODE,
+        name: ERASER_MODE
     }
 ]
 
-class LayerSelectBox extends Component {
+class DrawModeSelectBox extends Component {
     constructor(props) {
         super(props)
         this.handleChange = this.handleChange.bind(this)
@@ -32,23 +32,21 @@ class LayerSelectBox extends Component {
     }
 
     render() {
-        return this.props.currentLayerNo === MAP_LAYER_NUM ?
-        null :
-        <SelectBox options={drawModeOptions} defaultValue='Pen' onChange={this.handleChange}/>
+        return this.props.currentLayerNo === MAP_LAYER_NUM
+            ? null
+            : <SelectBox options={drawModeOptions} defaultValue='Pen' onChange={this.handleChange}/>
     }
 }
 
-LayerSelectBox.propTypes = {
+DrawModeSelectBox.propTypes = {
     setDrawMode: PropTypes.func,
     currentLayerNo: PropTypes.number.isRequired
 }
 
-const mapStateToProps = (state) => ({
-    currentLayerNo: state.maps.selected.currentLayerNo
-})
+const mapStateToProps = (state) => ({currentLayerNo: state.maps.selected.currentLayerNo})
 
 const mapDispatchToProps = (dispatch) => (bindActionCreators({
     setDrawMode
 }, dispatch))
 
-export default connect(mapStateToProps, mapDispatchToProps)(LayerSelectBox)
+export default connect(mapStateToProps, mapDispatchToProps)(DrawModeSelectBox)

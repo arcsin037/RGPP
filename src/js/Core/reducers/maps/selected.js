@@ -2,7 +2,7 @@ import {
     SET_CURRENT_LAYER_NO,
     SET_CURRENT_MAP_ID
 } from 'Core/actions/Map/actionTypes'
-import {MAP_LAYER_NUM} from 'Core/constant'
+import {MAP_LAYER_NUM} from 'Core/constants'
 import SelectionRange from '../common/SelectionRange'
 
 const initialState = new SelectionRange({

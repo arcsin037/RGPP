@@ -37,7 +37,7 @@ class LayerSelectBox extends Component {
 }
 
 LayerSelectBox.propTypes = {
-    setCurrentLayerNo: PropTypes.func
+    setCurrentLayerNo: PropTypes.func.isRequired
 }
 
 const mapStateToProps = () => ({})
