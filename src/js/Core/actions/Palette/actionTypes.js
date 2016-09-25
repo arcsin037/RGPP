@@ -1,2 +1,3 @@
 export const ADD_PALETTE = 'ADD_PALETTE'
 export const SET_SELECTION_RANGE = 'SET_SELECTION_RANGE'
+export const SET_DRAW_MODE = 'SET_DRAW_MODE'

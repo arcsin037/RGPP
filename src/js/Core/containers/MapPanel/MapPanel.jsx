@@ -2,11 +2,11 @@ import React, {Component, PropTypes} from 'react'
 import {addMap, setCtx, setMapChip} from 'Core/actions/Map'
 import {drawMap, drawVirtualImage} from './MapUtil'
 import ControllableCanvas from 'Core/Components/Base/ControllableCanvas'
+import {MAP_LAYER_NUM} from 'RGPP/System/Map/MapData'
 import RGPP from 'RGPP'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import styles from './MapPanel.scss'
-import {MAP_LAYER_NUM} from 'RGPP/System/Map/MapData'
 
 const CHIP_WIDTH = 32
 const CHIP_HEIGHT = 32

@@ -1,7 +1,7 @@
 import * as BasicDraw from '../Graphics/Base/BasicDraw'
 import MapLayer, {NOTHING} from './MapLayer'
+import {MAP_LAYER_NUM} from 'Core/constant'
 
-export const MAP_LAYER_NUM = 3
 let id = 0
 export class MapData {
     constructor(spec = {}) {

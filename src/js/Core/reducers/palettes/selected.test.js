@@ -1,6 +1,7 @@
 'use strict'
 
 import * as types from 'Core/actions/Palette/actionTypes'
+import SelectionRange from '../common/SelectionRange'
 import {
     expect
 } from 'chai'
@@ -8,31 +9,35 @@ import reducer from './selected'
 
 describe('selected reducer', () => {
     it('should return the initial state', () => {
-        expect(reducer(undefined, {})).to.deep.equal({
-            currentMapID: 0,
-            currentLayerNo: 0
+        const initialState = new SelectionRange({
+            id: 0
         })
+        initialState.chipNoArray = [
+            [0]
+        ]
+        expect(reducer(undefined, {})).to.deep.equal(initialState)
     })
 
-    it('should handle SET_CURRENT_MAP_ID', () => {
-        const currentMapID = 2
-        const action = {
-            type: types.SET_CURRENT_MAP_ID,
-            currentMapID
+    it('should handle SET_SELECTION_RANGE', () => {
+        const chipNoArray = [
+            [1, 2],
+            [3, 4]
+        ]
+        const arg = {
+            id: 2,
+            startX: 0,
+            startY: 32,
+            specifyRangeX: 64,
+            specifyRangeY: 128,
+            chipNoArray
         }
-        expect(reducer({}, action)).to.deep.equal({
-            currentMapID
-        })
-    })
+        const action = Object.assign({
+            type: types.SET_SELECTION_RANGE
+        }, arg)
 
-    it('should handle SET_CURRENT_LAYER_NO', () => {
-        const currentLayerNo = 2
-        const action = {
-            type: types.SET_CURRENT_LAYER_NO,
-            currentLayerNo
-        }
-        expect(reducer({}, action)).to.deep.equal({
-            currentLayerNo
-        })
+        const state = new SelectionRange(action)
+        state.chipNoArray = chipNoArray
+
+        expect(reducer(undefined, action)).to.deep.equal(state)
     })
 })
