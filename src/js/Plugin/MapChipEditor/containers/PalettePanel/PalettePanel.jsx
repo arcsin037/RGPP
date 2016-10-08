@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import {addPalette, setSelectionRange} from '../../actions/Palette'
 import ControllableCanvas from 'Core/Components/Base/ControllableCanvas'
+import Palette from './Palette'
 import PaletteImage from 'Image/User/MapChip/mack_material.png'
 import RGPP from 'RGPP'
 import {bindActionCreators} from 'redux'
@@ -10,7 +11,6 @@ import styles from './PalettePanel.scss'
 
 const BasicDraw = RGPP.System.Graphics.BasicDraw
 const NumberUtil = RGPP.System.Utils.NumberUtil
-const Palette = RGPP.System.Palette
 
 class PalettePanel extends Component {
     constructor(props) {

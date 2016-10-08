@@ -1,10 +1,10 @@
-import Graphics from '../Graphics'
+import RGPP from 'RGPP'
 
 const CHIP_WIDTH = 32
 const CHIP_HEIGHT = 32
 
-const BasicDraw = Graphics.BasicDraw
-const ImageUtil = Graphics.ImageUtil
+const BasicDraw = RGPP.System.Graphics.BasicDraw
+const ImageUtil = RGPP.System.Graphics.ImageUtil
 
 let id = 0
 
