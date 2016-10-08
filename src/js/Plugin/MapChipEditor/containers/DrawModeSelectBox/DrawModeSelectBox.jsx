@@ -1,6 +1,6 @@
 import {ERASER_MODE, FILLING_MODE, MAP_LAYER_NUM, PEN_MODE, RECTANGLE_MODE} from '../../constants'
 import React, {Component, PropTypes} from 'react'
-import SelectBox from 'Core/Components/Base/SelectBox'
+import SelectBox from 'Core/components/Base/SelectBox'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import {getStore} from '../../utils/storeUtil'

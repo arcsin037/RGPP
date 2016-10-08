@@ -1,4 +1,4 @@
-import Button from 'Core/Components/Base/Button'
+import Button from 'Core/components/Base/Button'
 import React from 'react'
 import calendarIcon from 'Image/System/calendar.svg'
 

@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react'
-import {SIZE_STRING} from 'Core/Components/definition'
+import {SIZE_STRING} from 'Core/components/definition'
 import classNames from 'classnames'
 import styles from './Text.scss'
 

@@ -1,9 +1,9 @@
 import React, {Component, PropTypes} from 'react'
 
-import Button from 'Core/Components/Base/Button'
-import ControllableCanvas from 'Core/Components/Base/ControllableCanvas'
+import Button from 'Core/components/Base/Button'
+import ControllableCanvas from 'Core/components/Base/ControllableCanvas'
 import RGPP from 'RGPP'
-import Text from 'Core/Components/Base/Text'
+import Text from 'Core/components/Base/Text'
 
 import fullScreenIcon from 'Image/System/fullScreenIcon.svg'
 import pseudoFullScreenIcon from 'Image/System/pseudoFullScreenIcon.svg'

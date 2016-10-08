@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import {addPalette, setSelectionRange} from '../../actions/Palette'
-import ControllableCanvas from 'Core/Components/Base/ControllableCanvas'
+import ControllableCanvas from 'Core/components/Base/ControllableCanvas'
 import Palette from './Palette'
 import PaletteImage from 'Image/User/MapChip/mack_material.png'
 import RGPP from 'RGPP'

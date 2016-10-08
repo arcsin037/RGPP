@@ -1,5 +1,5 @@
 import React from 'react'
-import SelectBox from 'Core/Components/Base/SelectBox'
+import SelectBox from 'Core/components/Base/SelectBox'
 import Draggable from 'react-draggable'
 
 // import FlatButton from 'material-ui/FlatButton'

@@ -2,7 +2,7 @@ import {ERASER_MODE, FILLING_MODE, MAP_LAYER_NUM, PEN_MODE, RECTANGLE_MODE} from
 import React, {Component, PropTypes} from 'react'
 import {addMap, setCtx, setMapChip} from '../../actions/Map'
 import {drawMap, drawVirtualImage} from './MapUtil'
-import ControllableCanvas from 'Core/Components/Base/ControllableCanvas'
+import ControllableCanvas from 'Core/components/Base/ControllableCanvas'
 import RGPP from 'RGPP'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'

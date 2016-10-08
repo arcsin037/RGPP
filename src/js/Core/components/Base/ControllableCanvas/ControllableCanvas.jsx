@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import Canvas from 'Core/Components/Base/Canvas'
+import Canvas from 'Core/components/Base/Canvas'
 import KeyBoard from 'Core/Input/KeyBoard'
 import Mouse from 'Core/Input/Mouse'
 import Pad from 'Core/Input/Pad'

@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import SelectBox from 'Core/Components/Base/SelectBox'
+import SelectBox from 'Core/components/Base/SelectBox'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import {setCurrentLayerNo} from '../../actions/Map'
