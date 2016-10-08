@@ -105,8 +105,20 @@ class ControllableCanvas extends Component {
     }
 
     render() {
+        const {
+            width,
+            height
+        } = this.props
+        const widthPx = `${width}px`
+        const heightPx = `${height}px`
+
+        const sizeStyle = {
+            width: widthPx,
+            height: heightPx
+        }
+
         return (
-            <div className={styles.ControllableCanvas} onMouseMove={this.onMouseMove} onMouseDown={this.onMouseDown} onMouseUp={this.onMouseUp} onMouseOut={this.onMouseOut} onMouseOver={this.onMouseOver} onDoubleClick={this.onDoubleClick}>
+            <div className={styles.ControllableCanvas} onMouseMove={this.onMouseMove} onMouseDown={this.onMouseDown} onMouseUp={this.onMouseUp} onMouseOut={this.onMouseOut} onMouseOver={this.onMouseOver} onDoubleClick={this.onDoubleClick} style={sizeStyle} width={widthPx} height={heightPx}>
                 <Canvas {...this.props} getCanvasInfo={this.getCanvasInfo} onKeyDown={this.onKeyDown} onKeyUp={this.onKeyUp}/>
             </div>
         )

@@ -27,18 +27,7 @@ class Canvas extends Component {
             height: heightPx
         }
 
-        return (
-            <canvas
-                ref='canvas'
-                className={styles.Canvas}
-                style={sizeStyle}
-                width={widthPx}
-                height={heightPx}
-                tabIndex='0'
-                onKeyDown={onKeyDown}
-                onKeyUp={onKeyUp}
-            />
-        )
+        return (<canvas ref='canvas' tabIndex={0} className={styles.Canvas} style={sizeStyle} width={widthPx} height={heightPx} onKeyDown={onKeyDown} onKeyUp={onKeyUp}/>)
     }
 }
 
