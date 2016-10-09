@@ -1,5 +1,6 @@
 import 'babel-polyfill'
 import {applyMiddleware, compose, createStore} from 'redux'
+import middleware, {enhancer} from 'Core/middleware'
 import $ from 'jquery'
 // import RGPP from 'RGPP'
 import EditorMainPanel from 'Core/View/EditorMainPanel'
@@ -8,7 +9,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import config from './templates/config.json'
 import injectTapEventPlugin from 'react-tap-event-plugin'
-import middleware from 'Core/middleware'
 import reducers from 'Core/reducers'
 
 import template from './templates/Edit.mustache'
@@ -31,7 +31,14 @@ import template from './templates/Edit.mustache'
 //https://github.com/zilverline/react-tap-event-plugin
 injectTapEventPlugin()
 
-const store = createStore(reducers, compose(applyMiddleware(...middleware), window.devToolsExtension && window.devToolsExtension()))
+const store = createStore(
+    reducers,
+    compose(
+        applyMiddleware(...middleware),
+        window.devToolsExtension && window.devToolsExtension()
+    ),
+    compose(...enhancer)
+)
 /**
  * Function to call when DOMs are loaded
  * @method main

@@ -1,3 +1,5 @@
+import persistState from 'redux-localstorage'
+
 /* eslint no-console: "off" */
 export const logger = (store) => (next) => (action) => {
     console.group(action.type)
@@ -10,4 +12,8 @@ export const logger = (store) => (next) => (action) => {
 
 export default [
     logger
+]
+
+export const enhancer = [
+    persistState('saveData')
 ]

@@ -1,8 +1,11 @@
+import React, {Component, PropTypes} from 'react'
 import Button from 'Core/components/Base/Button'
-import React from 'react'
+import {bindActionCreators} from 'redux'
 import calendarIcon from 'Image/System/calendar.svg'
+import {connect} from 'react-redux'
 
 import debugIcon from 'Image/System/debug.svg'
+import {getPluginSaveData} from 'Plugin'
 import gridIcon from 'Image/System/grid.svg'
 import newIcon from 'Image/System/new.svg'
 import pauseIcon from 'Image/System/pause.svg'
@@ -11,16 +14,21 @@ import {save} from 'Core/actions'
 import saveIcon from 'Image/System/save.svg'
 import styles from './IconMenu.scss'
 
-class IconMenu extends React.Component {
+class IconMenu extends Component {
+    constructor(props) {
+        super(props)
+        this.save = this.save.bind(this)
+    }
+    save() {
+        this.props.save(this.props.saveData)
+    }
     render() {
         return (
             <div className={styles.btnWrapper}>
                 <Button title='New Map'>
                     <img src={newIcon}/>
                 </Button>
-                <Button title='Save Map' onClick={() => {
-                    save({dummy: {}})
-                }}>
+                <Button title='Save Map' onClick={this.save}>
                     <img src={saveIcon}/>
                 </Button>
                 <Button title='Grid'>
@@ -42,4 +50,20 @@ class IconMenu extends React.Component {
         )
     }
 }
-export default IconMenu
+
+IconMenu.propTypes = {
+    save: PropTypes.func.isRequired,
+    saveData: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+    saveData: {
+        plugin: getPluginSaveData(state)
+    }
+})
+
+const mapDispatchToProps = (dispatch) => (bindActionCreators({
+    save
+}, dispatch))
+
+export default connect(mapStateToProps, mapDispatchToProps)(IconMenu)
