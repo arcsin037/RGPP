@@ -33,7 +33,7 @@ export default {
     output: {
         publicPath: '/',
         sourcePrefix: '  ',
-        path: path.join(__dirname, 'public'),
+        path: path.join(__dirname, 'docs'),
         filename: '[name].js'
     },
 
@@ -121,7 +121,7 @@ export default {
     },
 
     devServer: {
-        contentBase: path.join(__dirname, 'public'),
+        contentBase: path.join(__dirname, 'docs'),
         port: 8080,
         hot: true,
         inline: true
