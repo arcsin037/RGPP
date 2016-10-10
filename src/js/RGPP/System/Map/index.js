@@ -1,5 +1,1 @@
-import MapData from './MapData'
-
-export default {
-    MapData
-}
+export default {}

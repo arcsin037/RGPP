@@ -1,22 +1,29 @@
-import * as BasicDraw from '../Graphics/Base/BasicDraw'
+import * as BasicDraw from 'RGPP/System/Graphics/Base/BasicDraw'
 import MapLayer, {NOTHING} from './MapLayer'
-import {MAP_LAYER_NUM} from 'Core/constants'
+import {MAP_LAYER_NUM} from '../constants'
 
-let id = 0
 export class MapData {
-    constructor(spec = {}) {
+    constructor({
+        id = 0,
+        col,
+        row,
+        chipWidth,
+        chipHeight,
+        layers = []
+    }) {
         // Create Map Layer
         this.layers = [MAP_LAYER_NUM]
-        this.id = id++
-        this.col = spec.col
-        this.row = spec.row
-        this.chipWidth = spec.chipWidth
-        this.chipHeight = spec.chipHeight
+        this.id = id || id++
+        this.col = col
+        this.row = row
+        this.chipWidth = chipWidth
+        this.chipHeight = chipHeight
 
         for (let layerNo = 0; layerNo < MAP_LAYER_NUM; layerNo += 1) {
             this.layers[layerNo] = new MapLayer({
                 col: this.col,
-                row: this.row
+                row: this.row,
+                layer: layers[layerNo]
             })
         }
     }
@@ -62,7 +69,7 @@ export class MapData {
         return this.chipHeight
     }
 
-    initTestData() {
+    initData() {
         for (let layerNo = 0; layerNo < MAP_LAYER_NUM; layerNo += 1) {
             for (let y = 0; y < this.row; y += 1) {
                 for (let x = 0; x < this.col; x += 1) {

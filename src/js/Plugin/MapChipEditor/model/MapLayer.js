@@ -5,13 +5,21 @@ export const DEFAULT_COL = 20
 export const DEFAULT_ROW = 15
 
 export class MapLayer {
-    constructor(spec = {}) {
-        const {
-            col = DEFAULT_COL, row = DEFAULT_ROW
-        } = spec
-
+    constructor({
+        col = DEFAULT_COL,
+        row = DEFAULT_ROW,
+        layer = {}
+    } = {}) {
         this.col = col
         this.row = row
+        this.chipSetDataIDArray = layer.chipSetDataIDArray
+        this.chipSetNoArray = layer.chipSetNoArray
+        if (!this.chipSetDataIDArray || !this.chipSetNoArray) {
+            this.initData()
+        }
+    }
+
+    initData() {
         this.chipSetDataIDArray = []
         this.chipSetNoArray = []
         for (let y = 0; y < this.row; ++y) {
@@ -23,7 +31,6 @@ export class MapLayer {
             }
         }
     }
-
     setData(x, y, chipSetDataID, chipSetNo) {
         if (x >= 0 && x < this.col && y >= 0 && y < this.row) {
             this.chipSetDataIDArray[y][x] = chipSetDataID
@@ -73,7 +80,6 @@ export class MapLayer {
         }
         return ret
     }
-
 }
 
 export default MapLayer

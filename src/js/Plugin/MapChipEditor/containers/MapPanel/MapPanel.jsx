@@ -25,8 +25,6 @@ class MapPanel extends Component {
         this.selectedX = 0
         this.selectedY = 0
 
-        this.onEvent = this.onEvent.bind(this)
-
         const width = RGPP.Config.RESOLUTION_X
         const height = RGPP.Config.RESOLUTION_Y
 
@@ -34,10 +32,16 @@ class MapPanel extends Component {
         this.chipHeight = CHIP_HEIGHT
         this.col = Math.floor(width / this.chipWidth)
         this.row = Math.floor(height / this.chipHeight)
+        this.ctx = null
+        this.onEvent = this.onEvent.bind(this)
     }
 
     componentWillMount() {
-        this.props.loadMap(this.props.saveData.maps)
+        if (this.props.mapSaveData) {
+            this.props.loadMap(this.props.mapSaveData)
+        } else {
+            this.props.addMap(this)
+        }
     }
 
     onEvent(state) {
@@ -95,7 +99,13 @@ class MapPanel extends Component {
                 const {id, currentLayerNo, selectedPalette, setMapChip, drawMode} = this.props
                 switch (drawMode) {
                 case PEN_MODE:
-                    setMapChip({id, currentLayerNo, selectedX: this.mouseCellX, selectedY: this.mouseCellY, selectedPalette})
+                    setMapChip({
+                        id,
+                        currentLayerNo,
+                        selectedX: this.mouseCellX,
+                        selectedY: this.mouseCellY,
+                        selectedPalette
+                    })
                     break
                 case RECTANGLE_MODE:
                     break
@@ -162,7 +172,7 @@ MapPanel.propTypes = {
     palettesData: PropTypes.array.isRequired,
     currentLayerNo: PropTypes.number.isRequired,
     selectedPalette: PropTypes.object.isRequired,
-    saveData: PropTypes.object.isRequired,
+    mapSaveData: PropTypes.object,
     drawMode: PropTypes.string.isRequired,
     addMap: PropTypes.func.isRequired,
     setCtx: PropTypes.func.isRequired,
@@ -173,13 +183,15 @@ MapPanel.propTypes = {
 const mapStateToProps = (state, ownProps) => {
     const store = getStore(state)
     const saveData = loadSaveData(state)
+    const mapSaveData = saveData && saveData.maps && saveData.maps.data && saveData.maps.data[ownProps.id]
+
     return {
         mapData: store.maps.data[ownProps.id],
         palettesData: store.palettes.data,
         selectedPalette: store.palettes.selected,
         currentLayerNo: store.maps.selected.currentLayerNo,
         drawMode: store.palettes.context.drawMode,
-        saveData
+        mapSaveData
     }
 }
 

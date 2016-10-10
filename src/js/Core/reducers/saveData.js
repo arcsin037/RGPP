@@ -1,6 +1,8 @@
 import * as types from '../actions/SaveData/actionTypes'
 
-const initialState = {}
+const initialState = {
+    plugin: {}
+}
 
 const save = (state, action) => action.data
 

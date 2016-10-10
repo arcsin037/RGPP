@@ -1,6 +1,7 @@
 'use strict'
 
 import * as types from '../../actions/Map/actionTypes'
+import {MapData} from '../../model/MapData'
 import {
     expect
 } from 'chai'
@@ -12,7 +13,7 @@ describe('data reducer', () => {
     })
 
     it('should handle ADD_MAP', () => {
-        const args = {
+        const data = {
             id: 0,
             col: 20,
             row: 15,
@@ -21,16 +22,29 @@ describe('data reducer', () => {
             ctx: 'hoge',
             layers: [3]
         }
-        const action = Object.assign({
-            type: types.ADD_MAP
-        }, args)
-        expect(reducer([], action)).to.deep.equal([args])
+        const action = {
+            type: types.ADD_MAP,
+            data
+        }
+        const mapData = new MapData(data)
+        expect(reducer([], action)).to.deep.equal([mapData])
     })
 
     it('should handle LOAD_MAP', () => {
-        const action = {
-            type: types.LOAD_MAP
+        const data = {
+            id: 0,
+            col: 20,
+            row: 15,
+            chipWidth: 32,
+            chipHeight: 32,
+            ctx: 'hoge',
+            layers: [3]
         }
-        expect(reducer([], action)).to.deep.equal()
+        const action = {
+            type: types.LOAD_MAP,
+            data
+        }
+        const mapData = new MapData(data)
+        expect(reducer([], action)).to.deep.equal([mapData])
     })
 })

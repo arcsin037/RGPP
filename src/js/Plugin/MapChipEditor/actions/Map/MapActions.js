@@ -1,20 +1,8 @@
 import * as types from './actionTypes'
 
-export const addMap = ({
-    id,
-    col,
-    row,
-    chipWidth,
-    chipHeight,
-    layers
-}) => ({
+export const addMap = (data) => ({
     type: types.ADD_MAP,
-    id,
-    col,
-    row,
-    chipWidth,
-    chipHeight,
-    layers
+    data
 })
 
 export const setCtx = (id, ctx) => ({

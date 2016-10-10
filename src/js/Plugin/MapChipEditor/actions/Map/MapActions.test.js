@@ -2,27 +2,24 @@
 
 import * as actions from './MapActions'
 import * as types from './actionTypes'
-import RGPP from 'RGPP'
 import {
     expect
 } from 'chai'
 
-const MapData = RGPP.System.Map.MapData
-
 describe('MapActions', () => {
     it('should create an action to add a map', () => {
-        const args = {
+        const data = {
             id: 0,
             col: 20,
             row: 15,
             chipWidth: 32,
             chipHeight: 32
         }
-        const mapData = new MapData(args)
-        const expectedAction = Object.assign({
-            type: types.ADD_MAP
-        }, mapData)
-        expect(actions.addMap(mapData)).to.deep.equal(expectedAction)
+        const expectedAction = {
+            type: types.ADD_MAP,
+            data
+        }
+        expect(actions.addMap(data)).to.deep.equal(expectedAction)
     })
     it('should create an action to set ctx', () => {
         const id = 0
