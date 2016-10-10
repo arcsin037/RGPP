@@ -2,14 +2,13 @@ import {
     drawImage
 } from 'RGPP/System/Graphics/Base/BasicDraw'
 
-export const drawMap = (ctx, mapPanel) => {
+/*
+export const drawMap = (ctx, props) => {
     const {
-        props: {
-            mapData,
-            palettesData,
-            currentLayerNo
-        }
-    } = mapPanel
+        mapData,
+        palettesData,
+        currentLayerNo
+    } = props
 
     if (!mapData || !palettesData) {
         return
@@ -56,13 +55,15 @@ export const drawMap = (ctx, mapPanel) => {
         }
     }
 }
+*/
 
-
-export const drawVirtualImage = (ctx, mapPanel) => {
+/*
+export const drawVirtualImage = (ctx, props) => {
     const {
+        mapData,
         selectedPalette,
         palettesData
-    } = mapPanel.props
+    } = props
 
     const paletteId = selectedPalette.id
     const selectedPaletteData = palettesData[paletteId]
@@ -74,8 +75,8 @@ export const drawVirtualImage = (ctx, mapPanel) => {
     const paletteChipWidth = selectedPaletteData.chipWidth
     const paletteChipHeight = selectedPaletteData.chipHeight
 
-    const scaleX = mapPanel.cellWidth / paletteChipWidth
-    const scaleY = mapPanel.cellHeight / paletteChipHeight
+    const scaleX = mapData.cellWidth / paletteChipWidth
+    const scaleY = mapData.cellHeight / paletteChipHeight
 
     ctx.globalAlpha = 0.5
 
@@ -89,10 +90,11 @@ export const drawVirtualImage = (ctx, mapPanel) => {
         sy: startPixelY,
         sw: specifyRangePixelX,
         sh: specifyRangePixelY,
-        dx: mapPanel.mouseCellX * mapPanel.cellWidth,
-        dy: mapPanel.mouseCellY * mapPanel.cellHeight,
+        dx: mapPanel.mouseCellX * mapData.cellWidth,
+        dy: mapPanel.mouseCellY * mapData.cellHeight,
         dw: specifyRangePixelX * scaleX,
         dh: specifyRangePixelY * scaleY
     }
     drawImage(ctx, paletteImg, option)
 }
+*/
