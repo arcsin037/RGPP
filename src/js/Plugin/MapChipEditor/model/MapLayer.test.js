@@ -1,11 +1,13 @@
 'use strict'
 
-import MapLayer, {
+import {
     DEFAULT_COL,
     DEFAULT_ROW,
     NOTHING,
     OUT_OF_BOUNDS
-} from './MapLayer'
+} from '../constants'
+
+import MapLayer from './MapLayer'
 
 import {
     expect

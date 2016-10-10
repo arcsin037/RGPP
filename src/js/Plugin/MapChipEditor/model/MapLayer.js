@@ -1,8 +1,9 @@
-export const NOTHING = -1
-export const OUT_OF_BOUNDS = -2
-
-export const DEFAULT_COL = 20
-export const DEFAULT_ROW = 15
+import {
+    DEFAULT_COL,
+    DEFAULT_ROW,
+    NOTHING,
+    OUT_OF_BOUNDS
+} from '../constants'
 
 export class MapLayer {
     constructor({

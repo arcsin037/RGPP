@@ -17,8 +17,8 @@ describe('data reducer', () => {
             id: 0,
             col: 20,
             row: 15,
-            chipWidth: 32,
-            chipHeight: 32,
+            cellWidth: 16,
+            cellHeight: 16,
             ctx: 'hoge',
             layers: [3]
         }
@@ -35,8 +35,8 @@ describe('data reducer', () => {
             id: 0,
             col: 20,
             row: 15,
-            chipWidth: 32,
-            chipHeight: 32,
+            cellWidth: 16,
+            cellHeight: 16,
             ctx: 'hoge',
             layers: [3]
         }

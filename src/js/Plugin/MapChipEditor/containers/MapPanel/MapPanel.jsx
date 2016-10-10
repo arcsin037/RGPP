@@ -10,9 +10,6 @@ import {connect} from 'react-redux'
 
 import styles from './MapPanel.scss'
 
-const CHIP_WIDTH = 32
-const CHIP_HEIGHT = 32
-
 const BasicDraw = RGPP.System.Graphics.BasicDraw
 const NumberUtil = RGPP.System.Utils.NumberUtil
 
@@ -25,13 +22,6 @@ class MapPanel extends Component {
         this.selectedX = 0
         this.selectedY = 0
 
-        const width = RGPP.Config.RESOLUTION_X
-        const height = RGPP.Config.RESOLUTION_Y
-
-        this.chipWidth = CHIP_WIDTH
-        this.chipHeight = CHIP_HEIGHT
-        this.col = Math.floor(width / this.chipWidth)
-        this.row = Math.floor(height / this.chipHeight)
         this.ctx = null
         this.onEvent = this.onEvent.bind(this)
     }
@@ -40,8 +30,22 @@ class MapPanel extends Component {
         if (this.props.mapSaveData) {
             this.props.loadMap(this.props.mapSaveData)
         } else {
-            this.props.addMap(this)
+            this.props.addMap()
         }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const {
+            cellWidth,
+            cellHeight,
+            col,
+            row
+        } = nextProps.mapData
+
+        this.col = col
+        this.row = row
+        this.cellWidth = cellWidth
+        this.cellHeight = cellHeight
     }
 
     onEvent(state) {
@@ -63,8 +67,8 @@ class MapPanel extends Component {
 
     updateSelectedPos(state) {
         const {mouseInfo, padInfo} = state
-        this.mouseCellX = Math.floor(mouseInfo.x / this.chipWidth)
-        this.mouseCellY = Math.floor(mouseInfo.y / this.chipHeight)
+        this.mouseCellX = Math.floor(mouseInfo.x / this.cellWidth)
+        this.mouseCellY = Math.floor(mouseInfo.y / this.cellHeight)
 
         this.mouseCellX = NumberUtil.clamp(this.mouseCellX, 0, this.col - 1)
         this.mouseCellY = NumberUtil.clamp(this.mouseCellY, 0, this.row - 1)
@@ -142,12 +146,12 @@ class MapPanel extends Component {
 
     drawCellRect(ctx, x, y, r, g, b, a) {
         BasicDraw.setColor(ctx, r, g, b, a)
-        BasicDraw.drawRect(ctx, x * this.chipWidth, y * this.chipHeight, this.chipWidth, this.chipHeight, 2)
+        BasicDraw.drawRect(ctx, x * this.cellWidth, y * this.cellHeight, this.cellWidth, this.cellHeight, 2)
     }
 
     drawCellLargeRect(ctx, x, y, r, g, b, a) {
         BasicDraw.setColor(ctx, r, g, b, a)
-        BasicDraw.drawRect(ctx, x * this.chipWidth, y * this.chipHeight, this.chipWidth, this.chipHeight, 3)
+        BasicDraw.drawRect(ctx, x * this.cellWidth, y * this.cellHeight, this.cellWidth, this.cellHeight, 3)
     }
 
     render() {

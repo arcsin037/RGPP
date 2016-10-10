@@ -17,8 +17,8 @@ export const drawMap = (ctx, mapPanel) => {
 
     const col = mapData.col
     const row = mapData.row
-    const mapChipWidth = mapData.chipWidth
-    const mapChipHeight = mapData.chipHeight
+    const mapChipWidth = mapData.cellWidth
+    const mapChipHeight = mapData.cellHeight
     const mapLayers = mapData.layers
     const maxLayerNum = mapLayers.length
 
@@ -74,8 +74,8 @@ export const drawVirtualImage = (ctx, mapPanel) => {
     const paletteChipWidth = selectedPaletteData.chipWidth
     const paletteChipHeight = selectedPaletteData.chipHeight
 
-    const scaleX = mapPanel.chipWidth / paletteChipWidth
-    const scaleY = mapPanel.chipHeight / paletteChipHeight
+    const scaleX = mapPanel.cellWidth / paletteChipWidth
+    const scaleY = mapPanel.cellHeight / paletteChipHeight
 
     ctx.globalAlpha = 0.5
 
@@ -89,8 +89,8 @@ export const drawVirtualImage = (ctx, mapPanel) => {
         sy: startPixelY,
         sw: specifyRangePixelX,
         sh: specifyRangePixelY,
-        dx: mapPanel.mouseCellX * mapPanel.chipWidth,
-        dy: mapPanel.mouseCellY * mapPanel.chipHeight,
+        dx: mapPanel.mouseCellX * mapPanel.cellWidth,
+        dy: mapPanel.mouseCellY * mapPanel.cellHeight,
         dw: specifyRangePixelX * scaleX,
         dh: specifyRangePixelY * scaleY
     }
