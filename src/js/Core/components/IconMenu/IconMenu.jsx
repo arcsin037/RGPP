@@ -19,9 +19,11 @@ class IconMenu extends Component {
         super(props)
         this.save = this.save.bind(this)
     }
+
     save() {
         this.props.save(this.props.saveData)
     }
+
     render() {
         return (
             <div className={styles.btnWrapper}>

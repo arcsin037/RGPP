@@ -2,51 +2,72 @@
  * @class 2D Vector
  * @author arcsin
  */
-(function(global) {
-	/* global RGPP */
-	"use strict";
-	    var objName = "Vector2";
-    var constructor = function(spec, my) {
-        var that = {};
-        my = my || {};
+class Vector2 {
+    constructor({
+        x = 0,
+        y = 0
+    } = {}) {
+        this.x = x
+        this.y = y
+    }
 
-        that.x = spec.x;
-        that.y = spec.y;
-        
-        that.norm = norm;
-        that.negative = negative;
-        that.normalize = normalize;
+    norm() {
+        const squareLength = Vector2.dot(this, this)
+        return Math.sqrt(squareLength)
+    }
 
-        function negative() {
-            return RGPP.System.Vector2({
-                x: -that.x,
-                y: -that.y
-            });
-        }
+    normalize() {
+        const length = this.norm()
+        this.x = this.x / length
+        this.y = this.y / length
+    }
 
-        function norm() {
-            var squareLength = RGPP.System.VectorOperator.getInstance().Vec2.dot(that, that);
-            return Math.sqrt(squareLength);
-        }
+    /* static */
+    static add(vecA, vecB) {
+        const resultX = vecA.x + vecB.x
+        const resultY = vecA.y + vecB.y
+        return new Vector2({
+            x: resultX,
+            y: resultY
+        })
+    }
 
-        function normalize() {
-            var length = norm();
-            var x = that.x / length;
-            var y = that.y / length;
-            return RGPP.System.Vector2({
-                x: x,
-                y: y
-            });
-        }
-        
+    static sub(vecA, vecB) {
+        const resultX = vecA.x - vecB.x
+        const resultY = vecA.y - vecB.y
+        return new Vector2({
+            x: resultX,
+            y: resultY
+        })
+    }
 
-        return that;
-    };
-    
-    RGPP.System.exports({
-        name: objName,
-        constructorFunc: constructor,
-        module: module
-    });
+    static dot(vecA, vecB) {
+        return vecA.x * vecB.x + vecA.y * vecB.y
+    }
 
-})((this || 0).self || global);
+    static distanceSquare(vecA, vecB) {
+        const subVec = Vector2.sub(vecA, vecB)
+        return Vector2.dot(subVec, subVec)
+    }
+
+    static distance(vecA, vecB) {
+        return Math.sqrt(Vector2.distanceSquare(vecA, vecB))
+    }
+
+    static multScalar(multValue, vec) {
+        return new Vector2({
+            x: vec.x * multValue,
+            y: vec.y * multValue
+        })
+    }
+
+    static negated(vec) {
+        return new Vector2({
+            x: -vec.x,
+            y: -vec.y
+        })
+    }
+
+}
+
+export default Vector2
