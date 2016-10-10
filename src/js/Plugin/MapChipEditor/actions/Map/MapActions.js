@@ -47,3 +47,8 @@ export const setCurrentLayerNo = (currentLayerNo) => ({
     type: types.SET_CURRENT_LAYER_NO,
     currentLayerNo
 })
+
+export const loadMap = (data) => ({
+    type: types.LOAD_MAP,
+    data
+})

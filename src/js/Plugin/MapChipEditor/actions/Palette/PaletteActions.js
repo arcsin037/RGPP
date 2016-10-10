@@ -39,3 +39,8 @@ export const setDrawMode = (drawMode) => ({
     type: types.SET_DRAW_MODE,
     drawMode
 })
+
+export const loadPalette = (data) => ({
+    type: types.LOAD_PALETTE,
+    data
+})

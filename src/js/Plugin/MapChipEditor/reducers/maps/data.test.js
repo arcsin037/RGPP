@@ -26,4 +26,11 @@ describe('data reducer', () => {
         }, args)
         expect(reducer([], action)).to.deep.equal([args])
     })
+
+    it('should handle LOAD_MAP', () => {
+        const action = {
+            type: types.LOAD_MAP
+        }
+        expect(reducer([], action)).to.deep.equal()
+    })
 })

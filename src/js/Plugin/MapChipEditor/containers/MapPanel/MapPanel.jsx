@@ -1,12 +1,12 @@
 import {ERASER_MODE, FILLING_MODE, MAP_LAYER_NUM, PEN_MODE, RECTANGLE_MODE} from '../../constants'
 import React, {Component, PropTypes} from 'react'
-import {addMap, setCtx, setMapChip} from '../../actions/Map'
+import {addMap, loadMap, setCtx, setMapChip} from '../../actions/Map'
 import {drawMap, drawVirtualImage} from './MapUtil'
+import {getStore, loadSaveData} from '../../utils/storeUtil'
 import ControllableCanvas from 'Core/components/Base/ControllableCanvas'
 import RGPP from 'RGPP'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import {getStore} from '../../utils/storeUtil'
 
 import styles from './MapPanel.scss'
 
@@ -15,7 +15,6 @@ const CHIP_HEIGHT = 32
 
 const BasicDraw = RGPP.System.Graphics.BasicDraw
 const NumberUtil = RGPP.System.Utils.NumberUtil
-const MapData = RGPP.System.Map.MapData
 
 class MapPanel extends Component {
     constructor(props) {
@@ -35,10 +34,10 @@ class MapPanel extends Component {
         this.chipHeight = CHIP_HEIGHT
         this.col = Math.floor(width / this.chipWidth)
         this.row = Math.floor(height / this.chipHeight)
+    }
 
-        const mapData = new MapData({col: this.col, row: this.row, chipWidth: this.chipWidth, chipHeight: this.chipHeight})
-        mapData.initTestData()
-        this.props.addMap(mapData)
+    componentWillMount() {
+        this.props.loadMap(this.props.saveData.maps)
     }
 
     onEvent(state) {
@@ -163,27 +162,32 @@ MapPanel.propTypes = {
     palettesData: PropTypes.array.isRequired,
     currentLayerNo: PropTypes.number.isRequired,
     selectedPalette: PropTypes.object.isRequired,
+    saveData: PropTypes.object.isRequired,
     drawMode: PropTypes.string.isRequired,
     addMap: PropTypes.func.isRequired,
     setCtx: PropTypes.func.isRequired,
-    setMapChip: PropTypes.func.isRequired
+    setMapChip: PropTypes.func.isRequired,
+    loadMap: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state, ownProps) => {
     const store = getStore(state)
+    const saveData = loadSaveData(state)
     return {
         mapData: store.maps.data[ownProps.id],
         palettesData: store.palettes.data,
         selectedPalette: store.palettes.selected,
         currentLayerNo: store.maps.selected.currentLayerNo,
-        drawMode: store.palettes.context.drawMode
+        drawMode: store.palettes.context.drawMode,
+        saveData
     }
 }
 
 const mapDispatchToProps = (dispatch) => (bindActionCreators({
     addMap,
     setCtx,
-    setMapChip
+    setMapChip,
+    loadMap
 }, dispatch))
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapPanel)

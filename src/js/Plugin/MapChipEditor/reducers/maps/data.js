@@ -1,23 +1,23 @@
-import {
-    ADD_MAP,
-    SET_CTX,
-    SET_MAP_CHIP
-} from '../../actions/Map/actionTypes'
+import * as types from '../../actions/Map/actionTypes'
+import {MapData} from '../../model/MapData'
 
 const initialState = []
 
 const createMap = (state, action) => {
+    const {data} = action
+
+    const mapData = new MapData({
+        col: data.col,
+        row: data.row,
+        chipWidth: data.chipWidth,
+        chipHeight: data.chipHeight
+    })
+
     switch (action.type) {
-    case ADD_MAP:
-        return {
-            id: action.id,
-            ctx: action.ctx,
-            col: action.col,
-            row: action.row,
-            chipWidth: action.chipWidth,
-            chipHeight: action.chipHeight,
-            layers: action.layers
-        }
+    case types.ADD_MAP:
+        return mapData
+    case types.LOAD_MAP:
+        return mapData
     }
 }
 
@@ -48,17 +48,24 @@ const setMapChip = (state, action) => {
     return nextState
 }
 
+export const loadMap = (state, action) => {
+    const nextState = action.data
+    return nextState
+}
+
 const data = (state = initialState, action) => {
     switch (action.type) {
-    case ADD_MAP:
+    case types.ADD_MAP:
         return [
             ...state,
             createMap(state, action)
         ]
-    case SET_CTX:
+    case types.SET_CTX:
         return setCtx(state, action)
-    case SET_MAP_CHIP:
+    case types.SET_MAP_CHIP:
         return setMapChip(state, action)
+    case types.LOAD_MAP:
+        return loadMap(state, action)
     default:
         return state
     }
