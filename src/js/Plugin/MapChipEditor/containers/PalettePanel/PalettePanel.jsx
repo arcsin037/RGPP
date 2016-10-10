@@ -1,6 +1,8 @@
 import React, {Component, PropTypes} from 'react'
 import {addPalette, setSelectionRange} from '../../actions/Palette'
 import ControllableCanvas from 'Core/components/Base/ControllableCanvas'
+import Graphics from 'Core/Graphics'
+import {MAP_LAYER_NUM} from '../../constants'
 import Palette from './Palette'
 import PaletteImage from 'Image/User/MapChip/mack_material.png'
 import RGPP from 'RGPP'
@@ -9,7 +11,6 @@ import {connect} from 'react-redux'
 import {getStore} from '../../utils/storeUtil'
 import styles from './PalettePanel.scss'
 
-const BasicDraw = RGPP.System.Graphics.BasicDraw
 const NumberUtil = RGPP.System.Utils.NumberUtil
 
 class PalettePanel extends Component {
@@ -125,7 +126,7 @@ class PalettePanel extends Component {
         if (!ctx) {
             return
         }
-        BasicDraw.clear(ctx)
+        Graphics.BasicDraw.clear(ctx)
         this.palette.onDraw(ctx)
         this.drawEditSystemImage(ctx)
     }
@@ -134,14 +135,14 @@ class PalettePanel extends Component {
         ctx.globalAlpha = 1.0
 
         if (this.startPixelX >= 0 && this.startPixelX < this.palette.width && this.startPixelY >= 0 && this.startPixelY < this.palette.height) {
-            BasicDraw.setColor(ctx, 244, 255, 0, 1)
-            BasicDraw.drawRect(ctx, this.startPixelX, this.startPixelY, this.specifyRangePixelX, this.specifyRangePixelY, 2)
+            Graphics.BasicDraw.setColor(ctx, 244, 255, 0, 1)
+            Graphics.BasicDraw.drawRect(ctx, this.startPixelX, this.startPixelY, this.specifyRangePixelX, this.specifyRangePixelY, 2)
         }
     }
 
     drawCellLargeRect(ctx, x, y, r, g, b, a) {
-        BasicDraw.setColor(ctx, r, g, b, a)
-        BasicDraw.drawRect(ctx, x * this.palette.chipWidth, y * this.palette.chipHeight, this.palette.chipWidth, this.palette.chipHeight, 3)
+        Graphics.BasicDraw.setColor(ctx, r, g, b, a)
+        Graphics.BasicDraw.drawRect(ctx, x * this.palette.chipWidth, y * this.palette.chipHeight, this.palette.chipWidth, this.palette.chipHeight, 3)
     }
 
     getSelectedChipNoArray() {
@@ -161,11 +162,14 @@ class PalettePanel extends Component {
     }
 
     render() {
-        const {paletteWidth, paletteHeight} = this.props
+        const {paletteWidth, paletteHeight, isVisible} = this.props
+
         return (
-            <div className={styles.PalettePanel}>
-                <ControllableCanvas width={paletteWidth} height={paletteHeight} onEvent={this.onEvent}/>
-            </div>
+            isVisible ? (
+                <div className={styles.PalettePanel}>
+                    <ControllableCanvas width={paletteWidth} height={paletteHeight} onEvent={this.onEvent}/>
+                </div>
+            ) : null
         )
     }
 }
@@ -174,7 +178,8 @@ PalettePanel.propTypes = {
     paletteWidth: PropTypes.number.isRequired,
     paletteHeight: PropTypes.number.isRequired,
     addPalette: PropTypes.func.isRequired,
-    setSelectionRange: PropTypes.func.isRequired
+    setSelectionRange: PropTypes.func.isRequired,
+    isVisible: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = (state) => {
@@ -189,7 +194,12 @@ const mapStateToProps = (state) => {
         paletteHeight = paletteImg.height
     }
 
-    return {paletteWidth, paletteHeight}
+    const isVisible = store.maps.selected.currentLayerNo !== MAP_LAYER_NUM
+    return {
+        paletteWidth,
+        paletteHeight,
+        isVisible
+    }
 }
 
 const mapDispatchToProps = (dispatch) => (bindActionCreators({

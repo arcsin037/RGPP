@@ -1,4 +1,3 @@
-import * as BasicDraw from 'RGPP/System/Graphics/Base/BasicDraw'
 import {
     DEFAULT_COL,
     DEFAULT_ROW,
@@ -6,6 +5,7 @@ import {
     MAP_CELL_WIDTH,
     MAP_LAYER_NUM
 } from '../constants'
+import Graphics from 'Core/Graphics'
 import MapLayer from './MapLayer'
 
 export class MapData {
@@ -35,8 +35,8 @@ export class MapData {
     }
 
     drawCellRect(ctx, x, y, r, g, b, a) {
-        BasicDraw.setColor(ctx, r, g, b, a)
-        BasicDraw.drawRect(ctx, x * this.cellWidth, y * this.cellHeight, this.cellWidth, this.cellHeight, 2)
+        Graphics.BasicDraw.setColor(ctx, r, g, b, a)
+        Graphics.BasicDraw.drawRect(ctx, x * this.cellWidth, y * this.cellHeight, this.cellWidth, this.cellHeight, 2)
     }
 
     getTagData(x, y) {

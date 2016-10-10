@@ -3,18 +3,13 @@ import React, {Component, PropTypes} from 'react'
 import {addMap, loadMap, setCtx, setMapChip} from '../../actions/Map'
 import {getStore, loadSaveData} from '../../utils/storeUtil'
 import ControllableCanvas from 'Core/components/Base/ControllableCanvas'
+import Graphics from 'Core/Graphics'
 import RGPP from 'RGPP'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import {
-    drawImage
-} from 'RGPP/System/Graphics/Base/BasicDraw'
 
 import styles from './MapPanel.scss'
 
-
-
-const BasicDraw = RGPP.System.Graphics.BasicDraw
 const NumberUtil = RGPP.System.Utils.NumberUtil
 
 class MapPanel extends Component {
@@ -133,7 +128,7 @@ class MapPanel extends Component {
         if (!ctx) {
             return
         }
-        BasicDraw.clear(ctx)
+        Graphics.BasicDraw.clear(ctx)
         this.drawMap(ctx)
         if (this.isEventLayer) {
             this.drawEditSystemImage(ctx)
@@ -149,13 +144,13 @@ class MapPanel extends Component {
     }
 
     drawCellRect(ctx, x, y, r, g, b, a) {
-        BasicDraw.setColor(ctx, r, g, b, a)
-        BasicDraw.drawRect(ctx, x * this.cellWidth, y * this.cellHeight, this.cellWidth, this.cellHeight, 2)
+        Graphics.BasicDraw.setColor(ctx, r, g, b, a)
+        Graphics.BasicDraw.drawRect(ctx, x * this.cellWidth, y * this.cellHeight, this.cellWidth, this.cellHeight, 2)
     }
 
     drawCellLargeRect(ctx, x, y, r, g, b, a) {
-        BasicDraw.setColor(ctx, r, g, b, a)
-        BasicDraw.drawRect(ctx, x * this.cellWidth, y * this.cellHeight, this.cellWidth, this.cellHeight, 3)
+        Graphics.BasicDraw.setColor(ctx, r, g, b, a)
+        Graphics.BasicDraw.drawRect(ctx, x * this.cellWidth, y * this.cellHeight, this.cellWidth, this.cellHeight, 3)
     }
 
     drawMap(ctx) {
@@ -204,7 +199,7 @@ class MapPanel extends Component {
                             dw: mapChipWidth,
                             dh: mapChipHeight
                         }
-                        drawImage(ctx, palette.img, option)
+                        Graphics.BasicDraw.drawImage(ctx, palette.img, option)
                     }
                 }
             }
@@ -248,7 +243,7 @@ class MapPanel extends Component {
             dw: specifyRangePixelX * scaleX,
             dh: specifyRangePixelY * scaleY
         }
-        drawImage(ctx, paletteImg, option)
+        Graphics.BasicDraw.drawImage(ctx, paletteImg, option)
     }
 
     render() {

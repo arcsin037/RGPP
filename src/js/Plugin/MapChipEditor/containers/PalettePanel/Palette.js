@@ -1,10 +1,9 @@
-import RGPP from 'RGPP'
+import {
+    CHIP_HEIGHT,
+    CHIP_WIDTH
+} from '../../constants'
 
-const CHIP_WIDTH = 32
-const CHIP_HEIGHT = 32
-
-const BasicDraw = RGPP.System.Graphics.BasicDraw
-const ImageUtil = RGPP.System.Graphics.ImageUtil
+import Graphics from 'Core/Graphics'
 
 let id = 0
 
@@ -17,7 +16,7 @@ export class Palette {
         this.row = 0
 
         this.onLoadImage = this.onLoadImage.bind(this)
-        this.img = ImageUtil.loadImage(img, this.onLoadImage)
+        this.img = Graphics.ImageUtil.loadImage(img, this.onLoadImage)
         this.onLoad = onLoad
     }
 
@@ -31,7 +30,7 @@ export class Palette {
     }
 
     onDraw (ctx) {
-        BasicDraw.drawImage(ctx, this.img)
+        Graphics.BasicDraw.drawImage(ctx, this.img)
     }
 }
 
