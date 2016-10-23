@@ -1,7 +1,8 @@
 import * as types from '../actions/SaveData/actionTypes'
 
 const initialState = {
-    plugin: {}
+    plugin: {},
+    gameObjs: {}
 }
 
 const save = (state, action) => action.data

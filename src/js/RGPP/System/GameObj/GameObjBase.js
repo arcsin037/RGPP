@@ -1,6 +1,6 @@
 /**
  * System module
- * @module System
+ * @module GameObjBase
  * @namespace RGPP.System
  */
 

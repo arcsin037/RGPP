@@ -60,7 +60,8 @@ IconMenu.propTypes = {
 
 const mapStateToProps = (state) => ({
     saveData: {
-        plugin: getPluginSaveData(state)
+        plugin: getPluginSaveData(state),
+        gameObjs: {}
     }
 })
 

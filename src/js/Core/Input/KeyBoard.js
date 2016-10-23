@@ -42,7 +42,6 @@ export class KeyBoard {
             this.key[event.keyCode] = true
         }
         e.preventDefault()
-        console.log('onkeydown', e.which)
         return false
     }
 

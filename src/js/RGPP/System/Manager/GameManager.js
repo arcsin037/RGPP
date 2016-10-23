@@ -1,223 +1,191 @@
+import RGPP from 'Core/RGPP'
 /**
- * System module
- * @module System
- * @namespace RGPP.System
+ * Game Manager
+ * @class GameManager
+ * @author arcsin
+ * @constructor
  */
 
-(function(global) {
-	/* global RGPP */
-	"use strict";
-	var objName = "GameManager";
+const FRAME_RATE = 20 // (frame / second)
+const INTERVAL = 1000 / FRAME_RATE
 
-	/**
-	 * Game Manager
-	 * @class GameManager
-	 * @author arcsin
-	 * @constructor
-	 */
-	var constructor = function() {
-		var that = {};
+class GameManager {
+    // Private variable
 
-		// operate game
-		that.togglePause = togglePause;
-		that.quitGame = quitGame;
+    constructor() {
+        this.isDebugMode = false
+        this.isPauseGame = false
+        this.isTestMode = false
+        this.isEmulationMode = false
 
-		// Getter
-		that.isTestMode = isTestMode;
-		that.isEmulationMode = isEmulationMode;
-		that.isDebugMode = isDebugMode;
+        this.timer = new RGPP.System.Timer()
 
-		// Setter
-		that.setTestMode = setTestMode;
-		that.setEmulationMode = setEmulationMode;
-		that.setDebugMode = setDebugMode;
+        this.requestAnimationFrame = window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            window.setTimeout
+    }
 
 
-		// Private variable
-		var FRAME_RATE = 20, // (frame / second)
-			INTERVAL = 1000 / FRAME_RATE,
+    startGame() {
+        this.requestAnimationFrame(this.alwaysUpdate, INTERVAL)
+    }
 
-			mDebugModeFlag = false,
-			mPauseGameFlag = false,
-			mTestModeFlag = false,
-			mEmulationMode = false,
+    togglePause() {
+        this.isPauseGame = !this.isPauseGame
+        return this.isPauseGame
+    }
 
-			mTimer = RGPP.System.Timer(),
+    quitGame() {
+        RGPP.System.ImageDataManager.getInstance().clearObj()
+        RGPP.System.EventObjManager.getInstance().clear()
+        RGPP.System.EmulationModeCanvas.getInstance().clear()
+    }
 
-			requestAnimationFrame = window.requestAnimationFrame ||
-			window.webkitRequestAnimationFrame ||
-			window.mozRequestAnimationFrame ||
-			window.setTimeout;
+    alwaysUpdate() {
+        const eom = RGPP.System.EventObjManager.getInstance()
+        eom.organizeEventObj()
+        if (!this.isPauseGame) {
+            this.onUpdate()
+        }
+        this.onDraw()
 
-		function startGame() {
-			requestAnimationFrame(alwaysUpdate, INTERVAL);
-		}
+        const mapPanelList = RGPP.System.MapPanelList.getInstance()
+        const currentMapPanel = mapPanelList.currentMapPanel()
+        if (currentMapPanel !== null) {
+            const fps = this.timer.measureFPS()
+            currentMapPanel.setFPS(fps)
+        }
+        if (this.isTestMode) {
+            requestAnimationFrame(this.alwaysUpdate, INTERVAL)
+        }
+    }
 
-		function togglePause() {
-			mPauseGameFlag = !mPauseGameFlag;
-			return mPauseGameFlag;
-		}
+    onUpdate() {
+        const cm = RGPP.System.ControlManager.getInstance()
+        const eom = RGPP.System.EventObjManager.getInstance()
 
-		function quitGame() {
-			RGPP.System.ImageDataManager.getInstance().clearObj();
-			RGPP.System.EventObjManager.getInstance().clear();
-			RGPP.System.EmulationModeCanvas.getInstance().clear();
-		}
+        // update event instance
+        eom.updateEventObj()
 
-		function alwaysUpdate() {
-			var eom = RGPP.System.EventObjManager.getInstance();
-			eom.organizeEventObj();
-			if (!mPauseGameFlag) {
-				onUpdate();
-			}
-			onDraw();
+        // update event instance for debug
+        if (this.isDebugMode) {
+            eom.updateEventObjDebug()
+        }
 
-			var mapPanelList = RGPP.System.MapPanelList.getInstance();
-			var currentMapPanel = mapPanelList.currentMapPanel();
-			if (currentMapPanel !== null) {
-				var fps = mTimer.measureFPS();
-				currentMapPanel.setFPS(fps);
-			}
-			if (mTestModeFlag) {
-				requestAnimationFrame(alwaysUpdate, INTERVAL);
-			}
-		}
+        RGPP.System.EventDialogList.getInstance().updateDialog()
 
-		function onUpdate() {
-			var cm = RGPP.System.ControlManager.getInstance();
-			var eom = RGPP.System.EventObjManager.getInstance();
+        eom.updateGameObj()
 
-			// update event instance
-			eom.updateEventObj();
+        // save previous pad info
+        cm.savePreviousInputInfo()
+    }
 
-			// update event instance for debug
-			if (mDebugModeFlag) {
-				eom.updateEventObjDebug();
-			}
+    onDraw() {
+        const currentMapPanel = RGPP.System.MapPanelList.getInstance().currentMapPanel()
+        if (currentMapPanel !== null) {
+            const eom = RGPP.System.EventObjManager.getInstance()
+            const ctx = currentMapPanel.getCtx()
 
-			RGPP.System.EventDialogList.getInstance().updateDialog();
+            eom.sortGameObj()
 
-			eom.updateGameObj();
+            // draw map
+            currentMapPanel.paintComponent()
 
-			// save previous pad info
-			cm.savePreviousInputInfo();
-		}
+            // draw event instance
+            eom.drawEventObj(ctx)
 
-		function onDraw() {
-			var currentMapPanel = RGPP.System.MapPanelList.getInstance().currentMapPanel();
-			if (currentMapPanel !== null) {
-				var eom = RGPP.System.EventObjManager.getInstance();
-				var ctx = currentMapPanel.getCtx();
+            if (this.isDebugMode) {
+                eom.drawEventObjDebug(ctx)
+            }
 
-				eom.sortGameObj();
+            // Draw Filter
+            RGPP.System.ImageFilterInstance.getInstance().filter(ctx)
 
-				// draw map
-				currentMapPanel.paintComponent();
+            if (this.isEmulationMode) {
+                // Draw to Emulation Canvas
+                const scrollX = RGPP.System.CoordinateSystem.getInstance().convertMapToScreenX(0)
+                const scrollY = RGPP.System.CoordinateSystem.getInstance().convertMapToScreenY(0)
+                const imageData = ctx.getImageData(scrollX, scrollY, RGPP.Config.RESOLUTION_X, RGPP.Config.RESOLUTION_Y)
+                RGPP.System.EmulationModeCanvas.getInstance().draw(imageData)
+            }
 
-				// draw event instance
-				eom.drawEventObj(ctx);
-
-				if (mDebugModeFlag) {
-					eom.drawEventObjDebug(ctx);
-				}
-
-				// Draw Filter
-				RGPP.System.ImageFilterInstance.getInstance().filter(ctx);
-
-				if (mEmulationMode) {
-					// Draw to Emulation Canvas
-					var scrollX = RGPP.System.CoordinateSystem.getInstance().convertMapToScreenX(0);
-					var scrollY = RGPP.System.CoordinateSystem.getInstance().convertMapToScreenY(0);
-					var imageData = ctx.getImageData(scrollX, scrollY, RGPP.Config.RESOLUTION_X, RGPP.Config.RESOLUTION_Y);
-					RGPP.System.EmulationModeCanvas.getInstance().draw(imageData);
-				}
-
-				// Draw System Rect
-				currentMapPanel.drawEditSystemRect();
-			}
-		}
+            // Draw System Rect
+            currentMapPanel.drawEditSystemRect()
+        }
+    }
 
 
-		function setTestMode(testModeFlag) {
-			// Reset Filter
-			RGPP.System.ImageFilterInstance.getInstance().resetFilter();
-			var mapPanelList = RGPP.System.MapPanelList.getInstance();
-			var eom = RGPP.System.EventObjManager.getInstance();
-			var eventMoveInfoList = RGPP.System.EventMoveInfoList.getInstance();
+    setTestMode(isTestMode) {
+        // Reset Filter
+        RGPP.System.ImageFilterInstance.getInstance().resetFilter()
+        const mapPanelList = RGPP.System.MapPanelList.getInstance()
+        const eom = RGPP.System.EventObjManager.getInstance()
+        const eventMoveInfoList = RGPP.System.EventMoveInfoList.getInstance()
 
-			if (testModeFlag === true && mTestModeFlag === false) {
-				mTestModeFlag = true;
-				// clear event instance
-				eventMoveInfoList.clear();
-				eom.clear();
+        if (isTestMode === true && this.isTestMode === false) {
+            this.isTestMode = true
+            // clear event instance
+            eventMoveInfoList.clear()
+            eom.clear()
 
-				// set game mode
-				for (var mapPanelIndex = 0; mapPanelIndex < mapPanelList.size(); mapPanelIndex += 1) {
-					mapPanelList.panel(mapPanelIndex).setGameMode();
-					mapPanelList.panel(mapPanelIndex).resetEventParam();
-				}
+            // set game mode
+            for (let mapPanelIndex = 0; mapPanelIndex < mapPanelList.length; mapPanelIndex += 1) {
+                mapPanelList.panel(mapPanelIndex).setGameMode()
+                mapPanelList.panel(mapPanelIndex).resetEventParam()
+            }
 
-				if (mapPanelList.size() > 0) {
-					// load initialized event instance of current map panel
-					eom.loadInitEventObj();
-				}
+            if (mapPanelList.size() > 0) {
+                // load initialized event instance of current map panel
+                eom.loadInitEventObj()
+            }
 
-				RGPP.System.EventDialogList.getInstance().updateDialog();
+            RGPP.System.EventDialogList.getInstance().updateDialog()
 
-				RGPP.System.ImageDataManager.getInstance().clearObj();
+            RGPP.System.ImageDataManager.getInstance().clearObj()
 
-				// start game main loop
-				startGame();
+            // start game main loop
+            this.startGame()
 
-				eom.onLoad();
-			}
-			else if (testModeFlag === false && mTestModeFlag === true) {
-				mTestModeFlag = false;
-				// stop game main loop
-				quitGame();
+            eom.onLoad()
+        } else if (isTestMode === false && this.isTestMode === true) {
+            this.isTestMode = false
+            // stop game main loop
+            this.quitGame()
 
-				// reset game mode
-				for (var mapPanelIndex = 0; mapPanelIndex < mapPanelList.size(); mapPanelIndex += 1) {
-					mapPanelList.panel(mapPanelIndex).resetGameMode();
-				}
-				RGPP.System.EmulationModeCanvas.getInstance().resetInput();
+            // reset game mode
+            for (let mapPanelIndex = 0; mapPanelIndex < mapPanelList.length; mapPanelIndex += 1) {
+                mapPanelList.panel(mapPanelIndex).resetGameMode()
+            }
+            RGPP.System.EmulationModeCanvas.getInstance().resetInput()
 
-				// clear event instance
-				eventMoveInfoList.clear();
-				eom.clear();
-			}
-		}
-
-
-		function setDebugMode(debugModeFlag) {
-			mDebugModeFlag = debugModeFlag;
-		}
-
-		function setEmulationMode(emulationFlag) {
-			mEmulationMode = emulationFlag;
-		}
-
-		function isEmulationMode() {
-			return mEmulationMode;
-		}
-
-		function isTestMode() {
-			return mTestModeFlag;
-		}
-
-		function isDebugMode() {
-			return mDebugModeFlag;
-		}
+            // clear event instance
+            eventMoveInfoList.clear()
+            eom.clear()
+        }
+    }
 
 
-		return that;
-	};
+    setDebugMode(isDebugMode) {
+        this.isDebugMode = isDebugMode
+    }
 
-	RGPP.System.exportsAsSingleton({
-		name: objName,
-		constructorFunc: constructor,
-		module: module
-	});
+    setEmulationMode(emulationFlag) {
+        this.isEmulationMode = emulationFlag
+    }
 
+    isEmulationMode() {
+        return this.isEmulationMode
+    }
 
-})((this || 0).self || global);
+    isTestMode() {
+        return this.isTestMode
+    }
+
+    isDebugMode() {
+        return this.isDebugMode
+    }
+
+}
+
+export default GameManager
