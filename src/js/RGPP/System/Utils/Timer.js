@@ -7,6 +7,21 @@
 
 const LABEL = 'timer'
 
+/**
+* Request Animation frame
+* @method requestAnimationFrame
+*/
+export const requestAnimationFrame = (callback, interval) => {
+    const reqAnimFrame = window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        window.setTimeout
+
+    reqAnimFrame(callback, interval)
+}
+
 export default class Timer {
     /**
      * Timer Functions
@@ -16,34 +31,35 @@ export default class Timer {
      * @constructor
      */
     constructor() {
-        const now = global.performance && (
-            global.performance.now ||
-            global.performance.mozNow ||
-            global.performance.msNow ||
-            global.performance.oNow ||
-            global.performance.webkitNow)
+        this.now = window.performance && (
+            window.performance.now ||
+            window.performance.mozNow ||
+            window.performance.msNow ||
+            window.performance.oNow ||
+            window.performance.webkitNow)
 
-        /**
-         * Get current time
-         * @method getCurrentTime
-         * @return current time
-         */
-        this.getCurrentTime = () =>
-            (now && Reflect.apply(now, window.performance, [])) || (new Date())
+        this.previousTime = this.getCurrentTime()
+    }
 
-        let mPreviousTime = this.getCurrentTime()
+    /**
+     * Get current time
+     * @method getCurrentTime
+     * @return current time
+     */
+    getCurrentTime() {
+        return (this.now && Reflect.apply(this.now, window.performance, [])) || (new Date())
+    }
 
-        /**
-         * Measure frame per second
-         * @method measureFPS
-         * @return fps {Number} frame per second
-         */
-        this.measureFPS = () => {
-            const diff = this.getCurrentTime() - mPreviousTime
-            const fps = 1000 / diff
-            mPreviousTime = this.getCurrentTime()
-            return fps
-        }
+    /**
+     * Measure frame per second
+     * @method measureFPS
+     * @return fps {Number} frame per second
+     */
+    measureFPS() {
+        const diff = this.getCurrentTime() - this.previousTime
+        const fps = 1000 / diff
+        this.previousTime = this.getCurrentTime()
+        return fps
     }
 
     /**
