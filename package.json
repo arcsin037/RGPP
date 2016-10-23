@@ -9,7 +9,7 @@
     "server": "webpack-dev-server",
     "build": "webpack --release",
     "start": "npm run server",
-    "test": "mocha --compilers js:babel-core/register src/js/**/*.test.js"
+    "test": "mocha src/js/**/*.test.js"
   },
   "author": "arcsin",
   "license": "Apache-2.0",

@@ -20,13 +20,14 @@ class EventState {
     }
 
     addScript(scriptID) {
-        const scriptData = ScriptDB.createObj(scriptID);
-        scripts.push(scriptData)
+        const scriptData = ScriptDB.createObj(scriptID)
+        this.scripts.push(scriptData)
     }
 
-    removeScript(scriptID) {
-        const scriptData = ScriptDB.createObj(scriptID);
-        scripts.push(scriptData)
+    removeScript() {
+        if (this.scripts.length > 1) {
+            this.scripts.pop()
+        }
     }
 
     onLoadGame(event) {
@@ -75,18 +76,11 @@ class EventState {
 
     debugDraw(ctx) {
         this.scripts.forEach((script) => {
-            ctx.save();
-            script.debugDraw(ctx);
-            ctx.restore();
-        }
-    }
-
-
-
-    removeScript() {
-        if (mScriptDataIDs.length > 1) {
-            mScriptDataIDs.pop();
-            mScripts.pop();
-        }
+            ctx.save()
+            script.debugDraw(ctx)
+            ctx.restore()
+        })
     }
 }
+
+export default EventState
