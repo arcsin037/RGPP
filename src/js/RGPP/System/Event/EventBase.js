@@ -1,591 +1,500 @@
 /**
- * System module
- * @module System
- * @namespace RGPP.System
+ *  Event
+ * @class EventBase
+ * @author arcsin
+ * @constructor
  */
 
-(function(global) {
-	/* global RGPP */
-	"use strict";
-		var objName = "EventBase";
-
-	/**
-	 *  Event
-	 * @class EventBase
-	 * @author arcsin
-	 * @constructor
-	 */
-	var constructor = function(spec) {
-		var that = {};
-
-		// Interface
-		that.onLoadGame = onLoadGame;
-		that.onLoadMap = onLoadMap;
-
-		that.update = update;
-		that.debugUpdate = debugUpdate;
-
-		that.draw = draw;
-		that.debugDraw = debugDraw;
-
-		that.reaction = reaction;
-
-		// Update
-		that.updateStateWithArray = updateStateWithArray;
-		that.updateStateWithInputField = updateStateWithInputField;
-		that.updateCurrentStateScript = updateCurrentStateScript;
-
-		// Operate state
-		that.addCurrentStateScript = addCurrentStateScript;
-		that.removeCurrentStateScript = removeCurrentStateScript;
-		that.searchMinEventStateID = searchMinEventStateID;
-
-		// Copy
-		that.copyObj = copyObj;
-
-		// Getter
-		that.id = getID;
-		that.getName = getName;
-
-		that.getInitMapCategoryID = getInitMapCategoryID;
-		that.getInitMapDataID = getInitMapDataID;
-		that.getInitX = getInitX;
-		that.getInitY = getInitY;
-
-		that.scriptIDSet = getScriptIDSet;
-		that.scriptName = getScriptName;
-		that.scriptNum = getScriptNum;
-		that.stateSize = getStateSize;
-		that.currentStateIndex = currentStateIndex;
-		that.currentStateKey = currentStateKey;
-		that.currentScriptNum = currentScriptNum;
-		that.currentScriptID = currentScriptID;
-		that.currentScriptName = currentScriptName;
-		that.stateName = stateName;
-		that.stateID = stateID;
-		that.stateTransitionFlag = stateTransitionFlag;
-		that.currentScriptIndex = currentScriptIndex;
-		that.currentScriptCategoryIndex = currentScriptCategoryIndex;
-		that.resetStateTransitionFlag = resetStateTransitionFlag;
-		that.changeableValueNum = getChangeableValueNum;
-		that.changeableInitValue = getChangeableInitValue;
-
-		// Setter
-		that.setID = setID;
-		that.setInitialPos = setInitialPos;
-		that.setName = setName;
-		that.setCurrentStateByKey = setCurrentStateByKey;
-		that.setCurrentStateIndex = setCurrentStateIndex;
-		that.resetParam = resetParam;
-
-		// Changeable values operator
-		that.loadChangeableValuesPerEvent = loadChangeableValuesPerEvent;
-		that.loadChangeableValuesPerScript = loadChangeableValuesPerScript;
-		that.saveInitValuesFromChangeableValue = saveInitValuesFromChangeableValue;
-		that.saveInitValuesFromChangeableValuePerScript = saveInitValuesFromChangeableValuePerScript;
-
-		var scriptUtil = RGPP.System.ScriptUtil.getInstance();
-
-		var mID = spec.id;
-		// Default
-		var mInitMapCategoryID = spec.categoryID;
-		var mInitMapDataID = spec.mapID;
-		// Grid
-		var mInitX = spec.x;
-		var mInitY = spec.y;
-		var mName = spec.name;
-
-		var mEventStates = {};
-
-		var mCurrentStateIndex = 0;
-		var mStateKeys = [];
-		mStateKeys[0] = 'normal';
-
-		var mLoaded = false;
-		var mStateTransitionFlag = true;
-
-		var SCRIPT_CATEGORY_ID_INDEX = 0;
-		var SCRIPT_DATA_ID_INDEX = 1;
-
-		function initialize() {
-			setInitialPos(spec.categoryID, spec.mapID, spec.x, spec.y);
-
-			var currentKey = currentStateKey();
-			mEventStates[currentKey] = RGPP.System.EventState({
-				id: mCurrentStateIndex,
-				name: currentKey
-			});
-		}
-
-		function onLoadGame(event) {
-			mStateTransitionFlag = true;
-			if (!mLoaded) {
-				for (var key in mEventStates) {
-					mEventStates[key].onLoadGame(event);
-				}
-				mLoaded = true;
-			}
-		}
-
-		function onLoadMap(event) {
-			mStateTransitionFlag = true;
-			for (var key in mEventStates) {
-				mEventStates[key].onLoadMap(event);
-			}
-		}
-
-		function loadChangeableValuesPerEvent() {
-			var currentKey = currentStateKey();
-			var retValues = mEventStates[currentKey].loadChangeableValuesPerEvent();
-			return retValues;
-		}
-
-		function loadChangeableValuesPerScript(changeableValues) {
-			var currentKey = currentStateKey();
-			mEventStates[currentKey].loadChangeableValuesPerScript(changeableValues);
-		}
-
-		function reaction(event) {
-			var currentKey = currentStateKey();
-			if (mEventStates[currentKey] !== undefined) {
-				mEventStates[currentKey].reaction(event);
-			}
-			else {
-				scriptUtil.outputErrMsgToConsole("[Event.js:reaction] not defined status " + currentKey);
-			}
-		}
-
-		function update(event) {
-			var currentKey = currentStateKey();
-			if (mEventStates[currentKey] === undefined) {
-				scriptUtil.outputErrMsgToConsole("[Event.js:update] not defined status " + currentKey);
-				return;
-			}
-			if (mStateTransitionFlag) {
-				mEventStates[currentKey].onStateTransition(event);
-				mStateTransitionFlag = false;
-			}
-			mEventStates[currentKey].update(event);
-		}
-
-		function debugUpdate(event) {
-			var currentKey = currentStateKey();
-			if (mEventStates[currentKey] === undefined) {
-				scriptUtil.outputErrMsgToConsole("[Event.js:debugUpdate] not defined status " + currentKey);
-				return;
-			}
-			mEventStates[currentKey].debugUpdate(event);
-		}
-
-
-		function draw(ctx) {
-			var currentKey = currentStateKey();
-			if (mEventStates[currentKey] === undefined) {
-				scriptUtil.outputErrMsgToConsole("[Event.js:draw] not defined status " + currentKey);
-				return;
-			}
-			mEventStates[currentKey].draw(ctx);
-		}
-
-		function debugDraw(ctx) {
-			var currentKey = currentStateKey();
-			if (mEventStates[currentKey] === undefined) {
-				scriptUtil.outputErrMsgToConsole("[Event.js:debugDraw] not defined status " + currentKey);
-				return;
-			}
-			mEventStates[currentKey].debugDraw(ctx);
-		}
-
-		function updateStateWithArray(stateArray, scriptArray, changeableValueArray) {
-			deleteAllState();
-			var stateNum = stateArray.length;
-			for (var stateIndex = 0; stateIndex < stateNum; ++stateIndex) {
-				var id = stateIndex;
-				var key = stateArray[stateIndex];
-				mStateKeys[id] = key;
-				mEventStates[key] = RGPP.System.EventState({
-					id: id,
-					name: key
-				});
-				var scriptNum = scriptArray[stateIndex].length;
-				for (var scriptIndex = 0; scriptIndex < scriptNum; ++scriptIndex) {
-					mEventStates[key].setScriptID(
-						scriptIndex,
-						scriptArray[stateIndex][scriptIndex][SCRIPT_CATEGORY_ID_INDEX],
-						scriptArray[stateIndex][scriptIndex][SCRIPT_DATA_ID_INDEX]);
-
-					var changeableValueNum = changeableValueArray[stateIndex][scriptIndex].length;
-					for (var cIndex = 0; cIndex < changeableValueNum; cIndex += 1) {
-						var value = changeableValueArray[stateIndex][scriptIndex][cIndex];
-						mEventStates[key].setChangeableInitValue(scriptIndex, cIndex, value);
-					}
-					mEventStates[key].setInitValuesToChangeableValue();
-				}
-			}
-		}
-
-		function updateStateWithInputField(stateNum, inputNameField) {
-			scriptUtil.outputMsgToConsole("[Event.js:updateStateWithInputField] stateNum = " + stateNum);
-			deleteAllState();
-
-			for (var eventStateIndex = 0; eventStateIndex < stateNum; ++eventStateIndex) {
-				var id = eventStateIndex;
-				var key = $(inputNameField[eventStateIndex]).val();
-				mStateKeys[id] = key;
-				scriptUtil.outputMsgToConsole("[Event.js:updateStateWithInputField] key = " + key);
-				if (mEventStates[key] === undefined) {
-					mEventStates[key] = RGPP.System.EventState({
-						id: id,
-						name: key
-					});
-				}
-				else {
-					mEventStates[key].setID(id);
-					mEventStates[key].setName(key);
-				}
-			}
-
-			// Delete another key
-			for (var key in mEventStates) {
-				var breakFlag = false;
-				for (var i = 0; i < mStateKeys.length; ++i) {
-					if (key === mStateKeys[i]) {
-						breakFlag = true;
-						break;
-					}
-				}
-				if (!breakFlag) {
-					scriptUtil.outputMsgToConsole("delete key : " + key);
-					delete mEventStates[key];
-				}
-			}
-
-
-			mStateKeys.length = stateNum;
-		}
-
-		function updateCurrentStateScript(comboBox) {
-			var currentKey = currentStateKey();
-			scriptUtil.outputMsgToConsole("current state key = " + currentKey);
-			var scriptNum = mEventStates[currentKey].scriptNum();
-			for (var scriptIndex = 0; scriptIndex < scriptNum; ++scriptIndex) {
-				var selectedIndex = comboBox[scriptIndex].selectedIndex();
-				scriptUtil.outputMsgToConsole("scriptIndex = " + scriptIndex + " selectedIndex : " + selectedIndex);
-				var scriptDB = RGPP.System.ScriptDataBase.getInstance();
-				mEventStates[currentKey].setScriptID(
-					scriptIndex,
-					scriptDB.searchCategoryIDFromIndex(selectedIndex),
-					scriptDB.searchDataIDFromIndex(selectedIndex));
-			}
-			mStateTransitionFlag = true;
-		}
-
-		function addCurrentStateScript() {
-			var currentKey = currentStateKey();
-			mEventStates[currentKey].addScript();
-		}
-
-		function removeCurrentStateScript() {
-			var currentKey = currentStateKey();
-			mEventStates[currentKey].removeScript();
-		}
-
-		function searchMinEventStateID() {
-			if (getStateSize() === 0) {
-				return 0;
-			}
-			var j = 0;
-			while (true) {
-				var existFlag = false;
-				for (var i = 0; i < getStateSize(); ++i) {
-					if (mEventStates[i].id() === j) {
-						existFlag = true;
-						break;
-					}
-				}
-				if (!existFlag) {
-					return j;
-				}
-				++j;
-			}
-		}
-
-		function getID() {
-			return mID;
-		}
-
-		function getInitMapCategoryID() {
-			return mInitMapCategoryID;
-		}
-
-		function getInitMapDataID() {
-			return mInitMapDataID;
-		}
-
-		function getInitX() {
-			return mInitX;
-		}
-
-		function getInitY() {
-			return mInitY;
-		}
-
-		function getName() {
-			return mName;
-		}
-
-		/*
-		function imageName() {
-			return mImageName;
-		}
-		*/
-
-		function setID(id) {
-			mID = id;
-		}
-
-		function setInitialPos(mapCategoryID, mapID, x, y) {
-			mInitMapCategoryID = mapCategoryID;
-			mInitMapDataID = mapID;
-			mInitX = x;
-			mInitY = y;
-		}
-
-		function resetParam() {
-			mLoaded = false;
-			mCurrentStateIndex = 0;
-			mStateTransitionFlag = true;
-			scriptUtil.outputMsgToConsole("resetParam!");
-		}
-
-		function setName(name) {
-			mName = name;
-		}
-
-		function stateID(index) {
-			var key = mStateKeys[index];
-			scriptUtil.outputMsgToConsole("[Event.js:stateID()] key = " + key);
-			return mEventStates[key].id();
-		}
-
-		function stateName(index) {
-			var key = mStateKeys[index];
-			scriptUtil.outputMsgToConsole("[Event.js:stateName()] key = " + key);
-			return mEventStates[key].name();
-		}
-
-		function getStateSize() {
-			return Object.keys(mEventStates).length;
-		}
-
-		function setCurrentStateIndex(stateIndex) {
-			if (mCurrentStateIndex !== stateIndex) {
-				mStateTransitionFlag = true;
-				mCurrentStateIndex = stateIndex;
-				scriptUtil.outputMsgToConsole("mCurrentStateIndex = " + mCurrentStateIndex);
-			}
-		}
-
-		function setCurrentStateByKey(key) {
-			var currentKey = currentStateKey();
-			if (currentKey !== key) {
-				var breakFlag = false;
-				for (var index = 0; index < mStateKeys.length; ++index) {
-					if (mStateKeys[index] === key) {
-
-						mCurrentStateIndex = index;
-						scriptUtil.outputMsgToConsole("mCurrentStateIndex = " + mCurrentStateIndex);
-						mStateKeys[mCurrentStateIndex] = key;
-						scriptUtil.outputMsgToConsole("set current state : index : " + index + " key : " + key);
-						breakFlag = true;
-						break;
-					}
-				}
-				if (breakFlag) {
-					mStateTransitionFlag = true;
-				}
-				else {
-					scriptUtil.outputErrMsgToConsole("No state : " + key);
-				}
-			}
-		}
-
-		function getScriptNum(stateIndex) {
-			var key = mStateKeys[stateIndex];
-			return mEventStates[key].scriptNum();
-		}
-
-		function getScriptDataID(stateIndex, scriptIndex) {
-			var key = mStateKeys[stateIndex];
-			return mEventStates[key].scriptID(scriptIndex);
-		}
-
-		function getScriptCategoryID(stateIndex, scriptIndex) {
-			var key = mStateKeys[stateIndex];
-			return mEventStates[key].scriptCategoryID(scriptIndex);
-		}
-
-		function getScriptIDSet(stateIndex, scriptIndex) {
-			var idSet = [2];
-			var key = mStateKeys[stateIndex];
-
-			idSet[SCRIPT_CATEGORY_ID_INDEX] = mEventStates[key].scriptCategoryID(scriptIndex);
-			idSet[SCRIPT_DATA_ID_INDEX] = mEventStates[key].scriptID(scriptIndex);
-			return idSet;
-		}
-
-		function getChangeableValueNum(stateIndex, scriptIndex) {
-			var key = mStateKeys[stateIndex];
-			return mEventStates[key].changeableValueNum(scriptIndex);
-		}
-
-		function getChangeableInitValue(stateIndex, scriptIndex, cIndex) {
-			var key = mStateKeys[stateIndex];
-			return mEventStates[key].changeableInitValue(scriptIndex, cIndex);
-		}
-
-		function getScriptName(currentKey, scriptIndex) {
-			return mEventStates[currentKey].scriptName(scriptIndex);
-		}
-
-		function currentStateIndex() {
-			scriptUtil.outputMsgToConsole("mCurrentStateIndex = " + mCurrentStateIndex);
-			return mCurrentStateIndex;
-		}
-
-		function currentStateKey() {
-			var currentKey = mStateKeys[mCurrentStateIndex];
-			if (currentKey === undefined) {
-				mCurrentStateIndex = 0;
-				currentKey = mStateKeys[mCurrentStateIndex];
-			}
-			return currentKey;
-		}
-
-		function currentScriptNum() {
-			var currentKey = currentStateKey();
-			return mEventStates[currentKey].scriptNum();
-		}
-
-		function currentScriptID(index) {
-			var currentKey = currentStateKey();
-
-			return mEventStates[currentKey].scriptID(index);
-		}
-
-		function currentScriptName(index) {
-			var currentKey = currentStateKey();
-			return mEventStates[currentKey].scriptName(index);
-		}
-
-		function currentScriptCategoryIndex(index) {
-			var currentKey = currentStateKey();
-			return mEventStates[currentKey].categoryIndex(index);
-		}
-
-		function currentScriptIndex(index) {
-			var currentKey = currentStateKey();
-			return mEventStates[currentKey].scriptIndex(index);
-		}
-
-		function stateTransitionFlag() {
-			return mStateTransitionFlag;
-		}
-
-		function deleteAllState() {
-			for (var key in mEventStates) {
-				delete mEventStates[key];
-			}
-		}
-
-		function resetStateTransitionFlag() {
-			mStateTransitionFlag = false;
-		}
-
-		function copyObj(eventID) {
-			var copyEvent = RGPP.System.EventBase({
-				id: eventID,
-				categoryID: mInitMapCategoryID,
-				mapID: mInitMapDataID,
-				x: mInitX,
-				y: mInitY,
-				name: mName
-			});
-			// copyEvent.setImageName(mImageName);
-			var stateArray = createStateArray();
-			var scriptArray = createScriptArray();
-			var initChangeableValueArray = createInitChangeableValueArray();
-			copyEvent.updateStateWithArray(stateArray, scriptArray, initChangeableValueArray);
-			return copyEvent;
-		}
-
-		function createStateArray() {
-			var stateSize = getStateSize();
-			var array = [stateSize];
-
-			for (var i = 0; i < stateSize; ++i) {
-				array[i] = mStateKeys[i];
-			}
-
-			return array;
-		}
-
-		function createScriptArray() {
-			var stateSize = getStateSize();
-			var array = [stateSize];
-			for (var stateIndex = 0; stateIndex < stateSize; stateIndex += 1) {
-				var scriptNum = getScriptNum(stateIndex);
-				array[stateIndex] = [scriptNum];
-				for (var scriptIndex = 0; scriptIndex < scriptNum; scriptIndex += 1) {
-					var scriptCategoryID = getScriptCategoryID(stateIndex, scriptIndex);
-					var scriptID = getScriptDataID(stateIndex, scriptIndex);
-					array[stateIndex][scriptIndex] = [];
-					array[stateIndex][scriptIndex][SCRIPT_CATEGORY_ID_INDEX] = scriptCategoryID;
-					array[stateIndex][scriptIndex][SCRIPT_DATA_ID_INDEX] = scriptID;
-				}
-			}
-			return array;
-		}
-
-		function createInitChangeableValueArray() {
-			var stateSize = getStateSize();
-			var array = [];
-			for (var stateIndex = 0; stateIndex < stateSize; ++stateIndex) {
-				var scriptNum = getScriptNum(stateIndex);
-				array[stateIndex] = [];
-				for (var scriptIndex = 0; scriptIndex < scriptNum; ++scriptIndex) {
-					var changeableValueNum = getChangeableValueNum(stateIndex, scriptIndex);
-					array[stateIndex][scriptIndex] = [];
-					for (var cIndex = 0; cIndex < changeableValueNum; cIndex += 1) {
-						var value = getChangeableInitValue(stateIndex, scriptIndex, cIndex);
-						array[stateIndex][scriptIndex][cIndex] = value;
-					}
-				}
-			}
-			return array;
-		}
-
-
-		function saveInitValuesFromChangeableValue() {
-			for (var key in mEventStates) {
-				mEventStates[key].saveInitValuesFromChangeableValue();
-			}
-		}
-
-		function saveInitValuesFromChangeableValuePerScript() {
-			var currentKey = currentStateKey();
-			mEventStates[currentKey].saveInitValuesFromChangeableValuePerScript();
-		}
-
-
-		initialize();
-		return that;
-	};
-
-
-	RGPP.System.exports({
-		name: objName,
-		constructorFunc: constructor,
-		module: module
-	});
-})((this || 0).self || global);
+import RGPP from 'RGPP'
+const scriptUtil = RGPP.Util.ScriptUtil
+const SCRIPT_DATA_ID_INDEX = 0
+
+class EventBase {
+    constructor({
+        id,
+        initMapId,
+        initX,
+        initY,
+        name
+    }) {
+        this.id = id
+
+        // Default
+        this.initMapId = initMapId
+
+        // Grid
+        this.initX = initX
+        this.initY = initY
+
+        // Name
+        this.name = name
+
+        // Event Statuses
+        this.eventStatuses = {}
+
+        this.currentStateIndex = 0
+        this.stateKeys = []
+        this.this.stateKeys[0] = 'normal'
+
+        this.isLoaded = false
+        this.isStateTransition = true
+
+        const currentKey = this.currentStateKey()
+        this.eventStatuses[currentKey] = new RGPP.System.EventState({
+            id: this.currentStateIndex,
+            name: currentKey
+        })
+    }
+
+    onLoadGame(event) {
+        this.isStateTransition = true
+        if (!this.isLoaded) {
+            for (const key in this.eventStatuses) {
+                this.eventStatuses[key].onLoadGame(event)
+            }
+            this.isLoaded = true
+        }
+    }
+
+    onLoadMap(event) {
+        this.isStateTransition = true
+        for (const key in this.eventStatuses) {
+            this.eventStatuses[key].onLoadMap(event)
+        }
+    }
+
+    loadChangeableValuesPerEvent() {
+        const currentKey = this.currentStateKey()
+        const retValues = this.eventStatuses[currentKey].loadChangeableValuesPerEvent()
+        return retValues
+    }
+
+    loadChangeableValuesPerScript(changeableValues) {
+        const currentKey = this.currentStateKey()
+        this.eventStatuses[currentKey].loadChangeableValuesPerScript(changeableValues)
+    }
+
+    reaction(event) {
+        const currentKey = this.currentStateKey()
+        if (this.eventStatuses[currentKey] !== undefined) {
+            this.eventStatuses[currentKey].reaction(event)
+        } else {
+            scriptUtil.outputErrMsgToConsole(`[Event.js:reaction] not defined status ${currentKey}`)
+        }
+    }
+
+    update(event) {
+        const currentKey = this.currentStateKey()
+        if (this.eventStatuses[currentKey] === undefined) {
+            scriptUtil.outputErrMsgToConsole(`[Event.js:update] not defined status ${currentKey}`)
+            return
+        }
+        if (this.isStateTransition) {
+            this.eventStatuses[currentKey].onStateTransition(event)
+            this.isStateTransition = false
+        }
+        this.eventStatuses[currentKey].update(event)
+    }
+
+    debugUpdate(event) {
+        const currentKey = this.currentStateKey()
+        if (this.eventStatuses[currentKey] === undefined) {
+            scriptUtil.outputErrMsgToConsole(`[Event.js:debugUpdate] not defined status  ${currentKey}`)
+            return
+        }
+        this.eventStatuses[currentKey].debugUpdate(event)
+    }
+
+
+    draw(ctx) {
+        const currentKey = this.currentStateKey()
+        if (this.eventStatuses[currentKey] === undefined) {
+            scriptUtil.outputErrMsgToConsole(`[Event.js:draw] not defined status  ${currentKey}`)
+            return
+        }
+        this.eventStatuses[currentKey].draw(ctx)
+    }
+
+    debugDraw(ctx) {
+        const currentKey = this.currentStateKey()
+        if (this.eventStatuses[currentKey] === undefined) {
+            scriptUtil.outputErrMsgToConsole(`[Event.js:debugDraw] not defined status ${currentKey}`)
+            return
+        }
+        this.eventStatuses[currentKey].debugDraw(ctx)
+    }
+
+    updateStateWithArray(stateArray, scriptArray, changeableValueArray) {
+        this.deleteAllState()
+        const stateNum = stateArray.length
+        for (let stateIndex = 0; stateIndex < stateNum; ++stateIndex) {
+            const id = stateIndex
+            const key = stateArray[stateIndex]
+            this.stateKeys[id] = key
+            this.eventStatuses[key] = new RGPP.System.EventState({
+                id,
+                name: key
+            })
+            const scriptNum = scriptArray[stateIndex].length
+            for (let scriptIndex = 0; scriptIndex < scriptNum; ++scriptIndex) {
+                this.eventStatuses[key].setScriptID(
+                    scriptIndex,
+                    scriptArray[stateIndex][scriptIndex][SCRIPT_DATA_ID_INDEX])
+
+                const changeableValueNum = changeableValueArray[stateIndex][scriptIndex].length
+                for (let cIndex = 0; cIndex < changeableValueNum; cIndex += 1) {
+                    const value = changeableValueArray[stateIndex][scriptIndex][cIndex]
+                    this.eventStatuses[key].setChangeableInitValue(scriptIndex, cIndex, value)
+                }
+                this.eventStatuses[key].setInitValuesToChangeableValue()
+            }
+        }
+    }
+
+    updateStateWithInputField(stateNum, inputNameField) {
+        scriptUtil.outputMsgToConsole(`[Event.js:updateStateWithInputField] stateNum = ${stateNum}`)
+        this.deleteAllState()
+
+        for (let eventStateIndex = 0; eventStateIndex < stateNum; ++eventStateIndex) {
+            const id = eventStateIndex
+            const key = $(inputNameField[eventStateIndex]).val()
+            this.stateKeys[id] = key
+            scriptUtil.outputMsgToConsole(`[Event.js:updateStateWithInputField] key = ${key}`)
+            if (this.eventStatuses[key] === undefined) {
+                this.eventStatuses[key] = new RGPP.System.EventState({
+                    id,
+                    name: key
+                })
+            } else {
+                this.eventStatuses[key].setID(id)
+                this.eventStatuses[key].setName(key)
+            }
+        }
+
+        // Delete another key
+        for (const key in this.eventStatuses) {
+            let breakFlag = false
+            for (let i = 0; i < this.stateKeys.length; ++i) {
+                if (key === this.stateKeys[i]) {
+                    breakFlag = true
+                    break
+                }
+            }
+            if (!breakFlag) {
+                scriptUtil.outputMsgToConsole(`delete key : ${key}`)
+                Reflect.deleteProperty(this.eventStatuses, key)
+            }
+        }
+
+
+        this.stateKeys.length = stateNum
+    }
+
+    updateCurrentStateScript(comboBox) {
+        const currentKey = this.currentStateKey()
+        scriptUtil.outputMsgToConsole(`current state key = ${currentKey}`)
+        const scriptNum = this.eventStatuses[currentKey].scriptNum()
+        for (let scriptIndex = 0; scriptIndex < scriptNum; ++scriptIndex) {
+            const selectedIndex = comboBox[scriptIndex].selectedIndex()
+            scriptUtil.outputMsgToConsole(`scriptIndex = ${scriptIndex} selectedIndex : ${selectedIndex}`)
+            const scriptDB = RGPP.System.ScriptDataBase.getInstance()
+            this.eventStatuses[currentKey].setScriptID(
+                scriptIndex,
+                scriptDB.searchCategoryIDFromIndex(selectedIndex),
+                scriptDB.searchDataIDFromIndex(selectedIndex))
+        }
+        this.isStateTransition = true
+    }
+
+    addCurrentStateScript() {
+        const currentKey = this.currentStateKey()
+        this.eventStatuses[currentKey].addScript()
+    }
+
+    removeCurrentStateScript() {
+        const currentKey = this.currentStateKey()
+        this.eventStatuses[currentKey].removeScript()
+    }
+
+    searchMinEventStateID() {
+        if (this.getStateSize() === 0) {
+            return 0
+        }
+        let j = 0
+        while (true) {
+            const existFlag = false
+            for (const i = 0; i < getStateSize(); ++i) {
+                if (this.eventStatuses[i].id() === j) {
+                    existFlag = true
+                    break
+                }
+            }
+            if (!existFlag) {
+                return j
+            }
+            ++j
+        }
+    }
+
+    getID() {
+        return mID
+    }
+
+    getInitMapCategoryID() {
+        return mInitMapCategoryID
+    }
+
+    getInitMapDataID() {
+        return mInitMapDataID
+    }
+
+    getInitX() {
+        return mInitX
+    }
+
+    getInitY() {
+        return mInitY
+    }
+
+    getName() {
+        return mName
+    }
+
+    setID(id) {
+        mID = id
+    }
+
+    setInitialPos(mapID, x, y) {
+        mInitMapDataID = mapID
+        mInitX = x
+        mInitY = y
+    }
+
+    resetParam() {
+        this.isLoaded = false
+        this.currentStateIndex = 0
+        this.isStateTransition = true
+        scriptUtil.outputMsgToConsole('resetParam!')
+    }
+
+    setName(name) {
+        mName = name
+    }
+
+    stateID(index) {
+        const key = this.stateKeys[index]
+        scriptUtil.outputMsgToConsole('[Event.js:stateID()] key = ' + key)
+        return this.eventStatuses[key].id()
+    }
+
+    stateName(index) {
+        const key = this.stateKeys[index]
+        scriptUtil.outputMsgToConsole('[Event.js:stateName()] key = ' + key)
+        return this.eventStatuses[key].name()
+    }
+
+    getStateSize() {
+        return Object.keys(this.eventStatuses).length
+    }
+
+    setCurrentStateIndex(stateIndex) {
+        if (this.currentStateIndex !== stateIndex) {
+            this.isStateTransition = true
+            this.currentStateIndex = stateIndex
+            scriptUtil.outputMsgToConsole('this.currentStateIndex = ' + this.currentStateIndex)
+        }
+    }
+
+    setCurrentStateByKey(key) {
+        const currentKey = this.currentStateKey()
+        if (currentKey !== key) {
+            const breakFlag = false
+            for (const index = 0; index < this.stateKeys.length; ++index) {
+                if (this.stateKeys[index] === key) {
+
+                    this.currentStateIndex = index
+                    scriptUtil.outputMsgToConsole('this.currentStateIndex = ' + this.currentStateIndex)
+                    this.stateKeys[this.currentStateIndex] = key
+                    scriptUtil.outputMsgToConsole('set current state : index : ' + index + ' key : ' + key)
+                    breakFlag = true
+                    break
+                }
+            }
+            if (breakFlag) {
+                this.isStateTransition = true
+            } else {
+                scriptUtil.outputErrMsgToConsole('No state : ' + key)
+            }
+        }
+    }
+
+    getScriptNum(stateIndex) {
+        const key = this.stateKeys[stateIndex]
+        return this.eventStatuses[key].scriptNum()
+    }
+
+    getScriptDataID(stateIndex, scriptIndex) {
+        const key = this.stateKeys[stateIndex]
+        return this.eventStatuses[key].scriptID(scriptIndex)
+    }
+
+    getScriptCategoryID(stateIndex, scriptIndex) {
+        const key = this.stateKeys[stateIndex]
+        return this.eventStatuses[key].scriptCategoryID(scriptIndex)
+    }
+
+    getScriptIDSet(stateIndex, scriptIndex) {
+        const idSet = [2]
+        const key = this.stateKeys[stateIndex]
+
+        idSet[SCRIPT_CATEGORY_ID_INDEX] = this.eventStatuses[key].scriptCategoryID(scriptIndex)
+        idSet[SCRIPT_DATA_ID_INDEX] = this.eventStatuses[key].scriptID(scriptIndex)
+        return idSet
+    }
+
+    getChangeableValueNum(stateIndex, scriptIndex) {
+        const key = this.stateKeys[stateIndex]
+        return this.eventStatuses[key].changeableValueNum(scriptIndex)
+    }
+
+    getChangeableInitValue(stateIndex, scriptIndex, cIndex) {
+        const key = this.stateKeys[stateIndex]
+        return this.eventStatuses[key].changeableInitValue(scriptIndex, cIndex)
+    }
+
+    getScriptName(currentKey, scriptIndex) {
+        return this.eventStatuses[currentKey].scriptName(scriptIndex)
+    }
+
+    currentStateIndex() {
+        scriptUtil.outputMsgToConsole('this.currentStateIndex = ' + this.currentStateIndex)
+        return this.currentStateIndex
+    }
+
+    currentStateKey() {
+        const currentKey = this.stateKeys[this.currentStateIndex]
+        if (currentKey === undefined) {
+            this.currentStateIndex = 0
+            currentKey = this.stateKeys[this.currentStateIndex]
+        }
+        return currentKey
+    }
+
+    currentScriptNum() {
+        const currentKey = this.currentStateKey()
+        return this.eventStatuses[currentKey].scriptNum()
+    }
+
+    currentScriptID(index) {
+        const currentKey = this.currentStateKey()
+
+        return this.eventStatuses[currentKey].scriptID(index)
+    }
+
+    currentScriptName(index) {
+        const currentKey = this.currentStateKey()
+        return this.eventStatuses[currentKey].scriptName(index)
+    }
+
+    currentScriptCategoryIndex(index) {
+        const currentKey = this.currentStateKey()
+        return this.eventStatuses[currentKey].categoryIndex(index)
+    }
+
+    currentScriptIndex(index) {
+        const currentKey = this.currentStateKey()
+        return this.eventStatuses[currentKey].scriptIndex(index)
+    }
+
+    stateTransitionFlag() {
+        return this.isStateTransition
+    }
+
+    deleteAllState() {
+        for (const key in this.eventStatuses) {
+            delete this.eventStatuses[key]
+        }
+    }
+
+    resetStateTransitionFlag() {
+        this.isStateTransition = false
+    }
+
+    copyObj(eventID) {
+        const copyEvent = RGPP.System.EventBase({
+                id: eventID,
+                categoryID: mInitMapCategoryID,
+                mapID: mInitMapDataID,
+                x: mInitX,
+                y: mInitY,
+                name: mName
+            })
+            // copyEvent.setImageName(mImageName)
+        const stateArray = createStateArray()
+        const scriptArray = createScriptArray()
+        const initChangeableValueArray = createInitChangeableValueArray()
+        copyEvent.updateStateWithArray(stateArray, scriptArray, initChangeableValueArray)
+        return copyEvent
+    }
+
+    createStateArray() {
+        const stateSize = getStateSize()
+        const array = [stateSize]
+
+        for (const i = 0; i < stateSize; ++i) {
+            array[i] = this.stateKeys[i]
+        }
+
+        return array
+    }
+
+    createScriptArray() {
+        const stateSize = getStateSize()
+        const array = [stateSize]
+        for (const stateIndex = 0; stateIndex < stateSize; stateIndex += 1) {
+            const scriptNum = getScriptNum(stateIndex)
+            array[stateIndex] = [scriptNum]
+            for (const scriptIndex = 0; scriptIndex < scriptNum; scriptIndex += 1) {
+                const scriptCategoryID = getScriptCategoryID(stateIndex, scriptIndex)
+                const scriptID = getScriptDataID(stateIndex, scriptIndex)
+                array[stateIndex][scriptIndex] = []
+                array[stateIndex][scriptIndex][SCRIPT_CATEGORY_ID_INDEX] = scriptCategoryID
+                array[stateIndex][scriptIndex][SCRIPT_DATA_ID_INDEX] = scriptID
+            }
+        }
+        return array
+    }
+
+    createInitChangeableValueArray() {
+        const stateSize = getStateSize()
+        const array = []
+        for (const stateIndex = 0; stateIndex < stateSize; ++stateIndex) {
+            const scriptNum = getScriptNum(stateIndex)
+            array[stateIndex] = []
+            for (const scriptIndex = 0; scriptIndex < scriptNum; ++scriptIndex) {
+                const changeableValueNum = this.getChangeableValueNum(stateIndex, scriptIndex)
+                array[stateIndex][scriptIndex] = []
+                for (const cIndex = 0; cIndex < changeableValueNum; cIndex += 1) {
+                    const value = this.getChangeableInitValue(stateIndex, scriptIndex, cIndex)
+                    array[stateIndex][scriptIndex][cIndex] = value
+                }
+            }
+        }
+        return array
+    }
+
+
+    saveInitValuesFromChangeableValue() {
+        for (const key in this.eventStatuses) {
+            this.eventStatuses[key].saveInitValuesFromChangeableValue()
+        }
+    }
+
+    saveInitValuesFromChangeableValuePerScript() {
+        const currentKey = this.currentStateKey()
+        this.eventStatuses[currentKey].saveInitValuesFromChangeableValuePerScript()
+    }
+
+}
+
+export default EventBase

@@ -1,3 +1,4 @@
+/*
 import Spinner from './Spinner'
 import {
     expect
@@ -66,3 +67,4 @@ describe('Spinner', () => {
 
     })
 })
+*/

@@ -1,198 +1,128 @@
-(function(global) {
-	/* global RGPP */
-	"use strict";
-		var objName = "Event";
-	var constructor = function(spec) {
-		var that = {};
+import EventBase from './EventBase'
+import RGPP from 'RGPP'
 
-		// private variable
-		var mGameObjectIDArray = [];
-		var mGameObjectArray = [];
+class Event extends EventBase {
+    constructor(arg = {}) {
+        super(arg)
+        const {
+            currentMapID = 0,
+            currentEventX = 0,
+            currentEventY = 0
+        } = arg
 
-		var mCurrentMapCategoryID = (spec.currentMapCategoryID !== undefined) ? spec.currentMapCategoryID : spec.eventBase.getInitMapCategoryID();
-		var mCurrentMapDataID = (spec.currentMapDataID !== undefined) ? spec.currentMapDataID : spec.eventBase.getInitMapDataID();
+        this.gameObjectIDArray = []
+        this.gameObjectArray = []
+        this.currentMapID = currentMapID
+        this.currentEventX = currentEventX
+        this.currentEventY = currentEventY
+    }
 
-		var mCurrentEventX = (spec.currentEventX !== undefined) ? spec.currentEventX : spec.eventBase.getInitX();
-		var mCurrentEventY = (spec.currentEventY !== undefined) ? spec.currentEventY : spec.eventBase.getInitY();
-		
-		that.clearGameObj = clearGameObj;
-		that.createGameObj = createGameObj;
-		that.createImageObj = createImageObj;
-		that.createSoundObj = createSoundObj;
+    createGameObj(gameObjID, namespace, name) {
+        if (this.gameObjectArray[name] === undefined) {
+            this.gameObjectArray[name] = []
+        }
 
-		// Getter
-		that.id = id;
-		that.initMapCategoryID = initMapCategoryID;
-		that.initMapDataID = initMapDataID;
-		that.initX = initX;
-		that.initY = initY;
-		that.currentMapCategoryID = currentMapCategoryID;
-		that.currentMapDataID = currentMapDataID;
-		that.currentX = getX;
-		that.currentY = getY;
-		that.currentStateKey = currentStateKey;
+        if (this.gameObjectIDArray[name] === undefined) {
+            this.gameObjectIDArray[name] = []
+        }
 
-		that.gameObjs = gameObjs;
-		that.gameObjKeys = gameObjKeys;
+        const scriptName = this.correctScriptName(namespace, name)
 
-		// Setter
-		that.setPosition = setPosition;
-		
-		that.reaction = reaction;
+        const executeProgramString = `return new ${scriptName}()`
 
-		function reaction() {
-			spec.eventBase.reaction(that);
-		}
+        const scriptUtil = RGPP.System.ScriptUtil.getInstance()
+        scriptUtil.outputMsgToConsole(executeProgramString)
 
+        const gameObj = (new Function(executeProgramString))()
 
-		function createGameObj(gameObjID, namespace, name) {
-			if (mGameObjectArray[name] === undefined) {
-				mGameObjectArray[name] = [];
-			}
-			
-			if (mGameObjectIDArray[name] === undefined) {
-				mGameObjectIDArray[name] = [];
-			}
+        if (this.gameObjectIDArray[name][gameObjID] === undefined) {
+            this.gameObjectArray[name].push(gameObj)
+            const size = this.gameObjectArray[name].length
+            this.gameObjectIDArray[name][gameObjID] = size - 1
+        } else {
+            const index = this.gameObjectIDArray[name][gameObjID]
+            this.gameObjectArray[name][index] = gameObj
+        }
+        return gameObj
+    }
 
-			var scriptName = correctScriptName(namespace, name);
+    createImageObj(gameObjID, arg) {
+        const name = 'ImageObj'
+        if (this.gameObjectArray[name] === undefined) {
+            this.gameObjectArray[name] = []
+        }
 
-			var executeProgramString = "return new " + scriptName + "();";
+        if (this.gameObjectIDArray[name] === undefined) {
+            this.gameObjectIDArray[name] = []
+        }
 
-			var scriptUtil = RGPP.System.ScriptUtil.getInstance();
-			scriptUtil.outputMsgToConsole(executeProgramString);
+        const imageDataManager = RGPP.System.ImageDataManager.getInstance()
 
-			var gameObj = (new Function(executeProgramString))();
+        const gameObj = imageDataManager.createObj(arg)
+        if (this.gameObjectIDArray[name][gameObjID] === undefined) {
+            this.gameObjectArray[name].push(gameObj)
+            const size = this.gameObjectArray[name].length
+            this.gameObjectIDArray[name][gameObjID] = size - 1
+        } else {
+            const index = this.gameObjectIDArray[name][gameObjID]
+            this.gameObjectArray[name][index] = gameObj
+        }
+        return gameObj
 
-			if (mGameObjectIDArray[name][gameObjID] === undefined) {
-				mGameObjectArray[name].push(gameObj);
-				var size = mGameObjectArray[name].length;
-				mGameObjectIDArray[name][gameObjID] = size - 1;
-			}
-			else {
-				var index = mGameObjectIDArray[name][gameObjID];
-				mGameObjectArray[name][index] = gameObj;
-			}
-			return gameObj;
-		}
-		
-		function createImageObj(gameObjID, arg) {
-			var name = "ImageObj";
-			if (mGameObjectArray[name] === undefined) {
-				mGameObjectArray[name] = [];
-			}
-			
-			if (mGameObjectIDArray[name] === undefined) {
-				mGameObjectIDArray[name] = [];
-			}
+    }
 
-			var imageDataManager = RGPP.System.ImageDataManager.getInstance();
+    createSoundObj() {
 
-			var gameObj = imageDataManager.createObj(arg);
-			if (mGameObjectIDArray[name][gameObjID] === undefined) {
-				mGameObjectArray[name].push(gameObj);
-				var size = mGameObjectArray[name].length;
-				mGameObjectIDArray[name][gameObjID] = size - 1;
-			}
-			else {
-				var index = mGameObjectIDArray[name][gameObjID];
-				mGameObjectArray[name][index] = gameObj;
-			}
-			return gameObj;
+    }
 
-		}
-		
-		function createSoundObj(gameObjID, arg) {
-			
-		}
+    correctScriptName(namespace, scriptName) {
+        const retName = `${RGPP.GlobalNS}.${namespace}.${scriptName}`
+        return retName
+    }
 
-		var correctScriptName = function(namespace, scriptName) {
-			var retName = RGPP.GlobalNS + "." + namespace + "." + scriptName;
-			return retName;
-		};
+    setPosition(mapDataID, x, y) {
+        RGPP.System.EventMoveInfoList.getInstance().setMoveInfo({
+            mapDataID,
+            currentX: x,
+            currentY: y
+        })
 
-		function currentStateKey() {
-			return spec.eventBase.currentStateKey();
-		}
+        this.currentMapID = mapDataID
+        this.currentEventX = x
+        this.currentEventY = y
+    }
 
-		function setPosition(mapCategoryID, mapDataID, x, y) {
-			RGPP.System.EventMoveInfoList.getInstance().setMoveInfo({
-				eventBase: spec.eventBase,
-				mapCategoryID: mapCategoryID,
-				mapDataID: mapDataID,
-				currentX: x,
-				currentY: y,
-			});
+    getX() {
+        return this.currentEventX
+    }
 
-			mCurrentMapCategoryID = mapCategoryID;
-			mCurrentMapDataID = mapDataID;
-			mCurrentEventX = x;
-			mCurrentEventY = y;
-		}
+    getY() {
+        return this.currentEventY
+    }
 
-		function getX() {
-			return mCurrentEventX;
-		}
+    currentMapDataID() {
+        return this.currentMapID
+    }
 
-		function getY() {
-			return mCurrentEventY;
-		}
+    clearGameObj() {
+        this.gameObjectIDArray = []
+        this.gameObjectArray = []
+    }
 
-		function id() {
-			return spec.eventBase.id();
-		}
+    gameObjs(name) {
+        if (this.gameObjectArray[name] === undefined) {
+            return []
+        }
+        return this.gameObjectArray[name]
+    }
 
-		function initMapCategoryID() {
-			return spec.eventBase.getInitMapCategoryID();
-		}
+    gameObjKeys() {
+        const keys = []
+        for (const key in this.gameObjectArray) {
+            keys.push(key)
+        }
+        return keys
+    }
+}
 
-		function initMapDataID() {
-			return spec.eventBase.getInitMapDataID();
-		}
-
-		function currentMapCategoryID() {
-			return mCurrentMapCategoryID;
-		}
-
-		function currentMapDataID() {
-			return mCurrentMapDataID;
-		}
-
-		function initX() {
-			return spec.eventBase.getInitX();
-		}
-
-		function initY() {
-			return spec.eventBase.getInitY();
-		}
-
-		function clearGameObj() {
-			mGameObjectIDArray = [];
-			mGameObjectArray = [];
-		}
-		
-		function gameObjs(name) {
-			if (mGameObjectArray[name] === undefined) {
-				return [];
-			}
-			return mGameObjectArray[name];
-		}
-
-		function gameObjKeys() {
-			var keys = [];
-			for (var key in mGameObjectArray) {
-				keys.push(key);
-			}
-			return keys;
-		}
-
-
-		return that;
-	};
-
-    RGPP.System.exports({
-        name: objName,
-        constructorFunc: constructor,
-        module: module
-    });
-
-})((this || 0).self || global);
+export default Event
