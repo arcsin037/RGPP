@@ -8,8 +8,7 @@
   "scripts": {
     "server": "webpack-dev-server",
     "build": "webpack --release",
-    "start": "npm run server",
-    "test": "mocha src/js/**/*.test.js"
+    "start": "npm run server"
   },
   "author": "arcsin",
   "license": "Apache-2.0",
