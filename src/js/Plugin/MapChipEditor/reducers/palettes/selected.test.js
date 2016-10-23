@@ -31,11 +31,12 @@ describe('selected reducer', () => {
             specifyRangeY: 128,
             chipNoArray
         }
-        const action = Object.assign({
-            type: types.SET_SELECTION_RANGE
-        }, arg)
+        const action = {
+            type: types.SET_SELECTION_RANGE,
+            range: arg
+        }
 
-        const state = new SelectionRange(action)
+        const state = new SelectionRange(action.range)
         state.chipNoArray = chipNoArray
 
         expect(reducer(undefined, action)).to.deep.equal(state)

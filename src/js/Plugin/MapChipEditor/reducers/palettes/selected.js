@@ -11,8 +11,8 @@ initialState.chipNoArray = [
 ]
 
 const setSelectionRange = (state, action) => {
-    const nextState = new SelectionRange(action)
-    nextState.chipNoArray = action.chipNoArray
+    const nextState = new SelectionRange(action.range)
+    nextState.chipNoArray = action.range.chipNoArray
     return nextState
 }
 

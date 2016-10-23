@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react'
+import {getImages, getSounds} from 'Core/reducers'
 import Button from 'Core/components/Base/Button'
 import {bindActionCreators} from 'redux'
 import calendarIcon from 'Image/System/calendar.svg'
@@ -7,6 +8,7 @@ import {connect} from 'react-redux'
 import debugIcon from 'Image/System/debug.svg'
 import {getGameObjs} from 'GameObjs'
 import {getPluginSaveData} from 'Plugin'
+
 import gridIcon from 'Image/System/grid.svg'
 import newIcon from 'Image/System/new.svg'
 import pauseIcon from 'Image/System/pause.svg'
@@ -62,7 +64,9 @@ IconMenu.propTypes = {
 const mapStateToProps = (state) => ({
     saveData: {
         plugin: getPluginSaveData(state),
-        gameObjs: getGameObjs()
+        gameObjs: getGameObjs(),
+        images: getImages(state),
+        sounds: getSounds(state)
     }
 })
 

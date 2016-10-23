@@ -1,28 +1,24 @@
 'use strict'
 
-import * as types from '../../actions/Palette/actionTypes'
+import * as types from '../../actions/Sounds/actionTypes'
 import {
     expect
 } from 'chai'
 import reducer from './data'
 
-describe('palettes data reducer', () => {
+describe('sounds data reducer', () => {
     it('should return the initial state', () => {
         expect(reducer(undefined, {})).to.deep.equal([])
     })
 
-    it('should handle ADD_PALETTE', () => {
+    it('should handle ADD_SOUND', () => {
         const data = {
-            id: 0,
-            ctx: 'hoge',
-            img: 'img',
-            col: 20,
-            row: 15,
-            chipWidth: 16,
-            chipHeight: 16
+            name: 'hoge',
+            description: 'description',
+            url: 'url'
         }
         const action = {
-            type: types.ADD_PALETTE,
+            type: types.ADD_SOUND,
             data
         }
         expect(reducer([], action)).to.deep.equal([data])

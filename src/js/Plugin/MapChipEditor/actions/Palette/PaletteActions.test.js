@@ -6,7 +6,7 @@ import {
     expect
 } from 'chai'
 
-describe('PaletteAction', () => {
+describe('PaletteActions', () => {
     it('should create an action to add a palette', () => {
         const ctx = 'hoge'
         const palette = {
@@ -17,10 +17,11 @@ describe('PaletteAction', () => {
             chipHeight: 32,
             img: 'fuga'
         }
-        const expectedAction = Object.assign({
+        palette.ctx = ctx
+        const expectedAction = {
             type: types.ADD_PALETTE,
-            ctx
-        }, palette)
+            data: palette
+        }
         expect(actions.addPalette(ctx, palette)).to.deep.equal(expectedAction)
     })
     it('should create an action to set selection range', () => {
@@ -37,9 +38,10 @@ describe('PaletteAction', () => {
                 [7, 8]
             ]
         }
-        const expectedAction = Object.assign({
-            type: types.SET_SELECTION_RANGE
-        }, arg)
+        const expectedAction = {
+            type: types.SET_SELECTION_RANGE,
+            range: arg
+        }
         expect(actions.setSelectionRange(arg)).to.deep.equal(expectedAction)
     })
     it('should create an action to set draw mode', () => {

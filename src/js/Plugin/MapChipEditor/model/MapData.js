@@ -39,6 +39,7 @@ export class MapData {
         Graphics.BasicDraw.drawRect(ctx, x * this.cellWidth, y * this.cellHeight, this.cellWidth, this.cellHeight, 2)
     }
 
+    /*
     getTagData(x, y) {
         let tagData = -1
         for (let layerNo = 0; layerNo < MAP_LAYER_NUM; layerNo += 1) {
@@ -58,6 +59,7 @@ export class MapData {
         }
         return tagData
     }
+    */
 
     getFieldWidth() {
         return this.col * this.cellWidth

@@ -1,38 +1,16 @@
 import * as types from './actionTypes'
 
-export const addPalette = (ctx, {
-    id,
-    col,
-    row,
-    chipWidth,
-    chipHeight,
-    img
-}) => ({
-    type: types.ADD_PALETTE,
-    id,
-    ctx,
-    col,
-    row,
-    chipWidth,
-    chipHeight,
-    img
-})
+export const addPalette = (ctx, data) => {
+    data.ctx = ctx
+    return {
+        type: types.ADD_PALETTE,
+        data
+    }
+}
 
-export const setSelectionRange = ({
-    id,
-    startX,
-    startY,
-    specifyRangeX,
-    specifyRangeY,
-    chipNoArray
-}) => ({
+export const setSelectionRange = (range) => ({
     type: types.SET_SELECTION_RANGE,
-    id,
-    startX,
-    startY,
-    specifyRangeX,
-    specifyRangeY,
-    chipNoArray
+    range
 })
 
 export const setDrawMode = (drawMode) => ({

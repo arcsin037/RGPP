@@ -3,17 +3,7 @@ import {MapData} from '../../model/MapData'
 
 const initialState = []
 
-const createMap = (state, action) => {
-    const {data} = action
-
-    const mapData = new MapData(data)
-
-    switch (action.type) {
-    case types.ADD_MAP:
-    case types.LOAD_MAP:
-        return mapData
-    }
-}
+const createMap = (state, action) => new MapData(action.data)
 
 const setCtx = (state, action) => {
     const nextState = state

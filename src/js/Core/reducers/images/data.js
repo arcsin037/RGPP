@@ -1,17 +1,14 @@
-import {
-    ADD_PALETTE
-} from '../../actions/Palette/actionTypes'
-
+import * as types from '../../actions/Images/actionTypes'
 const initialState = []
 
-const createPalette = (state, action) => action.data
+const createImage = (state, action) => action.data
 
 const data = (state = initialState, action) => {
     switch (action.type) {
-    case ADD_PALETTE:
+    case types.ADD_IMAGE:
         return [
             ...state,
-            createPalette(state, action)
+            createImage(state, action)
         ]
     default:
         return state
