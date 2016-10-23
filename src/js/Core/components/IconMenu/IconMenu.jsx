@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 
 import debugIcon from 'Image/System/debug.svg'
 import {getPluginSaveData} from 'Plugin'
+import {getGameObjs} from 'GameObjs'
 import gridIcon from 'Image/System/grid.svg'
 import newIcon from 'Image/System/new.svg'
 import pauseIcon from 'Image/System/pause.svg'
@@ -61,7 +62,7 @@ IconMenu.propTypes = {
 const mapStateToProps = (state) => ({
     saveData: {
         plugin: getPluginSaveData(state),
-        gameObjs: {}
+        gameObjs: getGameObjs()
     }
 })
 
