@@ -1,5 +1,7 @@
 import {ADD_PALETTE} from '../../actions/Palette/actionTypes'
 
+const initialState = []
+
 const createPalette = (state, action) => {
     switch (action.type) {
     case ADD_PALETTE:
@@ -15,7 +17,7 @@ const createPalette = (state, action) => {
     }
 }
 
-const data = (state = [], action) => {
+const data = (state = initialState, action) => {
     switch (action.type) {
     case ADD_PALETTE:
         return [

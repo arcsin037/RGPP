@@ -7,7 +7,7 @@ import {
 } from 'chai'
 import reducer from './data'
 
-describe('data reducer', () => {
+describe('maps data reducer', () => {
     it('should return the initial state', () => {
         expect(reducer(undefined, {})).to.deep.equal([])
     })
