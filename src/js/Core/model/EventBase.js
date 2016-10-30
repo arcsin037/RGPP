@@ -1,46 +1,36 @@
 /**
- *  Event
+ * Event Base
  * @class EventBase
  * @author arcsin
  * @constructor
  */
 
 import RGPP from 'RGPP'
-const scriptUtil = RGPP.Util.ScriptUtil
+import EventState from './EventState'
+const scriptUtil = RGPP.System.ScriptUtil
 const SCRIPT_DATA_ID_INDEX = 0
 
 class EventBase {
     constructor({
-        id,
-        initMapId,
-        initX,
-        initY,
-        name
-    }) {
+        id = 0,
+        name = 'Event',
+        initSceneId = 0
+    } = {}) {
         this.id = id
-
-        // Default
-        this.initMapId = initMapId
-
-        // Grid
-        this.initX = initX
-        this.initY = initY
-
+        // Default Scene
+        this.initSceneId = initSceneId
         // Name
         this.name = name
-
         // Event Statuses
-        this.eventStatuses = {}
-
         this.currentStateIndex = 0
-        this.stateKeys = []
-        this.this.stateKeys[0] = 'normal'
+        this.stateKeys = ['normal']
 
         this.isLoaded = false
         this.isStateTransition = true
 
         const currentKey = this.currentStateKey()
-        this.eventStatuses[currentKey] = new RGPP.System.EventState({
+        this.eventStatuses = {}
+        this.eventStatuses[currentKey] = new EventState({
             id: this.currentStateIndex,
             name: currentKey
         })
@@ -221,9 +211,9 @@ class EventBase {
             return 0
         }
         let j = 0
-        while (true) {
-            const existFlag = false
-            for (const i = 0; i < getStateSize(); ++i) {
+        let existFlag = false
+        while (!existFlag) {
+            for (let i = 0; i < this.getStateSize(); i += 1) {
                 if (this.eventStatuses[i].id() === j) {
                     existFlag = true
                     break
@@ -237,15 +227,11 @@ class EventBase {
     }
 
     getID() {
-        return mID
-    }
-
-    getInitMapCategoryID() {
-        return mInitMapCategoryID
+        return this.id
     }
 
     getInitMapDataID() {
-        return mInitMapDataID
+        return this.mapDataID
     }
 
     getInitX() {
@@ -308,8 +294,8 @@ class EventBase {
     setCurrentStateByKey(key) {
         const currentKey = this.currentStateKey()
         if (currentKey !== key) {
-            const breakFlag = false
-            for (const index = 0; index < this.stateKeys.length; ++index) {
+            let breakFlag = false
+            for (let index = 0; index < this.stateKeys.length; index += 1) {
                 if (this.stateKeys[index] === key) {
 
                     this.currentStateIndex = index
@@ -372,8 +358,8 @@ class EventBase {
     }
 
     currentStateKey() {
-        const currentKey = this.stateKeys[this.currentStateIndex]
-        if (currentKey === undefined) {
+        let currentKey = this.stateKeys[this.currentStateIndex]
+        if (typeof currentKey === 'undefined') {
             this.currentStateIndex = 0
             currentKey = this.stateKeys[this.currentStateIndex]
         }
@@ -438,10 +424,10 @@ class EventBase {
     }
 
     createStateArray() {
-        const stateSize = getStateSize()
-        const array = [stateSize]
+        const stateSize = this.getStateSize()
+        let array = [stateSize]
 
-        for (const i = 0; i < stateSize; ++i) {
+        for (let i = 0; i < stateSize; ++i) {
             array[i] = this.stateKeys[i]
         }
 
@@ -451,10 +437,10 @@ class EventBase {
     createScriptArray() {
         const stateSize = getStateSize()
         const array = [stateSize]
-        for (const stateIndex = 0; stateIndex < stateSize; stateIndex += 1) {
+        for (let stateIndex = 0; stateIndex < stateSize; stateIndex += 1) {
             const scriptNum = getScriptNum(stateIndex)
             array[stateIndex] = [scriptNum]
-            for (const scriptIndex = 0; scriptIndex < scriptNum; scriptIndex += 1) {
+            for (let scriptIndex = 0; scriptIndex < scriptNum; scriptIndex += 1) {
                 const scriptCategoryID = getScriptCategoryID(stateIndex, scriptIndex)
                 const scriptID = getScriptDataID(stateIndex, scriptIndex)
                 array[stateIndex][scriptIndex] = []
@@ -468,13 +454,13 @@ class EventBase {
     createInitChangeableValueArray() {
         const stateSize = getStateSize()
         const array = []
-        for (const stateIndex = 0; stateIndex < stateSize; ++stateIndex) {
+        for (let stateIndex = 0; stateIndex < stateSize; stateIndex += 1) {
             const scriptNum = getScriptNum(stateIndex)
             array[stateIndex] = []
-            for (const scriptIndex = 0; scriptIndex < scriptNum; ++scriptIndex) {
+            for (let scriptIndex = 0; scriptIndex < scriptNum; scriptIndex += 1) {
                 const changeableValueNum = this.getChangeableValueNum(stateIndex, scriptIndex)
                 array[stateIndex][scriptIndex] = []
-                for (const cIndex = 0; cIndex < changeableValueNum; cIndex += 1) {
+                for (let cIndex = 0; cIndex < changeableValueNum; cIndex += 1) {
                     const value = this.getChangeableInitValue(stateIndex, scriptIndex, cIndex)
                     array[stateIndex][scriptIndex][cIndex] = value
                 }

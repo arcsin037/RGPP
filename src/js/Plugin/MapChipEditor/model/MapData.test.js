@@ -11,7 +11,6 @@ import {
     expect
 } from 'chai'
 
-
 describe('MapData', () => {
     describe('set size by constructor', () => {
         const col = 30
