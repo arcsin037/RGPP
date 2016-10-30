@@ -1,14 +1,14 @@
-import * as types from 'Core/actions/Images/actionTypes'
+import * as types from 'Core/actions/Scenes/actionTypes'
 const initialState = []
 
-const createImage = (state, action) => action.data
+const createScene = (state, action) => action.data
 
 const data = (state = initialState, action) => {
     switch (action.type) {
-    case types.ADD_IMAGE:
+    case types.ADD_SCENE:
         return [
             ...state,
-            createImage(state, action)
+            createScene(state, action)
         ]
     default:
         return state

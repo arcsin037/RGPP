@@ -1,24 +1,23 @@
 'use strict'
 
-import * as types from 'Core/actions/Images/actionTypes'
+import * as types from 'Core/actions/Scenes/actionTypes'
 import {
     expect
 } from 'chai'
 import reducer from './data'
 
-describe('images data reducer', () => {
+describe('scenes data reducer', () => {
     it('should return the initial state', () => {
         expect(reducer(undefined, {})).to.deep.equal([])
     })
 
-    it('should handle ADD_IMAGE', () => {
+    it('should handle ADD_SCENE', () => {
         const data = {
             name: 'hoge',
-            description: 'description',
-            url: 'url'
+            events: []
         }
         const action = {
-            type: types.ADD_IMAGE,
+            type: types.ADD_SCENE,
             data
         }
         expect(reducer([], action)).to.deep.equal([data])

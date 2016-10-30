@@ -1,4 +1,4 @@
-import * as types from '../actions/SaveData/actionTypes'
+import * as types from 'Core/actions/SaveData/actionTypes'
 
 const initialState = {
     plugin: {},
@@ -24,6 +24,5 @@ export const getImages = (state) => state.images.data
 export const getSounds = (state) => state.sounds.data
 
 export const getScenes = (state) => state.scenes.data
-
 
 export default saveData
