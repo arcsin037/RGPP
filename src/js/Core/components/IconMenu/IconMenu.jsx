@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {getImages, getSounds} from 'Core/reducers'
+import {getImages, getScenes, getSounds} from 'Core/reducers/saveData'
 import Button from 'Core/components/Base/Button'
 import {bindActionCreators} from 'redux'
 import calendarIcon from 'Image/System/calendar.svg'
@@ -66,6 +66,7 @@ const mapStateToProps = (state) => ({
         plugin: getPluginSaveData(state),
         gameObjs: getGameObjs(),
         images: getImages(state),
+        scenes: getScenes(state),
         sounds: getSounds(state)
     }
 })
