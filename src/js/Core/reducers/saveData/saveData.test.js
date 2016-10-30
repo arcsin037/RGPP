@@ -1,10 +1,10 @@
 'use strict'
 
 import * as types from 'Core/actions/SaveData/actionTypes'
+import reducer, {getImages, getScenes, getSounds} from './saveData'
 import {
     expect
 } from 'chai'
-import reducer from './saveData'
 
 describe('save data reducer', () => {
     it('should return the initial state', () => {
@@ -31,5 +31,45 @@ describe('save data reducer', () => {
             data
         }
         expect(reducer([], action)).to.deep.equal(data)
+    })
+
+    it('get images', () => {
+        const data = {
+            name: 'hoge',
+            description: 'description',
+            url: 'url'
+        }
+        const state = {
+            images: {
+                data
+            }
+        }
+        expect(getImages(state)).to.deep.equal(data)
+    })
+    it('get sounds', () => {
+        const data = {
+            name: 'hoge',
+            description: 'description',
+            url: 'url'
+        }
+        const state = {
+            sounds: {
+                data
+            }
+        }
+        expect(getSounds(state)).to.deep.equal(data)
+    })
+    it('get scenes', () => {
+        const data = {
+            name: 'hoge',
+            description: 'description',
+            url: 'url'
+        }
+        const state = {
+            scenes: {
+                data
+            }
+        }
+        expect(getScenes(state)).to.deep.equal(data)
     })
 })
