@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import App from 'Core/components/TodoList/App'
 import DrawModeSelectBox from 'Plugin/MapChipEditor/containers/DrawModeSelectBox'
 // import EmulationWindow from 'Core/components/EmulationWindow'
 import IconMenu from 'Core/components/IconMenu'
@@ -41,7 +40,6 @@ class EditorMainPanel extends Component {
                     <FlatButtonExampleSimple/>
                 </MuiThemeProvider>
                 */}
-                <App />
                 <IconMenu/>
                 <div className='selectbox-wrapper'>
                     <SelectBox options={modeOptions} defaultValue='TestMode'/>
