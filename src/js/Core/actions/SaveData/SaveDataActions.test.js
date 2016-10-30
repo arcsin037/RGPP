@@ -7,7 +7,7 @@ import {
 } from 'chai'
 
 describe('SaveDataActions', () => {
-    it('should create an action to add an image', () => {
+    it('should create an action to save', () => {
         const saveData = {
             plugin: {hoge: 'hoge'},
             gameObjs: {hoge: 'hoge'},
@@ -16,7 +16,7 @@ describe('SaveDataActions', () => {
             sounds: {hoge: 'hoge'}
         }
         const expectedAction = {
-            type: types.ADD_SCENE,
+            type: types.SAVE,
             data: saveData
         }
         expect(actions.save(saveData)).to.deep.equal(expectedAction)

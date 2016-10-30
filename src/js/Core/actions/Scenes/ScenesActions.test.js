@@ -7,7 +7,7 @@ import {
 } from 'chai'
 
 describe('ScenesActions', () => {
-    it('should create an action to add an image', () => {
+    it('should create an action to add a scene', () => {
         const scene = {
             name: 'hoge',
             events: []

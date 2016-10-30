@@ -7,7 +7,7 @@ import {
 } from 'chai'
 
 describe('SoundsActions', () => {
-    it('should create an action to add an image', () => {
+    it('should create an action to add a sound', () => {
         const sound = {
             name: 'hoge',
             description: 'description',
