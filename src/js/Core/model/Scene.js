@@ -3,6 +3,6 @@
 import {List, Record} from 'immutable'
 
 export const Scene = new Record({
-    id: undefined,
-    events: new List()
+  id: undefined,
+  events: List([])
 })

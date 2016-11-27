@@ -10,77 +10,77 @@
  */
 
 class EventState {
-    constructor({
+  constructor ({
         id,
         name
     } = {}) {
-        this.id = id
-        this.name = name
-        this.scripts = []
-    }
+    this.id = id
+    this.name = name
+    this.scripts = []
+  }
 
-    addScript(scriptID) {
-        const scriptData = ScriptDB.createObj(scriptID)
-        this.scripts.push(scriptData)
-    }
+  addScript (scriptID) {
+    const scriptData = ScriptDB.createObj(scriptID)
+    this.scripts.push(scriptData)
+  }
 
-    removeScript() {
-        if (this.scripts.length > 1) {
-            this.scripts.pop()
-        }
+  removeScript () {
+    if (this.scripts.length > 1) {
+      this.scripts.pop()
     }
+  }
 
-    onLoadGame(event) {
-        this.scripts.forEach((script) => {
-            script.onLoadGame(event)
-        })
-    }
+  onLoadGame (event) {
+    this.scripts.forEach((script) => {
+      script.onLoadGame(event)
+    })
+  }
 
-    onLoadMap(event) {
-        this.scripts.forEach((script) => {
-            script.onLoadMap(event)
-        })
-    }
+  onLoadMap (event) {
+    this.scripts.forEach((script) => {
+      script.onLoadMap(event)
+    })
+  }
 
-    onStateTransition(event) {
-        this.scripts.forEach((script) => {
-            script.onStateTransition(event)
-        })
-    }
+  onStateTransition (event) {
+    this.scripts.forEach((script) => {
+      script.onStateTransition(event)
+    })
+  }
 
-    reaction(event) {
-        this.scripts.forEach((script) => {
-            script.reaction(event)
-        })
-    }
+  reaction (event) {
+    this.scripts.forEach((script) => {
+      script.reaction(event)
+    })
+  }
 
-    update(event) {
-        this.scripts.forEach((script) => {
-            script.update(event)
-        })
-    }
+  update (event) {
+    this.scripts.forEach((script) => {
+      script.update(event)
+    })
+  }
 
-    debugUpdate(event) {
-        this.scripts.forEach((script) => {
-            script.debugUpdate(event)
-        })
-    }
+  debugUpdate (event) {
+    this.scripts.forEach((script) => {
+      script.debugUpdate(event)
+    })
+  }
 
-    draw(ctx) {
-        this.scripts.forEach((script) => {
-            ctx.save()
-            script.draw(ctx)
-            ctx.restore()
-        })
-    }
+  draw (ctx) {
+    this.scripts.forEach((script) => {
+      ctx.save()
+      script.draw(ctx)
+      ctx.restore()
+    })
+  }
 
-    debugDraw(ctx) {
-        this.scripts.forEach((script) => {
-            ctx.save()
-            script.debugDraw(ctx)
-            ctx.restore()
-        })
-    }
+  debugDraw (ctx) {
+    this.scripts.forEach((script) => {
+      ctx.save()
+      script.debugDraw(ctx)
+      ctx.restore()
+    })
+  }
 }
 
 export default EventState

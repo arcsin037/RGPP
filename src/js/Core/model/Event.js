@@ -13,7 +13,7 @@ class Event extends EventBase {
     this.currentEventY = currentEventY
   }
 
-  createGameObj(gameObjID, namespace, name) {
+  createGameObj (gameObjID, namespace, name) {
     if (this.gameObjectArray[name] === undefined) {
       this.gameObjectArray[name] = []
     }
@@ -42,7 +42,7 @@ class Event extends EventBase {
     return gameObj
   }
 
-  createImageObj(gameObjID, arg) {
+  createImageObj (gameObjID, arg) {
     const name = 'ImageObj'
     if (this.gameObjectArray[name] === undefined) {
       this.gameObjectArray[name] = []
@@ -64,17 +64,16 @@ class Event extends EventBase {
       this.gameObjectArray[name][index] = gameObj
     }
     return gameObj
-
   }
 
-  createSoundObj() {}
+  createSoundObj () {}
 
-  correctScriptName(namespace, scriptName) {
+  correctScriptName (namespace, scriptName) {
     const retName = `${RGPP.GlobalNS}.${namespace}.${scriptName}`
     return retName
   }
 
-  setPosition(mapDataID, x, y) {
+  setPosition (mapDataID, x, y) {
     RGPP.System.EventMoveInfoList.getInstance().setMoveInfo({
       mapDataID,
       currentX: x,
@@ -86,31 +85,31 @@ class Event extends EventBase {
     this.currentEventY = y
   }
 
-  getX() {
+  getX () {
     return this.currentEventX
   }
 
-  getY() {
+  getY () {
     return this.currentEventY
   }
 
-  currentMapDataID() {
+  currentMapDataID () {
     return this.currentMapID
   }
 
-  clearGameObj() {
+  clearGameObj () {
     this.gameObjectIDArray = []
     this.gameObjectArray = []
   }
 
-  gameObjs(name) {
+  gameObjs (name) {
     if (this.gameObjectArray[name] === undefined) {
       return []
     }
     return this.gameObjectArray[name]
   }
 
-  gameObjKeys() {
+  gameObjKeys () {
     const keys = []
     for (const key in this.gameObjectArray) {
       keys.push(key)
