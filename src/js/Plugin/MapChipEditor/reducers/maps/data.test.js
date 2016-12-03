@@ -5,11 +5,11 @@ import {MapData} from '../../model/MapData'
 import {
     expect
 } from 'chai'
-import reducer from './data'
+import reducer, {initialState} from './data'
 
 describe('maps data reducer', () => {
   it('should return the initial state', () => {
-    expect(reducer(undefined, {})).to.deep.equal([])
+    expect(reducer(undefined, {})).to.deep.equal(initialState)
   })
 
   it('should handle ADD_MAP', () => {
@@ -26,8 +26,9 @@ describe('maps data reducer', () => {
       type: types.ADD_MAP,
       data
     }
+    const nextState = reducer(undefined, action)
     const mapData = new MapData(data)
-    expect(reducer([], action)).to.deep.equal([mapData])
+    expect(nextState).to.deep.equal([mapData])
   })
 
   it('should handle LOAD_MAP', () => {

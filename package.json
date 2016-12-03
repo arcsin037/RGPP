@@ -9,7 +9,9 @@
     "server": "webpack-dev-server",
     "build": "webpack --release",
     "start": "npm run server",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "test": "set NODE_PATH=src/js/ && mocha src/js/**/*.test.js",
+    "test:dev": "npm run test -- --watch"
   },
   "author": "arcsin",
   "license": "Apache-2.0",

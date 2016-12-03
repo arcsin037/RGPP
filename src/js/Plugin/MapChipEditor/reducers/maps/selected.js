@@ -1,3 +1,4 @@
+'use strict'
 import {
     SET_CURRENT_LAYER_NO,
     SET_CURRENT_MAP_ID
@@ -8,6 +9,10 @@ import {Map} from 'immutable'
 
 export const initialState = Map({
   id: 0,
+  startX: 0,
+  startY: 0,
+  specifyRangeX: 1,
+  specifyRangeY: 1,
   currentMapID: 0,
   currentLayerNo: MAP_LAYER_NUM
 })

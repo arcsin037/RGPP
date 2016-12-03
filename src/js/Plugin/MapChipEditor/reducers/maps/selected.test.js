@@ -2,7 +2,6 @@
 
 import * as types from '../../actions/Map/actionTypes'
 import {MAP_LAYER_NUM} from '../../constants'
-import SelectionRange from '../common/SelectionRange'
 import {
     expect
 } from 'chai'
@@ -22,6 +21,10 @@ describe('selected reducer', () => {
     const nextState = reducer(undefined, action)
 
     expect(nextState.get('id')).to.equal(0)
+    expect(nextState.get('startX')).to.equal(0)
+    expect(nextState.get('startY')).to.equal(0)
+    expect(nextState.get('specifyRangeX')).to.equal(1)
+    expect(nextState.get('specifyRangeY')).to.equal(1)
     expect(nextState.get('currentMapID')).to.equal(currentMapID)
     expect(nextState.get('currentLayerNo')).to.equal(MAP_LAYER_NUM)
   })
@@ -35,6 +38,10 @@ describe('selected reducer', () => {
     const nextState = reducer(undefined, action)
 
     expect(nextState.get('id')).to.equal(0)
+    expect(nextState.get('startX')).to.equal(0)
+    expect(nextState.get('startY')).to.equal(0)
+    expect(nextState.get('specifyRangeX')).to.equal(1)
+    expect(nextState.get('specifyRangeY')).to.equal(1)
     expect(nextState.get('currentMapID')).to.equal(0)
     expect(nextState.get('currentLayerNo')).to.equal(currentLayerNo)
   })

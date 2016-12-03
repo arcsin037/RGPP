@@ -39,7 +39,7 @@ export default {
 
   target: 'web',
 
-  devtool: DEBUG ? 'cheap-module-eval-source-map' : false,
+  devtool: DEBUG ? 'inline-source-map' : false,
 
   plugins: [
     new webpack.DefinePlugin({

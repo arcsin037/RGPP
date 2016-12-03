@@ -7,52 +7,52 @@ import {getStore} from '../../utils/storeUtil'
 import {setDrawMode} from '../../actions/Palette'
 
 const drawModeOptions = [
-    {
-        value: PEN_MODE,
-        name: PEN_MODE
-    }, {
-        value: RECTANGLE_MODE,
-        name: RECTANGLE_MODE
-    }, {
-        value: FILLING_MODE,
-        name: FILLING_MODE
-    }, {
-        value: ERASER_MODE,
-        name: ERASER_MODE
-    }
+  {
+    value: PEN_MODE,
+    name: PEN_MODE
+  }, {
+    value: RECTANGLE_MODE,
+    name: RECTANGLE_MODE
+  }, {
+    value: FILLING_MODE,
+    name: FILLING_MODE
+  }, {
+    value: ERASER_MODE,
+    name: ERASER_MODE
+  }
 ]
 
 class DrawModeSelectBox extends Component {
-    constructor(props) {
-        super(props)
-        this.handleChange = this.handleChange.bind(this)
-    }
+  constructor (props) {
+    super(props)
+    this.handleChange = this.handleChange.bind(this)
+  }
 
-    handleChange(event) {
-        this.props.setDrawMode(event.target.value)
-    }
+  handleChange (event) {
+    this.props.setDrawMode(event.target.value)
+  }
 
-    render() {
-        return this.props.currentLayerNo === MAP_LAYER_NUM
+  render () {
+    return this.props.currentLayerNo === MAP_LAYER_NUM
             ? null
-            : <SelectBox options={drawModeOptions} defaultValue='Pen' onChange={this.handleChange}/>
-    }
+            : <SelectBox options={drawModeOptions} defaultValue='Pen' onChange={this.handleChange} />
+  }
 }
 
 DrawModeSelectBox.propTypes = {
-    setDrawMode: PropTypes.func,
-    currentLayerNo: PropTypes.number.isRequired
+  setDrawMode: PropTypes.func,
+  currentLayerNo: PropTypes.number.isRequired
 }
 
 const mapStateToProps = (state) => {
-    const store = getStore(state)
-    return {
-        currentLayerNo: store.maps.selected.currentLayerNo
-    }
+  const store = getStore(state)
+  return {
+    currentLayerNo: store.maps.selected.get('currentLayerNo')
+  }
 }
 
 const mapDispatchToProps = (dispatch) => (bindActionCreators({
-    setDrawMode
+  setDrawMode
 }, dispatch))
 
 export default connect(mapStateToProps, mapDispatchToProps)(DrawModeSelectBox)
