@@ -9,13 +9,13 @@ import todos from './todos'
 import visibilityFilter from './visibilityFilter'
 
 const reducer = combineReducers({
-    plugin: pluginReducers,
-    todos,
-    visibilityFilter,
-    saveData,
-    scenes,
-    images,
-    sounds
+  plugin: pluginReducers,
+  todos,
+  visibilityFilter,
+  saveData,
+  scenes,
+  images,
+  sounds
 })
 
 export default reducer
