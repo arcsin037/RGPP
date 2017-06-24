@@ -3,5 +3,5 @@ export const clamp = (value, min, max) => (
 )
 
 export default {
-    clamp
+  clamp
 }

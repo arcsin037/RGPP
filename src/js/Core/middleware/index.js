@@ -2,18 +2,18 @@ import persistState from 'redux-localstorage'
 
 /* eslint no-console: "off" */
 export const logger = (store) => (next) => (action) => {
-    console.group(action.type)
-    console.log('dispatch', action)
-    const result = next(action)
-    console.log('next state', store.getState())
-    console.groupEnd(action.type)
-    return result
+  console.group(action.type)
+  console.log('dispatch', action)
+  const result = next(action)
+  console.log('next state', store.getState())
+  console.groupEnd(action.type)
+  return result
 }
 
 export default [
-    logger
+  logger
 ]
 
 export const enhancer = [
-    persistState('saveData')
+  persistState('saveData')
 ]

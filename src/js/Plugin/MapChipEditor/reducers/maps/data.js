@@ -1,9 +1,6 @@
 'use strict'
 import * as types from '../../actions/Map/actionTypes'
-import {MapData} from '../../model/MapData'
-
-import {List} from 'immutable'
-
+import {List, Map} from 'immutable'
 export const initialState = List([])
 
 const setMapChip = (state, action) => {
@@ -30,11 +27,11 @@ const setMapChip = (state, action) => {
 const data = (state = initialState, action) => {
   switch (action.type) {
     case types.ADD_MAP:
+      return state.push(Map(action.data))
     case types.LOAD_MAP:
-      return state.push(new MapData(action.data))
+      return state.push(Map(action.data))
     case types.SET_CTX:
       return state.map(s => {
-        console.log('s (id) = ', s.get('id'), action.id, action.ctx)
         if (s.get('id') === action.id) {
           return s.set('ctx', action.ctx)
         } else {

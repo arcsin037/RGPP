@@ -16,8 +16,8 @@ import Const from 'RGPP/Const/Const.json'
  */
 const isOpera_ = () => {
     // Opera 8.0+ (UA detection to detect Blink/v8-powered Opera)
-    const isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0
-    return isOpera
+  const isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0
+  return isOpera
 }
 
 /**
@@ -27,8 +27,8 @@ const isOpera_ = () => {
  * @private
  */
 const isFirefox_ = () => {
-    const isFirefox = typeof InstallTrigger !== 'undefined' // Firefox 1.0+
-    return isFirefox
+  const isFirefox = typeof InstallTrigger !== 'undefined' // Firefox 1.0+
+  return isFirefox
 }
 
 /**
@@ -40,8 +40,8 @@ const isFirefox_ = () => {
 const isSafari_ = () => {
     // At least Safari 3+: '[object HTMLElementConstructor]'
     // const isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0
-    const isSafari = Reflect.apply(Object.prototype.toString, window.HTMLElement, []).indexOf('Constructor') > 0
-    return isSafari
+  const isSafari = Reflect.apply(Object.prototype.toString, window.HTMLElement, []).indexOf('Constructor') > 0
+  return isSafari
 }
 
 /**
@@ -51,8 +51,8 @@ const isSafari_ = () => {
  * @private
  */
 const isChrome_ = () => {
-    const isChrome = !!window.chrome && !isOpera_() // Chrome 1+
-    return isChrome
+  const isChrome = !!window.chrome && !isOpera_() // Chrome 1+
+  return isChrome
 }
 
 /**
@@ -62,8 +62,8 @@ const isChrome_ = () => {
  * @private
  */
 const isIE_ = () => {
-    const isIE = /*@cc_on!@*/ false || !!document.documentMode // At least IE6
-    return isIE
+  const isIE = /* @cc_on!@ */ false || !!document.documentMode // At least IE6
+  return isIE
 }
 
 /**
@@ -75,12 +75,12 @@ const isIE_ = () => {
  */
 const extractIEVerStr_ = () => {
     // userAgent
-    const nvUA = navigator.userAgent
+  const nvUA = navigator.userAgent
 
     // search 'msie' or 'MSIE' or 'rv:'
-    const bwVer = nvUA.match(/((msie|MSIE)\s|rv:)([\d\.]+)/)[3]
+  const bwVer = nvUA.match(/((msie|MSIE)\s|rv:)([\d\.]+)/)[3]
 
-    return bwVer
+  return bwVer
 }
 
 /**
@@ -92,16 +92,16 @@ const extractIEVerStr_ = () => {
  */
 const extractFireFoxVerStr_ = () => {
     // userAgent
-    const nvUA = navigator.userAgent
+  const nvUA = navigator.userAgent
         // search 'FireFox'
-    const cutSt = nvUA.indexOf('Firefox')
+  const cutSt = nvUA.indexOf('Firefox')
         // end of user agent
-    const cutEd = nvUA.length
+  const cutEd = nvUA.length
 
     // cut off 'Firefox'+'/'= 8 character
-    const bwVer = nvUA.substring(cutSt + 8, cutEd)
+  const bwVer = nvUA.substring(cutSt + 8, cutEd)
 
-    return bwVer
+  return bwVer
 }
 
 /**
@@ -113,16 +113,16 @@ const extractFireFoxVerStr_ = () => {
  */
 const extractOperaVerStr_ = () => {
     // userAgent
-    const nvUA = navigator.userAgent
+  const nvUA = navigator.userAgent
         // search 'Version'
-    const cutSt = nvUA.indexOf('Version')
+  const cutSt = nvUA.indexOf('Version')
         // end of user agent
-    const cutEd = nvUA.length
+  const cutEd = nvUA.length
 
-    //cut off 'Version'+'/'= 8 character
-    const bwVer = nvUA.substring(cutSt + 8, cutEd)
+    // cut off 'Version'+'/'= 8 character
+  const bwVer = nvUA.substring(cutSt + 8, cutEd)
 
-    return bwVer
+  return bwVer
 }
 
 /**
@@ -134,16 +134,16 @@ const extractOperaVerStr_ = () => {
  */
 const extractChromeVerStr_ = () => {
     // userAgent
-    const nvUA = navigator.userAgent
+  const nvUA = navigator.userAgent
         // search 'Chrome'
-    const cutSt = nvUA.indexOf('Chrome')
+  const cutSt = nvUA.indexOf('Chrome')
         // search ' '
-    const cutEd = nvUA.indexOf(' ', cutSt)
+  const cutEd = nvUA.indexOf(' ', cutSt)
 
     // cut off 'Chrome/'= 7 character
-    const bwVer = nvUA.substring(cutSt + 7, cutEd)
+  const bwVer = nvUA.substring(cutSt + 7, cutEd)
 
-    return bwVer
+  return bwVer
 }
 
 /**
@@ -155,16 +155,16 @@ const extractChromeVerStr_ = () => {
  */
 const extractSafariVerStr_ = () => {
     // userAgent
-    const nvUA = navigator.userAgent
+  const nvUA = navigator.userAgent
         // search 'Version'
-    const cutSt = nvUA.indexOf('Version')
+  const cutSt = nvUA.indexOf('Version')
         // search ' '
-    const cutEd = nvUA.indexOf(' ', cutSt)
+  const cutEd = nvUA.indexOf(' ', cutSt)
 
     // cut off 'Version/'= 8 character
-    const bwVer = nvUA.substring(cutSt + 8, cutEd)
+  const bwVer = nvUA.substring(cutSt + 8, cutEd)
 
-    return bwVer
+  return bwVer
 }
 
 /**
@@ -173,41 +173,41 @@ const extractSafariVerStr_ = () => {
  * @return {Object} browser version & type
  */
 export const getUserBrowserInfo = () => {
-    let bwVerStr = 0
-    let bwType = null
+  let bwVerStr = 0
+  let bwType = null
 
-    if (isIE_()) {
+  if (isIE_()) {
         // IE
-        bwVerStr = extractIEVerStr_()
-        bwType = Const.BROWSER_TYPE.IE
-    } else if (isOpera_()) {
+    bwVerStr = extractIEVerStr_()
+    bwType = Const.BROWSER_TYPE.IE
+  } else if (isOpera_()) {
         // Opera
-        bwVerStr = extractOperaVerStr_()
-        bwType = Const.BROWSER_TYPE.OPERA
-    } else if (isSafari_()) {
+    bwVerStr = extractOperaVerStr_()
+    bwType = Const.BROWSER_TYPE.OPERA
+  } else if (isSafari_()) {
         // Safari
-        bwVerStr = extractSafariVerStr_()
-        bwType = Const.BROWSER_TYPE.SAFARI
-    } else if (isChrome_()) {
+    bwVerStr = extractSafariVerStr_()
+    bwType = Const.BROWSER_TYPE.SAFARI
+  } else if (isChrome_()) {
         // Chrome
-        bwVerStr = extractChromeVerStr_()
-        bwType = Const.BROWSER_TYPE.GOOGLE_CHROME
-    } else if (isFirefox_()) {
+    bwVerStr = extractChromeVerStr_()
+    bwType = Const.BROWSER_TYPE.GOOGLE_CHROME
+  } else if (isFirefox_()) {
         // FireFox
-        bwVerStr = extractFireFoxVerStr_()
-        bwType = Const.BROWSER_TYPE.FIRE_FOX
-    } else {
+    bwVerStr = extractFireFoxVerStr_()
+    bwType = Const.BROWSER_TYPE.FIRE_FOX
+  } else {
         // Other browser
-        bwType = Const.BROWSER_TYPE.OTHER
-    }
+    bwType = Const.BROWSER_TYPE.OTHER
+  }
 
-    const bwVer = parseInt(bwVerStr, 10)
-    return {
-        type: bwType,
-        version: bwVer
-    }
+  const bwVer = parseInt(bwVerStr, 10)
+  return {
+    type: bwType,
+    version: bwVer
+  }
 }
 
 export default {
-    getUserBrowserInfo
+  getUserBrowserInfo
 }

@@ -22,36 +22,36 @@ import SelectBox from 'Core/components/Base/SelectBox'
  */
 
 const modeOptions = [
-    {
-        value: 'TestMode',
-        name: 'Test Mode'
-    }, {
-        value: 'EmulationMode',
-        name: 'EmulationMode Mode'
-    }
+  {
+    value: 'TestMode',
+    name: 'Test Mode'
+  }, {
+    value: 'EmulationMode',
+    name: 'EmulationMode Mode'
+  }
 ]
 
 class EditorMainPanel extends Component {
-    render() {
-        return (
-            <div>
-                {/*
+  render () {
+    return (
+      <div>
+        {/*
                 <MuiThemeProvider muiTheme={getMuiTheme()}>
                     <FlatButtonExampleSimple/>
                 </MuiThemeProvider>
                 */}
-                <IconMenu/>
-                <div className='selectbox-wrapper'>
-                    <SelectBox options={modeOptions} defaultValue='TestMode'/>
-                    <LayerSelectBox />
-                    <DrawModeSelectBox />
-                </div>
-                <MapPanel id={0} />
-                <PalettePanel />
-                {/* <EmulationWindow titleName={RGPP.Config.GAME_NAME}/> */}
-            {/*<PaletteWindow />*/}
-            </div>
-        )
-    }
+        <IconMenu />
+        <div className='selectbox-wrapper'>
+          <SelectBox options={modeOptions} defaultValue='TestMode' />
+          <LayerSelectBox />
+          <DrawModeSelectBox />
+        </div>
+        <MapPanel id={0} />
+        <PalettePanel />
+        {/* <EmulationWindow titleName={RGPP.Config.GAME_NAME}/> */}
+        {/* <PaletteWindow /> */}
+      </div>
+    )
+  }
 }
 export default EditorMainPanel

@@ -38,9 +38,9 @@ const store = createStore(
  */
 $(() => {
     // Open editor mode main panel
-    ReactDOM.render(
-        <Provider store={store}>
-        <EditorMainPanel/>
+  ReactDOM.render(
+    <Provider store={store}>
+      <EditorMainPanel />
     </Provider>, document.getElementById('content'))
 })
 

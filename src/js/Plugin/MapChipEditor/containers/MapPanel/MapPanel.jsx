@@ -1,6 +1,7 @@
-import {ERASER_MODE, FILLING_MODE, MAP_LAYER_NUM, PEN_MODE, RECTANGLE_MODE} from '../../constants'
+import {MAP_LAYER_NUM} from '../../constants'
 import React, {Component, PropTypes} from 'react'
-import {addMap, loadMap, setCtx, setMapChip} from '../../actions/Map'
+import {addMap, updateMap} from '../../actions/Map'
+import MapData from '../../model/MapData'
 import {getStore, loadSaveData} from '../../utils/storeUtil'
 import ControllableCanvas from 'Core/components/Base/ControllableCanvas'
 import Graphics from 'Core/Graphics'
@@ -20,48 +21,35 @@ class MapPanel extends Component {
     this.mouseCellY = 0
     this.selectedX = 0
     this.selectedY = 0
-
-    this.ctx = null
+    this.isEventLayer = props.currentLayerNo === MAP_LAYER_NUM
     this.onEvent = this.onEvent.bind(this)
   }
 
   componentWillMount () {
-    if (this.props.mapSaveData) {
-      this.props.loadMap(this.props.mapSaveData)
+    const { mapSaveData } = this.props
+    if (mapSaveData) {
+      this.props.addMap(mapSaveData)
     } else {
-      this.props.addMap()
+      this.props.addMap(new MapData())
     }
-  }
-
-  componentWillReceiveProps (nextProps) {
-    const {
-      cellWidth,
-      cellHeight,
-      col,
-      row
-    } = nextProps.mapData
-
-    this.col = col
-    this.row = row
-    this.cellWidth = cellWidth
-    this.cellHeight = cellHeight
   }
 
   onEvent (state) {
-    const {ctx} = state
-    if (!this.ctx) {
-      this.ctx = ctx
-      const {id, setCtx} = this.props
-      setCtx(id, ctx)
-    }
-    this.onUpdate(state)
+    const { ctx } = state
+    this.setCtx(this.props, ctx)
+    this.onUpdate(this.props, state)
     this.onDraw(ctx)
   }
 
-  onUpdate (state) {
-    this.isEventLayer = this.props.currentLayerNo === MAP_LAYER_NUM
+  setCtx (props, ctx) {
+    const { id, mapData, updateMap } = props
+    if (mapData) {
+      updateMap(id, mapData.setCtx(ctx))
+    }
+  }
+
+  onUpdate (props, state) {
     this.updateSelectedPos(state)
-    this.updateMap(state)
   }
 
   updateSelectedPos (state) {
@@ -91,35 +79,6 @@ class MapPanel extends Component {
 
       this.selectedX = NumberUtil.clamp(this.selectedX, 0, this.col - 1)
       this.selectedY = NumberUtil.clamp(this.selectedY, 0, this.row - 1)
-    }
-  }
-
-  updateMap (state) {
-    const {mouseInfo} = state
-
-    if (!this.isEventLayer) {
-      if (mouseInfo.isLeftDragged) {
-        const {id, currentLayerNo, selectedPalette, setMapChip, drawMode} = this.props
-        switch (drawMode) {
-          case PEN_MODE:
-            setMapChip({
-              id,
-              currentLayerNo,
-              selectedX: this.mouseCellX,
-              selectedY: this.mouseCellY,
-              selectedPalette
-            })
-            break
-          case RECTANGLE_MODE:
-            break
-          case FILLING_MODE:
-            break
-          case ERASER_MODE:
-            break
-          default:
-            break
-        }
-      }
     }
   }
 
@@ -168,8 +127,7 @@ class MapPanel extends Component {
     const mapChipWidth = mapData.cellWidth
     const mapChipHeight = mapData.cellHeight
     const mapLayers = mapData.layers
-    console.log(mapLayers)
-    const maxLayerNum = mapLayers.size()
+    const maxLayerNum = mapLayers.size
 
     for (let layerNo = 0; layerNo < maxLayerNum; layerNo += 1) {
       if (layerNo !== currentLayerNo && currentLayerNo < maxLayerNum) {
@@ -271,16 +229,13 @@ MapPanel.propTypes = {
   mapSaveData: PropTypes.object,
   drawMode: PropTypes.string.isRequired,
   addMap: PropTypes.func.isRequired,
-  setCtx: PropTypes.func.isRequired,
-  setMapChip: PropTypes.func.isRequired,
-  loadMap: PropTypes.func.isRequired
+  updateMap: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state, ownProps) => {
   const store = getStore(state)
   const saveData = loadSaveData(state)
   const mapSaveData = saveData && saveData.maps && saveData.maps.data && saveData.maps.data[ownProps.id]
-
   return {
     mapData: store.maps.data.get(ownProps.id),
     palettesData: store.palettes.data,
@@ -293,9 +248,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => (bindActionCreators({
   addMap,
-  setCtx,
-  setMapChip,
-  loadMap
+  updateMap
 }, dispatch))
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapPanel)

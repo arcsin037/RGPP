@@ -4,8 +4,8 @@ import maps from './maps'
 import palettes from './palettes'
 
 const reducer = combineReducers({
-    maps,
-    palettes
+  maps,
+  palettes
 })
 
 export default reducer

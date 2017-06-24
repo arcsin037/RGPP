@@ -20,10 +20,10 @@
  * @return {Boolean} whether the string is empty string
  */
 export const isEmptyString = (str) => {
-    if (str === '') {
-        return true
-    }
-    return false
+  if (str === '') {
+    return true
+  }
+  return false
 }
 
 /**
@@ -38,7 +38,6 @@ export const isEmptyString = (str) => {
 export const substitute = (originalStr, searchStr, replacementStr) =>
     originalStr.split(searchStr).join(replacementStr)
 
-
 /**
  * Extract file name except for extension
  * @method extractFileNameExceptForExtension
@@ -46,14 +45,14 @@ export const substitute = (originalStr, searchStr, replacementStr) =>
  * @return {string] file name except for extension
  */
 export const extractFileNameExceptForExtension = (fileName) => {
-    const separator = '.'
-    const arrayOfStrings = fileName.split(separator)
-    let baseFileName = arrayOfStrings[0]
-    for (let i = 1; i < arrayOfStrings.length - 1; i += 1) {
-        baseFileName += '.'
-        baseFileName += arrayOfStrings[i]
-    }
-    return baseFileName
+  const separator = '.'
+  const arrayOfStrings = fileName.split(separator)
+  let baseFileName = arrayOfStrings[0]
+  for (let i = 1; i < arrayOfStrings.length - 1; i += 1) {
+    baseFileName += '.'
+    baseFileName += arrayOfStrings[i]
+  }
+  return baseFileName
 }
 
 /**
@@ -63,19 +62,19 @@ export const extractFileNameExceptForExtension = (fileName) => {
  * @return {string] extension
  */
 export const extractExtension = (fileName) => {
-    const separator = '.'
-    const arrayOfStrings = fileName.split(separator)
-    const lastIndex = arrayOfStrings.length - 1
-    if (lastIndex === 0) {
-        return ''
-    }
-    const extension = arrayOfStrings[lastIndex]
-    return extension
+  const separator = '.'
+  const arrayOfStrings = fileName.split(separator)
+  const lastIndex = arrayOfStrings.length - 1
+  if (lastIndex === 0) {
+    return ''
+  }
+  const extension = arrayOfStrings[lastIndex]
+  return extension
 }
 
 export default {
-    isEmptyString,
-    substitute,
-    extractFileNameExceptForExtension,
-    extractExtension
+  isEmptyString,
+  substitute,
+  extractFileNameExceptForExtension,
+  extractExtension
 }

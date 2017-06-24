@@ -3,9 +3,9 @@ import {getStore} from './MapChipEditor/utils/storeUtil'
 import mapChipEditor from './MapChipEditor/reducers'
 
 export const pluginReducers = combineReducers({
-    mapChipEditor
+  mapChipEditor
 })
 
 export const getPluginSaveData = (state) => ({
-    mapChipEditor: getStore(state)
+  mapChipEditor: getStore(state)
 })

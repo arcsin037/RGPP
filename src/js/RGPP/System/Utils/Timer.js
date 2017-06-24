@@ -12,14 +12,14 @@ const LABEL = 'timer'
 * @method requestAnimationFrame
 */
 export const requestAnimationFrame = (callback, interval) => {
-    const reqAnimFrame = window.requestAnimationFrame ||
+  const reqAnimFrame = window.requestAnimationFrame ||
         window.webkitRequestAnimationFrame ||
         window.mozRequestAnimationFrame ||
         window.oRequestAnimationFrame ||
         window.msRequestAnimationFrame ||
         window.setTimeout
 
-    reqAnimFrame(callback, interval)
+  reqAnimFrame(callback, interval)
 }
 
 export default class Timer {
@@ -30,51 +30,51 @@ export default class Timer {
      * @author arcsin
      * @constructor
      */
-    constructor() {
-        this.now = window.performance && (
+  constructor () {
+    this.now = window.performance && (
             window.performance.now ||
             window.performance.mozNow ||
             window.performance.msNow ||
             window.performance.oNow ||
             window.performance.webkitNow)
 
-        this.previousTime = this.getCurrentTime()
-    }
+    this.previousTime = this.getCurrentTime()
+  }
 
     /**
      * Get current time
      * @method getCurrentTime
      * @return current time
      */
-    getCurrentTime() {
-        return (this.now && Reflect.apply(this.now, window.performance, [])) || (new Date())
-    }
+  getCurrentTime () {
+    return (this.now && Reflect.apply(this.now, window.performance, [])) || (new Date())
+  }
 
     /**
      * Measure frame per second
      * @method measureFPS
      * @return fps {Number} frame per second
      */
-    measureFPS() {
-        const diff = this.getCurrentTime() - this.previousTime
-        const fps = 1000 / diff
-        this.previousTime = this.getCurrentTime()
-        return fps
-    }
+  measureFPS () {
+    const diff = this.getCurrentTime() - this.previousTime
+    const fps = 1000 / diff
+    this.previousTime = this.getCurrentTime()
+    return fps
+  }
 
     /**
      * Start timer
      * @method start
      */
-    start() {
-        console.time(LABEL)
-    }
+  start () {
+    console.time(LABEL)
+  }
 
     /**
      * Measure elapsed time from start function
      * @method measure
      */
-    measure() {
-        console.timeEnd(LABEL)
-    }
+  measure () {
+    console.timeEnd(LABEL)
+  }
 }

@@ -1,22 +1,22 @@
 import * as types from 'Core/actions/SaveData/actionTypes'
 
 const initialState = {
-    plugin: {},
-    gameObjs: {},
-    images: {},
-    scenes: {},
-    sounds: {}
+  plugin: {},
+  gameObjs: {},
+  images: {},
+  scenes: {},
+  sounds: {}
 }
 
 const save = (state, action) => action.data
 
 const saveData = (state = initialState, action) => {
-    switch (action.type) {
+  switch (action.type) {
     case types.SAVE:
-        return save(state, action)
+      return save(state, action)
     default:
-        return state
-    }
+      return state
+  }
 }
 
 export const getImages = (state) => state.images.data

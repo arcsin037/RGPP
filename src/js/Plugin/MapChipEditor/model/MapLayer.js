@@ -1,16 +1,11 @@
 import {
-    DEFAULT_COL,
-    DEFAULT_ROW,
     NOTHING,
     OUT_OF_BOUNDS
 } from '../constants'
 
-import {Record} from 'immutable'
+import MapLayerRecord from './MapLayerRecord'
 
-export class MapLayer extends Record({
-  chipSetDataIDArray: [],
-  chipSetNoArray: []
-}) {
+export class MapLayer extends MapLayerRecord {
   constructor () {
     super()
     if (!this.chipSetDataIDArray || !this.chipSetNoArray) {

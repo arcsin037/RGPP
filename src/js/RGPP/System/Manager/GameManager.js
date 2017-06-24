@@ -26,7 +26,6 @@ class GameManager {
             window.setTimeout
     }
 
-
     startGame() {
         this.requestAnimationFrame(this.alwaysUpdate, INTERVAL)
     }

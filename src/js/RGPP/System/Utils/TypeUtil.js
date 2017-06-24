@@ -5,10 +5,10 @@
  * @return {boolean} Whether a reference is defined or not.
  */
 export const isDefined = (value) => {
-    if (typeof value === 'undefined') {
-        return false
-    }
-    return true
+  if (typeof value === 'undefined') {
+    return false
+  }
+  return true
 }
 
 /**
@@ -26,10 +26,10 @@ export const isUndefined = (value) => !isDefined(value)
  * @return {Boolean} Whether a reference is string or not.
  */
 export const isString = (value) => {
-    if (typeof value === 'string') {
-        return true
-    }
-    return false
+  if (typeof value === 'string') {
+    return true
+  }
+  return false
 }
 
 /**
@@ -39,10 +39,10 @@ export const isString = (value) => {
  * @return {Boolean} Whether a reference is integer type or not.
  */
 export const isIntegerType = (value) => {
-    if (value === parseInt(value, 10)) {
-        return true
-    }
-    return false
+  if (value === parseInt(value, 10)) {
+    return true
+  }
+  return false
 }
 
 /**
@@ -52,11 +52,11 @@ export const isIntegerType = (value) => {
  * @return {Boolean} Whether a reference is finite number or not.
  */
 export const isFiniteNumber = (value) => {
-    if (typeof(value) !== 'number' && typeof(value) !== 'string') {
-        return false
-    } else {
-        return (value === parseFloat(value) && isFinite(value))
-    }
+  if (typeof (value) !== 'number' && typeof (value) !== 'string') {
+    return false
+  } else {
+    return (value === parseFloat(value) && isFinite(value))
+  }
 }
 
 /**
@@ -70,10 +70,10 @@ export const isFiniteNumber = (value) => {
 export const isNumeric = (value) => !isNaN(parseFloat(value)) && isFinite(value)
 
 export default {
-    isDefined,
-    isUndefined,
-    isString,
-    isIntegerType,
-    isFiniteNumber,
-    isNumeric
+  isDefined,
+  isUndefined,
+  isString,
+  isIntegerType,
+  isFiniteNumber,
+  isNumeric
 }
